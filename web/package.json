@@ -10,9 +10,9 @@
     },
     "devDependencies": {},
     "scripts": {
-        "dev": "next",
-        "build": "next build",
-        "start": "next start"
+        "dev": "node next",
+        "build": "node next build",
+        "start": "node next start"
     },
     "keywords": [],
     "author": "",
