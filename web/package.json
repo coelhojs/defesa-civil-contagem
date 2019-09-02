@@ -4,15 +4,17 @@
     "description": "",
     "main": "index.js",
     "dependencies": {
+        "@material-ui/core": "^4.4.0",
+        "@material-ui/icons": "^4.2.1",
         "next": "^9.0.3",
         "react": "^16.9.0",
         "react-dom": "^16.9.0"
     },
     "devDependencies": {},
     "scripts": {
-        "dev": "node next",
-        "build": "node next build",
-        "start": "node next start"
+        "dev": "next",
+        "build": "next build",
+        "start": "next start"
     },
     "keywords": [],
     "author": "",
