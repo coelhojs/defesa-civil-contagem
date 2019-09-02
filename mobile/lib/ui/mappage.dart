@@ -32,9 +32,6 @@ class MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: Text("Defesa Civil"),
-      ),
       body: Stack(children: <Widget>[
         GoogleMap(
           tiltGesturesEnabled: false,
