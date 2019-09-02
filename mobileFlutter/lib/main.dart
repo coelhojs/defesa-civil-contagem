@@ -1,4 +1,5 @@
 
+import 'package:defesa_civil/ui/home.dart';
 import 'package:defesa_civil/ui/registerpage.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Google Maps Demo',
-      home: RegisterPage(),
+      home: Home(),
+      theme: ThemeData(fontFamily: 'Uber'),
       debugShowCheckedModeBanner: false,
     );
   }
