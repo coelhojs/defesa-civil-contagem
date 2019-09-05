@@ -1,5 +1,5 @@
+import 'package:defesa_civil/ui/loginpage.dart';
 import 'package:defesa_civil/ui/mappage.dart';
-import 'package:defesa_civil/ui/registerpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
 
@@ -10,7 +10,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  final List<Widget> _children = [MapPage(), RegisterPage()];
+  final List<Widget> _children = [MapPage(), LoginPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
           ),
           BottomNavigationBarItem(
             icon: new Icon(Feather.getIconData("user")),
-            title: new Text('Cadastro', style: TextStyle(fontWeight: FontWeight.w500),),
+            title: new Text('Login', style: TextStyle(fontWeight: FontWeight.w500),),
           ),
         ],
       ),

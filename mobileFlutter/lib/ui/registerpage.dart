@@ -10,11 +10,14 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(246, 129, 33, 1),
+        title: Text("Página de cadastro"),
+      ),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(20),
@@ -66,11 +69,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 alignment: Alignment.bottomRight,
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
 }
