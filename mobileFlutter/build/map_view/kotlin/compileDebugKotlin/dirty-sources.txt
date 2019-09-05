@@ -1,0 +1,6 @@
+C:\Users\Caique\AppData\Roaming\Pub\Cache\hosted\pub.dartlang.org\map_view-0.0.14\android\src\main\kotlin\com\apptreesoftware\mapview\MapActivity.kt
+C:\Users\Caique\AppData\Roaming\Pub\Cache\hosted\pub.dartlang.org\map_view-0.0.14\android\src\main\kotlin\com\apptreesoftware\mapview\MapAnnotation.kt
+C:\Users\Caique\AppData\Roaming\Pub\Cache\hosted\pub.dartlang.org\map_view-0.0.14\android\src\main\kotlin\com\apptreesoftware\mapview\MapPolygon.kt
+C:\Users\Caique\AppData\Roaming\Pub\Cache\hosted\pub.dartlang.org\map_view-0.0.14\android\src\main\kotlin\com\apptreesoftware\mapview\MapPolyline.kt
+C:\Users\Caique\AppData\Roaming\Pub\Cache\hosted\pub.dartlang.org\map_view-0.0.14\android\src\main\kotlin\com\apptreesoftware\mapview\MapViewPlugin.kt
+C:\Users\Caique\AppData\Roaming\Pub\Cache\hosted\pub.dartlang.org\map_view-0.0.14\android\src\main\kotlin\com\apptreesoftware\mapview\ToolbarAction.kt
