@@ -66,7 +66,7 @@ export default function Header() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="fixed">
+            <AppBar position="relative">
                 <Toolbar>
                     <IconButton
                         edge="start"
