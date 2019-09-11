@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "651305936833",
+    "firebase_url": "https://defesa-civil-contagem.firebaseio.com",
+    "project_id": "defesa-civil-contagem",
+    "storage_bucket": "defesa-civil-contagem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651305936833:android:69a4685a83577e80dfb140",
+        "android_client_info": {
+          "package_name": "br.gov.mg.contagem.defesa_civil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651305936833-54ihu8oscsa9fsmfh0tb16t43t652950.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.gov.mg.contagem.defesa_civil",
+            "certificate_hash": "877964a6711312f482ec3f695f4115705c647408"
+          }
+        },
+        {
+          "client_id": "651305936833-1lfp3ce9minbuttpjs0knkukcl9385it.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgEftLEdBk2gX465DMHoIWf-XydoUrf1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651305936833-1lfp3ce9minbuttpjs0knkukcl9385it.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
