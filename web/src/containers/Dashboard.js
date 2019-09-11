@@ -63,7 +63,7 @@ function Dashboard() {
                 >
                     <div className={classes.toolbar} />
                     <List>
-                        {['Chamados', 'Mapa', 'Usuários'].map((text, index) => (
+                        {['Chamados', 'Mapa', 'Usuários', 'Cadastrar'].map((text, index) => (
                             <ListItem button key={text}>
                                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                                 <ListItemText primary={text} />
