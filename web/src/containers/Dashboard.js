@@ -1,5 +1,6 @@
 //Dependências
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +16,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 //Componentes
 import Map from "../components/map";
+import UserForm from '../components/userForm';
 
 const drawerWidth = 240;
 
@@ -80,15 +82,15 @@ function Dashboard() {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
-
                     {/* <Container maxWidth={false}> */}
                     {/* <Drawer></Drawer>
         <Header></Header> */}
-                    <Map></Map>
-                    {/* <UserForm></UserForm> */}
+                    {/*<Map></Map>*/}
+                    { <UserForm></UserForm> }
                     {/* </Container> */}
                 </main>
             </div>
+            
         </div>
     );
 }
