@@ -3,11 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
     container: {
-        display: 'flex',
-        flexWrap: 'wrap',
+        //display: 'flex',
+        //flexWrap: 'wrap',
     },
     textField: {
         marginLeft: theme.spacing(1),
@@ -15,7 +17,7 @@ const useStyles = makeStyles(theme => ({
         width: 800,
     },
     dense: {
-        marginTop: 19,
+        marginTop: 50,
     },
     menu: {
         width: 200,
@@ -37,11 +39,16 @@ export default function UserForm() {
     return (
         <div>
             <Grid container spacing={3}>
-                <Grid item md={3}></Grid>
-                <Grid item md={9}>
+                <Grid item xs={12} md={4}></Grid>
+                <Grid item xs={12} md={8}
+                 container
+                 direction="column"
+                 justify="center"
+                 alignItems="center"
+                >
                     <h1>Cadastro de usuário</h1>
                     <form className={classes.container} noValidate autoComplete="off">
-                        <Grid item md={8}>
+                        <Grid item md={10}>
                             <TextField
                                 fullWidth
                                 id="standard-name"
@@ -52,7 +59,7 @@ export default function UserForm() {
                                 margin="normal"
                             />
                         </Grid>
-                        <Grid item md={8}>
+                        <Grid item  md={10}>
                             <TextField
                                 fullWidth
                                 id="e-mail"
@@ -62,6 +69,13 @@ export default function UserForm() {
                                 onChange={handleChange('email')}
                                 margin="normal"
                             />
+                        </Grid>
+                        <Grid item md={10}>
+                            <Button variant="contained" color="primary" className={classes.button}>
+                                Enviar
+                                {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
+                                <Icon className={classes.rightIcon}>send</Icon>
+                            </Button>
                         </Grid>
                     </form>
                 </Grid>
