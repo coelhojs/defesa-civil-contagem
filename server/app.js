@@ -12,8 +12,11 @@ app.use(morgan('dev'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+app.get('/', (req, res, next)=> {
+    res.send('teste132');
+});
+
 // Rotas
-app.get('/', (req, res, next) => res.status(200).redirect('/index.html'));
 
 // Entidades Fisicas:
 app.use('/usuarios', require('./rotas/usuario.rotas'));
