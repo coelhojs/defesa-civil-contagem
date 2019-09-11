@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
+String name='sasda';
 
 Future<String> signInWithGoogle() async {
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
@@ -14,10 +15,17 @@ Future<String> signInWithGoogle() async {
     idToken: googleSignInAuthentication.idToken,
   );
 
-  final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+  final FirebaseUser user = await _auth.signInWithCredential(credential);
 
+  assert(user.displayName != null);
   assert(!user.isAnonymous);
   assert(await user.getIdToken() != null);
+
+  name = user.displayName;
+
+  if (name.contains(" ")) {
+    name = name.substring(0, name.indexOf(" "));
+  }
 
   final FirebaseUser currentUser = await _auth.currentUser();
   assert(user.uid == currentUser.uid);
