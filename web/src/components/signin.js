@@ -54,11 +54,7 @@ const successAuth = (response) => {
                 <Route
                     render={() =>
                         (
-                            <Redirect
-                                to={{
-                                    pathname: "/login"
-                                }}
-                            />
+                            <Redirect to="/login" />
                         )
                     }
                 />
