@@ -2,14 +2,13 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
     container: {
-        //display: 'flex',
-        //flexWrap: 'wrap',
+        display: 'flex',
+        flexWrap: 'wrap',
     },
     textField: {
         marginLeft: theme.spacing(1),
@@ -39,8 +38,7 @@ export default function UserForm() {
     return (
         <div>
             <Grid container spacing={3}>
-                <Grid item xs={12} md={4}></Grid>
-                <Grid item xs={12} md={8}
+                <Grid item md={12}
                  container
                  direction="column"
                  justify="center"
