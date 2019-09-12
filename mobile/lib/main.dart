@@ -1,6 +1,8 @@
 import 'dart:collection';
 
 import 'package:defesa_civil/ui/home.dart';
+import 'package:defesa_civil/ui/loginpage.dart';
+import 'package:defesa_civil/ui/registerpage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
