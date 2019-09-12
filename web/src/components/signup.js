@@ -11,8 +11,6 @@ import GoogleLogin from 'react-google-login';
 import { Link } from "react-router-dom";
 import Header from '../components/header';
 import { getUsuario } from '../controllers/Usuarios';
-import Signin from '../components/signin';
-import Signup from '../components/signup';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -34,14 +32,38 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function SimpleCard() {
+const Signup = () => {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-
+    
     return (
-        <Container maxWidth="sm">
-            <Header></Header>
-            <Signin></Signin>
-        </Container >
+        <Card className={classes.card}>
+            <CardContent>
+                <Typography variant="h5" component="h2">
+                    Gestão de chamados
+                    </Typography>
+                <br />
+                <Typography variant="body2" component="p">
+                    Cadastro
+                    </Typography>
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    spacing={2}
+                >
+                    <label htmlFor="">Endereço</label>
+                    <input type="text" />
+                </Grid>
+            </CardContent>
+            <CardActions>
+                <Link to={"/Dashboard"} variant="contained"
+                    color="primary" className={classes.button}>
+                    Dashboard
+                    </Link >
+            </CardActions>
+        </Card>
     );
-}
+};
+
+export default Signup;
