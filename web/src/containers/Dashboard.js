@@ -17,6 +17,7 @@ import MailIcon from '@material-ui/icons/Mail';
 //Componentes
 import Map from "../components/map";
 import UserForm from '../components/userForm';
+import UserList from '../components/userList';
 
 const drawerWidth = 240;
 
@@ -46,51 +47,49 @@ function Dashboard() {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            <div className="App">
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
-                        <Typography variant="h6" noWrap>
+            <AppBar position="fixed" className={classes.appBar}>
+                <Toolbar>
+                    <Typography variant="h6" noWrap>
                         Defesa Civil de Contagem
-          </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Drawer
-                    className={classes.drawer}
-                    variant="permanent"
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <div className={classes.toolbar} />
-                    <List>
-                        {['Chamados', 'Mapa', 'Usuários', 'Cadastrar'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['Configurações'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    {/* <Container maxWidth={false}> */}
-                    {/* <Drawer></Drawer>
-        <Header></Header> */}
-                    {/*<Map></Map>*/}
-                    { <UserForm></UserForm> }
-                    {/* </Container> */}
-                </main>
-            </div>
-            
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                className={classes.drawer}
+                variant="permanent"
+                classes={{
+                    paper: classes.drawerPaper,
+                }}
+            >
+                <div className={classes.toolbar} />
+                <List>
+                    {['Chamados', 'Mapa', 'Usuários'].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
+                <List>
+                    {['Configurações'].map((text, index) => (
+                        <ListItem button key={text}>
+                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemText primary={text} />
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                {/*<Container maxWidth={false}> */}
+                {/*<Drawer></Drawer>*/}
+                {/*<Header></Header> */}
+                {/*<Map></Map>*/}
+                { <UserList></UserList> }
+                {/*UserForm></UserForm>*/}
+                {/* </Container> */}
+            </main>
         </div>
     );
 }
