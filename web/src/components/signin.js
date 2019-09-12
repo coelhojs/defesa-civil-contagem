@@ -51,8 +51,19 @@ const successAuth = (response) => {
             console.log("Novo usuário. Cadastrar")
             console.log(response)
             return (
-                < Redirect to={{ pathname: "/cadastro" }} />
+                <Route
+                    render={() =>
+                        (
+                            <Redirect
+                                to={{
+                                    pathname: "/login"
+                                }}
+                            />
+                        )
+                    }
+                />
             )
+
         }
 
     } catch (error) {
@@ -67,8 +78,6 @@ const errorAuth = (response) => {
 }
 
 const Signin = () => {
-    let { from } = this.props.location.state || { from: { pathname: "/" } };
-    
     const classes = useStyles();
     return (
         <Card className={classes.card}>

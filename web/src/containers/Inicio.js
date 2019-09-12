@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import GoogleLogin from 'react-google-login';
-import { Link } from "react-router-dom";
+import { Switch, Route, Router, Link } from "react-router-dom";
 import Header from '../components/header';
 import { getUsuario } from '../controllers/Usuarios';
 import Signin from '../components/signin';
@@ -39,9 +39,9 @@ export default function SimpleCard() {
     const bull = <span className={classes.bullet}>•</span>;
 
     return (
-        <Container maxWidth="sm">
-            <Header></Header>
-            <Signin></Signin>
-        </Container >
+            <Container maxWidth="sm">
+                <Header></Header>
+                <Signin></Signin>
+            </Container >
     );
 }
