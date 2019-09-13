@@ -14,8 +14,9 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 
 // Rotas
-app.get((req, res, next) => {
-    
+app.use((req, res, next) => {
+    // Validações de autenticação e sessão
+    next();
 });
 
 // Entidades Fisicas:
@@ -27,6 +28,6 @@ app.use('/informativos', require('./rotas/informativo.rotas'));
 app.use('/noticias', require('./rotas/noticia.rotas'));
 
 // Tratamento de rotas inválidas:
-app.use((req, res, next) => res.status(404).redirect('/notfound.html'));
+app.use((req, res, next) => res.status(404).send('Rota Inválida'));
 
 module.exports = app;
