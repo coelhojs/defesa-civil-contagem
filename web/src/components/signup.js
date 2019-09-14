@@ -18,6 +18,7 @@ import Send from '@material-ui/icons/Send';
 
 import PersonalData from './personalData';
 import ResidentialData from './residentialData';
+import ChamadoData from './chamadoData';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -58,6 +59,7 @@ const Signup = () => {
 
                 <CardContent><PersonalData /></CardContent>
                 <CardContent><ResidentialData /></CardContent>
+                {<CardContent><ChamadoData /></CardContent>}
             </CardContent>
             <CardActions>
                 <Grid

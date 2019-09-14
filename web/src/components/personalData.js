@@ -1,5 +1,4 @@
 
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +13,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Grid from '@material-ui/core/Grid';
 
 import PropTypes from 'prop-types';
 import MaskedInput from 'react-text-mask';
@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        // width: 200,
     },
     dense: {
         marginTop: 19,
@@ -101,11 +100,8 @@ export default function PersonalData() {
                     direction="row"
                     justify="space-between"
                     alignItems="center"
+                    spacing={2}
                 >
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Dados Pessoais
-                    </Typography>
-
                     <Grid item md={12} >
                         <FormControl fullWidth className={classes.formControl}>
                             <InputLabel htmlFor="standard-name">Nome Completo</InputLabel>
