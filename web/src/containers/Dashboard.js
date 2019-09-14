@@ -16,7 +16,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 //Componentes
 import Map from "../components/map";
-import UserForm from '../components/userForm';
+// import UserForm from '../components/userForm';
 import UserList from '../components/userList';
 
 const drawerWidth = 240;

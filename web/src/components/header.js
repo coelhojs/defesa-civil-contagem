@@ -1,12 +1,10 @@
-import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
+import { useAuth } from "../controllers/Auth";
+import { Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -62,36 +60,26 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header() {
+    const auth = useAuth();
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
             <AppBar position="relative">
                 <Toolbar>
-                    {/* <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Defesa Civil de Contagem
-          </Typography>
-                    {/* <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
+                        <Link to="/">
+                            Defesa Civil de Contagem
+                                            </Link>
+                    </Typography>
+                    {/* {auth.user ? (
+                        <div>
+                            <Link to="/account">Account ({auth.user.email})</Link>
+                            <button onClick={() => auth.signout()}>Signout</button>
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div> */}
+                    ) : (
+                            <Link to="/signin">Signin</Link>
+                        )} */}
                 </Toolbar>
             </AppBar>
         </div>
