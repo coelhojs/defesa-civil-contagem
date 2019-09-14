@@ -1,10 +1,9 @@
+import { Link } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
-import { useAuth } from "../controllers/Auth";
-import { Link } from '@material-ui/core';
+import React, { useState } from 'react';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -59,8 +58,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Header() {
-    const auth = useAuth();
+export default function Header(props) {
+    //const auth = useAuth();
+    const [firebase] = useState(props.firebase);
+
     const classes = useStyles();
 
     return (
@@ -72,6 +73,14 @@ export default function Header() {
                             Defesa Civil de Contagem
                                             </Link>
                     </Typography>
+                    <button
+                        onClick={() => {
+                            firebase.auth().signOut();
+                            console.log(firebase)
+                        }}
+                    >
+                        Sign Out
+                    </button>
                     {/* {auth.user ? (
                         <div>
                             <Link to="/account">Account ({auth.user.email})</Link>

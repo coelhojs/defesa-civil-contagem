@@ -1,8 +1,7 @@
-import history from '../history';
 import { api } from "./index";
 
-export const getUsuario = email => async dispatch => {
-    const response = await api.post(`/Usuarios/getUsuarios/${email}`);
+export const getUsuario = async email => {
+    const response = await api.get(`/Usuarios?email=${email}`);
     console.log(response);
-    dispatch({ type: "POST", payload: response });
+    return await response;
 };
