@@ -5,15 +5,13 @@ const Schema = mongoose.Schema;
 const NOME_MODELO = 'Usuario';
 
 const schema = new Schema({
+    id: { type: String, required: true, unique: true },
     nome: { type: String, required: true, unique: true },
-    cpf: { type: String, unique: true },
-    telefone: { type: String, unique: false },
-    nascimento: { type: Date },
-    alergias: { type: Boolean },
-    sexo: { type: String },
-    token: { type: Schema.Types.ObjectId, required: true }
+    cpf: { type: String, required: true, unique: true },
+    telefone: { type: String, required: true, unique: false },
+    nascimento: { type: Date, required: true, },
 
-}, { strict: true });
+}, { strict: false });
 
 schema.plugin(muv);
 
