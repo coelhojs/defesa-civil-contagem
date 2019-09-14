@@ -1,24 +1,16 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
-import GoogleLogin from 'react-google-login';
-import { Link } from "react-router-dom";
-import Header from '../components/header';
-import { getUsuario } from '../controllers/Usuarios';
-
-import FormControl from '@material-ui/core/FormControl';
-import Button from '@material-ui/core/Button';
 import Send from '@material-ui/icons/Send';
-
+import React from 'react';
+import { Link } from "react-router-dom";
+import ChamadoData from './chamadoData';
 import PersonalData from './personalData';
 import ResidentialData from './residentialData';
-import ChamadoData from './chamadoData';
 
 const useStyles = makeStyles(theme => ({
     card: {
