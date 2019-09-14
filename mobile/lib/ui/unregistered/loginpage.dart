@@ -1,11 +1,13 @@
-import 'package:defesa_civil/ui/registerpage.dart';
+import 'package:defesa_civil/helpers/sign_in.dart';
+import 'package:defesa_civil/ui/logged/homelogged.dart';
+import 'package:defesa_civil/ui/unregistered/registerpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:flutter_icons/feather.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../sign_in.dart';
-import '../size_config.dart';
+import '../../helpers/size_config.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool sucess=true;
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -35,9 +39,38 @@ class _LoginPageState extends State<LoginPage> {
                 darkMode: true,
                 text: "Fazer login com Google",
                 onPressed: () async {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        // retorna um objeto do tipo Dialog
+                        return AlertDialog(
+                          title: new Text("Autenticando"),
+                          content: Row(
+                            children: <Widget>[
+                              CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(Color.fromRGBO(246, 129, 33, 1)),
+
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              Text("Autenticando")
+                            ],
+                          ),
+                        );
+                      }
+                  );
                   signInWithGoogle().then((result){
-                    print(name);
-                    print("RESULTADOOOOOOOOOOO"+result);
+
+                      if(sucess){
+                        setCredentials(name,email,image);
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => HomeLogged()),(Route<dynamic> route) => false);
+                      }
+                      else{
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => RegisterPage()),(Route<dynamic> route) => false);
+                      }
                   }).catchError((erro){
                     print("ERRO");
                   });
@@ -90,5 +123,12 @@ class _LoginPageState extends State<LoginPage> {
         });
       },
     );
+  }
+
+  setCredentials(String name, String email, String image) async {
+    SharedPreferences userData = await SharedPreferences.getInstance();
+    userData.setString("name", name);
+    userData.setString("email", email);
+    userData.setString("image", image);
   }
 }
