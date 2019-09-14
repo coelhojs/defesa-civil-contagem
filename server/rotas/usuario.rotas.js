@@ -1,38 +1,27 @@
 const express = require('express');
 const router = express.Router();
 
+const Usuario = require('../modelos/usuario.modelo');
 
-router.get('/', (req, res) => {
-    res.send('ola mundo');
-})
+// Obtém informações do usuário atual:
+router.get('/get', (req, res) => {
+    Usuario.findById(req.userId)
+        .then(result => res.status(200).json(result))
+        .catch(err => res.status(500).json(err));
+});
 
-// Obtém todos os elementos:
-router.get('/all', (req, res) => {
+// Cadastro de novo usuário:
+router.post('/cadastro', (req, res) => {
 
 });
 
-// Pesquisa por 0,N elementos:
-router.get('/all', (req, res) => {
+// Login:
+router.post('/login', (req, res) => {
 
 });
 
-// Obtém um elemento específico:
-router.get('/:id', (req, res) => {
-
-});
-
-// Adiciona um elemento:
-router.post('/', (req, res) => {
-
-});
-
-// Modifica um elemento:
-router.put('/:id', (req, res) => {
-
-});
-
-// Deleta um elemento:
-router.delete('/:id', (req, res) => {
+// Modificar as informações do usuário atual:
+router.put('/update', (req, res) => {
 
 });
 

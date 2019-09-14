@@ -2,34 +2,30 @@ const express = require('express');
 const router = express.Router();
 
 
-// Obtém todos os elementos:
-router.get('/all', (req, res, next) => {
+// Obtém todos os chamados do usuário atual:
+router.get('/all', (req, res) => {
+    
+});
+
+// Pesquisar chamado(s) do usuário atual:
+router.get('/find', (req, res) => {
 
 });
 
-// Pesquisa por 0,N elementos:
-router.get('/all', (req, res, next) => {
+// Adiciona um chamado para o usuário atual:
+router.post('/add', (req, res) => {
 
 });
 
-// Obtém um elemento específico:
-router.get('/:id', (req, res, next) => {
+// Deleta chamado(s) do usuário atual:
+router.delete('/delete', (req, res) => {
 
 });
 
-// Adiciona um elemento:
-router.post('/', (req, res, next) => {
+// Modifica um chamado do usuário atual:
+router.put('/update', (req, res) => {
 
 });
 
-// Modifica um elemento:
-router.put('/:id', (req, res, next) => {
-
-});
-
-// Deleta um elemento:
-router.delete('/:id', (req, res, next) => {
-
-});
 
 module.exports = router;
