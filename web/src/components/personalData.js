@@ -114,7 +114,7 @@ export default function PersonalData() {
                         </FormControl>
                         <FormHelperText id="standard-name-error">o telefone deve conter </FormHelperText>
                     </Grid>
-
+                    
                     <Grid item md={12}>
                         <FormControl fullWidth className={classes.formControl}>
                             <InputLabel htmlFor="e-mail">E-Mail</InputLabel>
@@ -130,7 +130,7 @@ export default function PersonalData() {
 
                     <Grid item xs={12} md={5}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="cpf" shrink="true">CPF</InputLabel>
+                            <InputLabel htmlFor="cpf" shrink>CPF</InputLabel>
                             <Input
                                 value={values.cpf}
                                 onChange={handleChange}
@@ -141,9 +141,10 @@ export default function PersonalData() {
                         </FormControl>
                         <FormHelperText id="cpf-error">o telefone deve conter </FormHelperText>
                     </Grid>
+                    
                     <Grid item xs={12} md={5}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="type" shrink="true">Tipo</InputLabel>
+                            <InputLabel htmlFor="type" shrink>Tipo</InputLabel>
                             <Select
                                 value={values.type}
                                 onChange={handleChangeSelect}
@@ -160,9 +161,10 @@ export default function PersonalData() {
                         </FormControl>
                         <FormHelperText id="type-error">o telefone deve conter </FormHelperText>
                     </Grid>
+
                     <Grid item xs={12} md={5}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="telephone" shrink="true">Telefone</InputLabel>
+                            <InputLabel htmlFor="telephone" shrink>Telefone</InputLabel>
                             <Input
                                 value={values.telephone}
                                 onChange={handleChange('telephone')}
@@ -175,7 +177,7 @@ export default function PersonalData() {
                     </Grid>
                     <Grid item xs={12} md={5}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="birthday" shrink="true">Data de Nascimento</InputLabel>
+                            <InputLabel htmlFor="birthday" shrink>Data de Nascimento</InputLabel>
                             <Input
                                 value={values.birthday}
                                 onChange={handleChange}

@@ -59,7 +59,7 @@ const Signup = () => {
 
                 <CardContent><PersonalData /></CardContent>
                 <CardContent><ResidentialData /></CardContent>
-                {<CardContent><ChamadoData /></CardContent>}
+                <CardContent><ChamadoData /></CardContent>
             </CardContent>
             <CardActions>
                 <Grid
