@@ -26,7 +26,6 @@ const useStyles = makeStyles(theme => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        // width: 200,
     },
     dense: {
         marginTop: 19,
@@ -95,10 +94,8 @@ export default function ResidentialData() {
                     direction="row"
                     justify="space-between"
                     alignItems="center"
+                    spacing={2}
                 >
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        Dados Residenciais
-                    </Typography>
                     <Grid item md={12}>
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="cep" shrink="true">CEP</InputLabel>
