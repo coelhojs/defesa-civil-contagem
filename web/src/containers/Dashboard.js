@@ -16,8 +16,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 //Componentes
 import Map from "../components/map";
-import UserForm from '../components/userForm';
-import UserList from '../components/userList';
+import Singnup from '../components/signup';
 
 const drawerWidth = 240;
 
@@ -86,7 +85,7 @@ function Dashboard() {
                 {/*<Drawer></Drawer>*/}
                 {/*<Header></Header> */}
                 {/*<Map></Map>*/}
-                { <UserList></UserList> }
+                { <Singnup></Singnup> }
                 {/*UserForm></UserForm>*/}
                 {/* </Container> */}
             </main>
