@@ -11,7 +11,7 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> {
-  MapType _defaultMapType = MapType.normal;
+  MapType _defaultMapType = MapType.satellite;
   GoogleMapController mapController;
 
   void _changeMapType() {
@@ -68,6 +68,7 @@ class MapPageState extends State<MapPage> {
         ),
       ]),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.black54,
           label: Text('Trocar mapa!'),
           icon: Icon(Icons.map),
           onPressed: () async {

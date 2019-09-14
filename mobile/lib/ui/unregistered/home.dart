@@ -1,7 +1,8 @@
-import 'package:defesa_civil/ui/loginpage.dart';
 import 'package:defesa_civil/ui/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
+
+import 'loginpage.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,6 +22,7 @@ class _HomeState extends State<Home> {
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color.fromRGBO(246, 129, 33, 1),
         currentIndex: _currentIndex, //
         onTap: (index){
           setState(() {
