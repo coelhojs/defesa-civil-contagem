@@ -5,7 +5,9 @@
     "dependencies": {
         "@material-ui/core": "^4.4.0",
         "@material-ui/icons": "^4.2.1",
+        "@react-firebase/auth": "^0.2.9",
         "apisauce": "^1.1.0",
+        "firebase": "^6.6.1",
         "fs": "0.0.1-security",
         "google-map-react": "^1.1.4",
         "leaflet": "^1.5.1",
