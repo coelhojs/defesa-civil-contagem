@@ -1,8 +1,6 @@
-import 'dart:collection';
 
-import 'package:defesa_civil/ui/home.dart';
-import 'package:defesa_civil/ui/loginpage.dart';
-import 'package:defesa_civil/ui/registerpage.dart';
+import 'package:defesa_civil/ui/logged/homelogged.dart';
+import 'package:defesa_civil/ui/unregistered/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Google Maps Demo',
       home: Home(),
-      theme: ThemeData(fontFamily: 'Uber'),
+      theme: ThemeData(fontFamily: 'Uber',),
       debugShowCheckedModeBanner: false,
     );
   }
