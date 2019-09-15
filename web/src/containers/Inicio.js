@@ -3,8 +3,6 @@ import Signin from "../components/signin";
 
 export default function Inicio(props) {
     return (
-        <div>
-            <Signin firebase={props.firebase} authProvider={props.authProvider}></Signin>
-        </div>
+        <Signin auth={props.auth} firebase={props.firebase} authProvider={props.authProvider} />
     );
 }
