@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import Signin from './signin';
-import Signup from './signup';
+import Cadastro from '../forms/cadastro';
 
 function SignForm() {
     const authContext = createContext();
@@ -12,7 +12,7 @@ function SignForm() {
         )
     } else {
         return (
-            <Signup></Signup>
+            <Cadastro></Cadastro>
         )
     }
 };

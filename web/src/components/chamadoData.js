@@ -8,29 +8,11 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import React from 'react';
-
-
-const useStyles = makeStyles(theme => ({
-    card: {
-        maxWidth: 345,
-    },
-    media: {
-        minHeight: 140,
-    },
-    textarea:{
-        
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-    },
-}));
+import { classes } from '../styles';
 
 export default function ChamadoData() {
-    const classes = useStyles();
     const [values, setValues] = React.useState({
         multiline: 'Controlled',
     });

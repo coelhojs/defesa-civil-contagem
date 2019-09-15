@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Route, Switch } from "react-router-dom";
 import Header from './components/header';
 import Signin from "./components/signin";
-import Signup from "./components/signup";
+import Cadastro from "./forms/cadastro";
 import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
 import { firebaseConfig } from "./controllers/Auth";
@@ -31,7 +31,7 @@ function App() {
                 />}
             />
             <Route path="/Dashboard" component={Dashboard} />
-            <Route path="/Cadastro" component={Signup} />
+            <Route path="/Cadastro" component={Cadastro} />
             {/* <Route path="/Login" component={Signin} /> */}
           </Switch>
         </Container >
