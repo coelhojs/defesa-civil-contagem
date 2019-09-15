@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
-const signOutBtn = (props) => {
-    console.log(`Auth, ${props.auth}`)
+export default function signOutBtn(props) {
+    // console.log(`Auth, ${props.auth}`)
     if (props.auth) {
         return (
             <div>
@@ -20,5 +20,3 @@ const signOutBtn = (props) => {
         return null;
     }
 };
-
-export default signOutBtn;
