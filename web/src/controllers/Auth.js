@@ -53,7 +53,7 @@ function useProvideAuth() {
             });
     };
 
-    const signup = (email, password) => {
+    const cadastro = (email, password) => {
         return firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
@@ -111,7 +111,7 @@ function useProvideAuth() {
     return {
         user,
         signin,
-        signup,
+        cadastro,
         signout,
         sendPasswordResetEmail,
         confirmPasswordReset
