@@ -5,8 +5,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -27,6 +25,10 @@ const useStyles = makeStyles(theme => ({
     menu: {
         width: 200,
     },
+
+    erro:{
+        color: '#ff0000',
+    },
 }));
 
 function CEPMaskCustom(props) {
@@ -38,7 +40,7 @@ function CEPMaskCustom(props) {
             ref={ref => {
                 inputRef(ref ? ref.inputElement : null);
             }}
-            mask={[/[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
+            mask={[/[0-9]/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
             placeholderChar={'\u2000'}
             showMask
         />
@@ -78,7 +80,52 @@ export default function ResidentialData() {
             ...oldValues,
             [event.target.name]: event.target.value,
         }));
-    }
+    };
+
+    function VerificaCEP(event) {
+        let cepValue = event.target.value.replace(/\D/g, '');
+
+        if (cepValue.length == 8) {
+            const https = require('https');
+
+            https.get('https://viacep.com.br/ws/' + cepValue + '/json/', (resp) => {
+                let data = '';
+
+                // A chunk of data has been recieved.
+                resp.on('data', (chunk) => {
+                    data += chunk;
+                });
+
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                    console.log(JSON.parse(data));
+                    data = JSON.parse(data);
+
+                    if(Object.keys(data).length > 1){
+                        document.getElementById("street").value = data.logradouro;
+                        document.getElementById("neighborhood").value = data.bairro;
+                        document.getElementById("cite").value = data.localidade;
+                        document.getElementById("region").value = data.uf;
+                        document.getElementById("cep-error").innerHTML = "";
+                    }
+                    else{
+                        document.getElementById("street").value = "";
+                        document.getElementById("neighborhood").value = "";
+                        document.getElementById("cite").value = "";
+                        document.getElementById("region").value = "";
+                        document.getElementById("cep-error").innerHTML = "CEP invalido";
+
+                    }
+                        
+
+                    
+                });
+
+            }).on("error", (err) => {
+                console.log("Error: " + err.message);
+            });
+        }
+    };
 
     return (
         <Card className={classes.card}>
@@ -92,90 +139,87 @@ export default function ResidentialData() {
                 >
                     <Grid item md={12}>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="cep" shrink="true">CEP</InputLabel>
+                            <InputLabel htmlFor="cep" shrink>CEP</InputLabel>
                             <Input
                                 value={values.cep}
                                 onChange={handleChange}
+                                onChange={VerificaCEP}
                                 id="cep"
                                 inputComponent={CEPMaskCustom}
                                 aria-describedby="cep-error"
                             />
                         </FormControl>
-                        <FormHelperText id="cep-error">o telefone deve conter </FormHelperText>
+                        <FormHelperText id="cep-error" className={classes.erro}></FormHelperText>
+
+                    </Grid>
+                    <Grid item xs={12} md={6}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="street">Rua</InputLabel>
+                            <InputLabel htmlFor="street" shrink>Logradouro</InputLabel>
                             <Input
+                                disabled
                                 id="street"
                                 value={values.street}
                                 onChange={handleChange}
-                                aria-describedby="street-error"
                             />
                         </FormControl>
-                        <FormHelperText id="street-error">o telefone deve conter </FormHelperText>
                     </Grid>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="center"
-                    >
-                        <Grid item xs={12} md={3}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="number">Número</InputLabel>
-                                <Input
-                                    id="number"
-                                    type="number"
-                                    value={values.number}
-                                    onChange={handleChange}
-                                    aria-describedby="number-error"
-                                />
-                            </FormControl>
-                            <FormHelperText id="number-error">o telefone deve conter </FormHelperText>
-                        </Grid>
-                        <Grid item xs={12} md={7}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="complement">Complemento</InputLabel>
-                                <Input
-                                    id="complement"
-                                    value={values.complement}
-                                    onChange={handleChange}
-                                    aria-describedby="complement-error"
-                                />
-                            </FormControl>
-                            <FormHelperText id="complement-error">o telefone deve conter </FormHelperText>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="cite">Cidade</InputLabel>
-                                <Select
-                                    value={values.cite}
-                                    onChange={handleChangeSelect}
-                                    inputProps={{
-                                        name: 'cite',
-                                        id: 'cite',
-                                    }}
-                                    aria-describedby="cite-error"
-                                >
-                                    {citeList.map((text) => (
-                                        <MenuItem value={text}>{text}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                            <FormHelperText id="cite-error">o telefone deve conter </FormHelperText>
-                        </Grid>
-                        <Grid item xs={12} md={7}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="neighborhood">Bairro</InputLabel>
-                                <Input
-                                    id="neighborhood"
-                                    value={values.neighborhood}
-                                    onChange={handleChange}
-                                    aria-describedby="neighborhood-error"
-                                />
-                            </FormControl>
-                            <FormHelperText id="neighborhood-error">o telefone deve conter </FormHelperText>
-                        </Grid>
+                    <Grid item xs={12} md={2}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="number">Número</InputLabel>
+                            <Input
+                                id="number"
+                                type="number"
+                                value={values.number}
+                                onChange={handleChange}
+                                aria-describedby="number-error"
+                            />
+                        </FormControl>
+                        <FormHelperText id="number-error"></FormHelperText>
                     </Grid>
+                    <Grid item xs={12} md={4}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="complement">Complemento</InputLabel>
+                            <Input
+                                id="complement"
+                                value={values.complement}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="neighborhood" shrink>Bairro</InputLabel>
+                            <Input
+                                disabled
+                                id="neighborhood"
+                                value={values.neighborhood}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="cite" shrink>Cidade</InputLabel>
+                            <Input
+                                disabled
+                                id="cite"
+                                value={values.cite}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={2}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="region" shrink>Estado</InputLabel>
+                            <Input
+                                disabled
+                                id="region"
+                                value={values.region}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+
                 </Grid>
             </CardContent>
         </Card>

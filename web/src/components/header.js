@@ -72,14 +72,6 @@ export default function Header(props) {
                         <Link to="/">Defesa Civil de Contagem</Link>
                     </Typography>
                     <SignOutBtn auth={auth} firebase={firebase} />
-                    {/* {auth.user ? (
-                        <div>
-                            <Link to="/account">Account ({auth.user.email})</Link>
-                            <button onClick={() => auth.signout()}>Signout</button>
-                        </div>
-                    ) : (
-                            <Link to="/signin">Signin</Link>
-                        )} */}
                 </Toolbar>
             </AppBar>
         </div>
