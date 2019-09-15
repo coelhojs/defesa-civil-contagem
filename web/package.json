@@ -16,6 +16,7 @@
         "react-geolocated": "^2.5.1",
         "react-google-login": "^5.0.5",
         "react-leaflet": "^2.4.0",
+        "react-redux": "^7.1.1",
         "react-router-dom": "^5.0.1",
         "react-scripts": "3.1.1",
         "react-spring": "^8.0.27",

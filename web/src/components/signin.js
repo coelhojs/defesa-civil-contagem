@@ -5,38 +5,28 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import "firebase/auth";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { getUsuario } from "../controllers/Usuarios";
 
 function Signin(props) {
+    const [auth, setAuth] = useState(props.auth);
     const [authProvider] = useState(props.authProvider);
     const [firebase] = useState(props.firebase);
     const [usuario, setUsuario] = useState(null);
 
     const successAuth = (response) => {
         try {
-            let usuario = getUsuario(response.user.email);
-            console.log(usuario)
-
-            if (usuario && usuario.existe) {
-                //Acessar a aplicação
-                console.log("Usuário logado")
-            } else {
-                //Formulario de cadastro
-                setUsuario({
-                    "email": response.user.email,
-                    "nome": response.user.displayName
-                })
-            }
+            getUsuario(response.user.email).then(
+                isAuth => setAuth(isAuth));
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
     const errorAuth = (response) => {
-        console.log("Erro")
-        console.log(response);
+        console.error("Erro")
+        console.error(response);
     }
 
     const classes = useStyles();
