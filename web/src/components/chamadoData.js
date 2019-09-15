@@ -20,6 +20,9 @@ const useStyles = makeStyles(theme => ({
     media: {
         minHeight: 140,
     },
+    textarea:{
+        
+    },
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
@@ -120,6 +123,7 @@ export default function ChamadoData() {
                             <Input
                                 disabled
                                 id="date"
+                                defaultValue="2017-05-24T10:30"
                                 type="datetime-local"
                                 value={values.street}
                                 onChange={handleChange}
@@ -129,16 +133,15 @@ export default function ChamadoData() {
                     <Grid item md={12} >
                         <InputLabel htmlFor="description">Descrição</InputLabel>
                         <TextareaAutosize
-                            className={classes.description}
+                            fullWidth
+                            className={classes.textarea}
                             value={values.description}
                             onChange={handleChange}
                             inputProps={{
                                 name: 'description',
                                 id: 'description',
                             }}
-                            fullWidth
-                            rowsMax={4}
-                            aria-label="maximum height"
+                            
                         />
                     </Grid>
                 </Grid>
