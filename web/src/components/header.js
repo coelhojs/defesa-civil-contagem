@@ -4,6 +4,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import React, { useState } from 'react';
+import SignOutBtn from './signOutBtn';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -59,9 +60,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Header(props) {
-    //const auth = useAuth();
+    const [auth] = useState(props.auth);
     const [firebase] = useState(props.firebase);
-
     const classes = useStyles();
 
     return (
@@ -69,18 +69,9 @@ export default function Header(props) {
             <AppBar position="relative">
                 <Toolbar>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        <Link to="/">
-                            Defesa Civil de Contagem
-                                            </Link>
+                        <Link to="/">Defesa Civil de Contagem</Link>
                     </Typography>
-                    <button
-                        onClick={() => {
-                            firebase.auth().signOut();
-                            console.log(firebase)
-                        }}
-                    >
-                        Sign Out
-                    </button>
+                    <SignOutBtn auth={auth} firebase={firebase} />
                     {/* {auth.user ? (
                         <div>
                             <Link to="/account">Account ({auth.user.email})</Link>
