@@ -1,34 +1,37 @@
 //https://codeburst.io/how-to-fetch-data-from-an-api-with-react-hooks-9e7202b8afcd
-import React, { useState, useEffect } from "react";
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import { makeStyles } from '@material-ui/core/styles';
-import * as lodash from "lodash";
+import React, { useState } from "react";
+import { useFetchAllChamados } from '../controllers/Chamados';
+import ChamadosItem from './chamadosItem';
+
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
+    },
 }));
-
 
 export default function ChamadosList() {
     const classes = useStyles();
+    const chamados = useFetchAllChamados();
     const [hasError, setErrors] = useState(false);
-    const [chamados, setChamados] = useState({});
-
-    async function fetchData() {
-        const res = await fetch("http://localhost:3004/chamados/");
-        res
-            .json()
-            .then(res => setChamados(res))
-            .catch(err => setErrors(err));
-    }
-
-    useEffect(() => {
-        fetchData();
-    })
 
     return (
+        <GridList cellHeight={180} className={classes.gridList}>
+            <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+                <ListSubheader component="div">Lista de chamados</ListSubheader>
+            </GridListTile>
+            {chamados.map(chamados => (
+                <ChamadosItem key={chamados.id} chamados={chamados} />
+            ))}
+        </GridList>
         //     <div>
         //         <Card >
         //             <CardActionArea>
@@ -41,7 +44,7 @@ export default function ChamadosList() {
         //             </CardContent>
         //         </Card>
 
-        <span>{JSON.stringify(chamados)}</span>
+        // < span > { JSON.stringify(chamados) }</span >
         //         {/* <span>Has error: {JSON.stringify(hasError)}</span> */}
         //     </div>
     );

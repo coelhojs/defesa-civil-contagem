@@ -1,15 +1,18 @@
+import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import ListItemLink from "./listItemLink";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import MapIcon from '@material-ui/icons/Map';
 import FeedbackIcon from '@material-ui/icons/Feedback';
+import MapIcon from '@material-ui/icons/Map';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import SettingsIcon from '@material-ui/icons/Settings';
-import Divider from '@material-ui/core/Divider';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import Chamados from '../containers/Chamados';
 import { useAuth } from "../customHooks/useAuth";
 
 const drawerWidth = 240;
@@ -42,19 +45,15 @@ export default function AppDrawer() {
             >
                 <div className={classes.toolbar} />
                 <List>
+                
                     <ListItem button key="Mapa" disabled>
                         <ListItemIcon>
                             <MapIcon />
                         </ListItemIcon>
                         <ListItemText primary="Mapa" />
                     </ListItem>
-
-                    <ListItem button key="Chamados">
-                        <ListItemIcon>
-                            <FeedbackIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Chamados" />
-                    </ListItem>
+                
+                    <ListItemLink to="/Chamados" primary="Chamados" icon={<FeedbackIcon />} />
 
                     <ListItem button key="Usuários" disabled>
                         <ListItemIcon>
