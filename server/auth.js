@@ -1,7 +1,6 @@
 const { OAuth2Client } = require('google-auth-library');
 const TokenGenerator = require('uuid-token-generator');
-const Usuario = require('../modelos/usuario.modelo');
-const sessoes = require('../sessoes');
+const Usuario = require('./modelos/usuario.modelo');
 const express = require('express');
 
 const router = express.Router();
@@ -14,18 +13,45 @@ const CLIENT_ID = '407408718192.apps.googleusercontent.com'; // Client_id apenas
 
 const client = new OAuth2Client(CLIENT_ID);
 
+// Controle de sessões:
+var sessoes = {
+    // user_id: api_token
+};
+
+// Obtem o ID de usuário a partir de um api_token
+function getUserId(api_token) {
+    let user_id = undefined;
+    for (let user_id_prop in sessoes) {
+        if (sessoes[user_id_prop] === api_token) {
+            user_id = user_id_prop;
+            break;
+        }
+    }
+    return user_id;
+}
+
+// Obtem o api_token atual de um usuário pelo seu user_id
+function getApiToken(user_id) {
+    return sessoes[user_id];
+}
+
+// Seta uma sessão:
+function set(userid, apitoken) {
+    sessoes[userid] = apitoken;
+}
+
 // Login
 router.post('/login', async (req, res) => {
     try {
         let token = req.headers.authorization.split(' ')[1];
-        let user_id = await getUserId(token);
+        let user_id = await getSubject(token);
         let user_db = await Usuario.findOne({ user_id: user_id });
         if (!user_db) {
             // Usuário não existe
             res.status(500).send('Usuário não cadastrado');
         } else {
             let api_token = gerarToken();
-            sessoes[user_id] = api_token;
+            set(user_id, api_token);
             res.status(200).json({ api_token: api_token });
         }
     } catch (ex) {
@@ -37,7 +63,7 @@ router.post('/login', async (req, res) => {
 router.post('/cadastro', async (req, res) => {
     try {
         let token = req.headers.authorization.split(' ')[1];
-        let user_id = await getUserId(token);
+        let user_id = await getSubject(token);
         if (await Usuario.findOne({ user_id: user_id })) {
             // Usuário já existe
             res.status(500).send('O usuário já está cadastrado');
@@ -47,7 +73,7 @@ router.post('/cadastro', async (req, res) => {
             let user_db = new Usuario(req_user);
             user_db.save().then(result => {
                 let api_token = gerarToken();
-                sessoes.set(user_id, api_token);
+                set(user_id, api_token);
                 res.status(200).json({ api_token: api_token });
             }).catch(err => res.status(500).send('Erro: ' + err));
         }
@@ -64,14 +90,20 @@ function gerarToken() {
 }
 
 // Decodifica o token do Google e retorna o campo 'sub' (subject)
-async function getUserId(token) {
+async function getSubject(token) {
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: CLIENT_ID,
     });
     const payload = ticket.getPayload();
-    const userid = payload['sub'];
-    return userid;
+    const sub = payload['sub'];
+    return sub;
 }
 
-module.exports = router;
+// Exportações
+module.exports = {
+    rotas: router,
+    getUserId: getUserId,
+    getApiToken: getApiToken,
+    set: set,
+};
