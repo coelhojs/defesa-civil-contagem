@@ -10,6 +10,7 @@ import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
 import { ProvideAuth } from "./customHooks/useAuth";
 import Cadastro from "./forms/cadastro";
+import ChamadoForm from "./forms/chamado";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,9 +35,10 @@ function App(props) {
         <AppDrawer />
         <main className={classes.main}>
           <div className={classes.toolbar} />
-          <Switch>
+          <Switch>ChamadoForm
             <Route exact path='/' component={Inicio} />
             <Route path="/Cadastro" component={Cadastro} />
+            <Route path="/ChamadoForm" component={ChamadoForm} />
             <Route path="/Chamados" component={Chamados} />
             <Route path="/Dashboard" component={Dashboard} />
           </Switch>
