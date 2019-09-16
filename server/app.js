@@ -1,4 +1,5 @@
 const bodyparser = require('body-parser');
+const request = require('request');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -14,9 +15,20 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 
 // Rotas
+
+// Verificação de sessão:
 app.use((req, res, next) => {
-    // Validações de autenticação e sessão
-    next();
+    let token = req.body.token;
+    request.get(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token}`, (err, res, body) => {
+        if (err) {
+            res.json(err);
+        } else {
+            req.user = {
+                id: req.user_id,
+            };
+            next();
+        }
+    });
 });
 
 // Entidades Fisicas:
