@@ -41,4 +41,16 @@ export function VerificaCEP(event) {
             console.log("Error: " + err.message);
         });
     }
+    else {
+        document.getElementById("logradouro").value = "";
+        document.getElementById("bairro").value = "";
+        document.getElementById("cidade").value = "";
+        document.getElementById("estado").value = "";
+        document.getElementById("cep-error").innerHTML = "";
+    }
 };
+
+
+export const text = value =>
+    value && !/^([a-zA-Zà-úÀ-Ú]|\s+)+$/i.test(value) ?
+        'Endereço de e-mail inválido' : undefined;
