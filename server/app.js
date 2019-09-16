@@ -1,5 +1,5 @@
 const bodyparser = require('body-parser');
-const sessoes = require('./sessoes');
+const auth = require('./auth');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -14,12 +14,12 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 // Login e Cadastro:
-app.use('/api', require('./rotas/api.rotas'));
+app.use('/auth', auth.rotas);
 
 // Controle de todas as rotas de acesso:
 app.use('/acesso/*', (req, res, next) => {
     let api_token = req.headers.authorization.split(' ')[1];
-    let user_id = sessoes.getUserId(api_token);
+    let user_id = auth.getUserId(api_token);
     if (!user_id) {
         res.status(500).send('Usuário não logado');
     } else {
