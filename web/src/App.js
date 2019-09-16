@@ -1,24 +1,21 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
-import { FirebaseAuthProvider } from "@react-firebase/auth";
-import * as firebase from "firebase/app";
 import "firebase/auth";
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Switch } from "react-router-dom";
 import AppDrawer from './components/drawer';
 import Header from './components/header';
+import Chamados from "./containers/Chamados";
 import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
-// import { firebaseConfig } from "./controllers/Auth";
-import { ProvideAuth } from "./controllers/Auth";
-
+import { ProvideAuth } from "./customHooks/useAuth";
 import Cadastro from "./forms/cadastro";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
-  content: {
+  main: {
     flexGrow: 1,
     padding: theme.spacing(3),
   },
@@ -35,13 +32,13 @@ function App(props) {
         <CssBaseline />
         <Header ></Header>
         <AppDrawer />
-        <main className={classes.content}>
+        <main className={classes.main}>
           <div className={classes.toolbar} />
           <Switch>
             <Route exact path='/' component={Inicio} />
-            <Route path="/Dashboard" component={Dashboard} />
             <Route path="/Cadastro" component={Cadastro} />
-            {/* <Route path="/Login" component={Signin} /> */}
+            <Route path="/Chamados" component={Chamados} />
+            <Route path="/Dashboard" component={Dashboard} />
           </Switch>
         </main>
       </div >

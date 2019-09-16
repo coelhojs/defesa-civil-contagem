@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import { getUsuario } from '../controllers/Usuarios';
+import history from '../history';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA9KI6v1zI8bfNDS8dTe2AiZDKWOwJFKdQ",
@@ -48,8 +50,13 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
-        setUser(response.user);
-        return response.user;
+        if (getUsuario(response.user.email)) {
+          console.log(`Usuario cadastrado: ${response.user.email}`);
+          setUser(response.user);
+          return response.user;
+        } else {
+
+        }
       });
   };
 
