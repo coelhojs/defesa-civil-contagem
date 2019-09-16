@@ -8,12 +8,13 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Send from '@material-ui/icons/Send';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { CEPMask, CPFMask, TelefoneMask } from "../masks";
-import { VerificaCEP, text } from "../validation";
 import { useForm } from "../customHooks/useForm";
+import ListaImagem from "./listaImagem";
+import { minHeight } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -24,6 +25,10 @@ const useStyles = makeStyles(theme => ({
     },
     erro: {
         color: '#ff0000',
+    },
+    textarea:{
+        minWidth: "600px",
+        minHeight: "100px",
     },
     rightIcon: {
         marginLeft: theme.spacing(1),
@@ -69,94 +74,72 @@ export default function CadastroForm() {
                     spacing={1}
                 >
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="nome">Nome Completo</InputLabel>
-                        <Input
-                            id="nome"
-                            value={values.nome}
-                            onChange={handleChange}
-                        />
+                    <InputLabel htmlFor="Informant" shrink>Informante</InputLabel>
+                            <Input
+                                readOnly
+                                id="Informant"
+                                value={values.Informant}
+                                onChange={handleChange}
+                            />
                         {/* <FormHelperText id="nome-error">Error?</FormHelperText> */}
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="email">E-Mail</InputLabel>
-                        <Input
-                            type="email"
-                            id="email"
-                            value={values.email}
-                            onChange={handleChange}
-                        />
+                        <InputLabel htmlFor="Inspector" shrink>Vistoriador</InputLabel>
+                            <Input
+                                readOnly
+                                id="Inspector"
+                                value={values.Inspector}
+                                onChange={handleChange}
+                            />
                         {/* <FormHelperText id="e-mail-error">o telefone deve conter </FormHelperText> */}
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="cpf" shrink>CPF</InputLabel>
-                        <Input
-                            value={values.cpf}
-                            onChange={handleChange}
-                            id="cpf"
-                            inputComponent={CPFMask}
-                        />
-                        {/* <FormHelperText id="cpf-error"></FormHelperText> */}
-                    </FormControl>
-
-                    <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="userType" >Tipo</InputLabel>
-                        <Select
-                            value={values.user}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: 'user',
-                                id: 'userType',
-                            }}
-                        >
-                            <MenuItem value="Atendente" defaultValue>Atendente</MenuItem>
-                            <MenuItem value='Gerente'>Gerente</MenuItem>
-                            <MenuItem value='Vistoriador'>Vistoriador</MenuItem>
-                        </Select>
+                    <InputLabel htmlFor="type">Tipo</InputLabel>
+                            <Select
+                                value={values.type}
+                                onChange={handleChange}
+                                inputProps={{
+                                    name: 'type',
+                                    id: 'type',
+                                }}
+                            >
+                                <MenuItem value='Deslizamento'>Deslizamento</MenuItem>
+                                <MenuItem value='Rachadura'>Rachadura</MenuItem>
+                            </Select>
                         {/* <FormHelperText id="type-error">o telefone deve conter </FormHelperText> */}
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="telefone" shrink>Telefone</InputLabel>
-                        <Input
-                            value={values.telefone}
-                            onChange={handleChange}
-                            id="telefone"
-                            inputComponent={TelefoneMask}
-                            aria-describedby="telefone-error"
-                        />
+                            <InputLabel htmlFor="status">Estatus</InputLabel>
+                            <Select
+                                value={values.status}
+                                onChange={handleChange}
+                                inputProps={{
+                                    name: 'status',
+                                    id: 'status',
+                                }}
+                            >
+                                <MenuItem value='Pendente'>Pendente</MenuItem>
+                                <MenuItem value='Vistoriado'>Vistoriado</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                    <FormControl fullWidth className={classes.formControl}>
+                    <InputLabel htmlFor="date" shrink="true" shrink>Data e Hora</InputLabel>
+                            <Input
+                                readOnly
+                                id="date"
+                                type="datetime-local"
+                                value={values.street}
+                                onChange={handleChange}
+                            />
                         {/* <FormHelperText id="telefone-error">o telefone deve conter </FormHelperText> */}
                     </FormControl>
-
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="dataNasc" shrink>Data de Nascimento</InputLabel>
+                        <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
                         <Input
-                            value={values.dataNasc}
-                            onChange={handleChange}
-                            id="dataNasc"
-                            type="date"
-                            aria-describedby="dataNasc-error"
-                        />
-                        {/* <FormHelperText id="dataNasc-error">Insira sua data de nascimento</FormHelperText> */}
-                    </FormControl>
-
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="cep" shrink>CEP</InputLabel>
-                        <Input
-                            value={values.cep}
-                            onChange={handleChange, VerificaCEP}
-                            id="cep"
-                            inputComponent={CEPMask}
-                            aria-describedby="cep-error"
-                        />
-                        <FormHelperText id="cep-error" className={classes.erro}></FormHelperText>
-                    </FormControl>
-
-                    <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="logradouro" shrink>Logradouro</InputLabel>
-                        <Input
-                            readOnly
                             id="logradouro"
                             value={values.logradouro}
                             onChange={handleChange}
@@ -164,7 +147,7 @@ export default function CadastroForm() {
                     </FormControl>
                     <Grid item xs={12} md={3}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="numero">Número</InputLabel>
+                            <InputLabel htmlFor="numero" >Número</InputLabel>
                             <Input
                                 id="numero"
                                 type="number"
@@ -186,9 +169,8 @@ export default function CadastroForm() {
                         </FormControl>
                     </Grid>
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
+                        <InputLabel htmlFor="bairro">Bairro</InputLabel>
                         <Input
-                            readOnly
                             id="bairro"
                             value={values.bairro}
                             onChange={handleChange}
@@ -196,9 +178,8 @@ export default function CadastroForm() {
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="cidade" shrink>Cidade</InputLabel>
+                        <InputLabel htmlFor="cidade">Cidade</InputLabel>
                         <Input
-                            readOnly
                             id="cidade"
                             value={values.cidade}
                             onChange={handleChange}
@@ -206,14 +187,30 @@ export default function CadastroForm() {
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="estado" shrink>Estado</InputLabel>
+                        <InputLabel htmlFor="estado">Estado</InputLabel>
                         <Input
-                            readOnly
                             id="estado"
                             value={values.estado}
                             onChange={handleChange}
                         />
                     </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="description" shrink>Descrição</InputLabel>
+                        <TextareaAutosize
+                            className={classes.textarea}
+                            value={values.description}
+                            onChange={handleChange}
+                            rowsMax={4}
+                            aria-label="maximum height"
+                            inputProps={{
+                                name: 'description',
+                                id: 'description',
+                            }}
+                            
+                        />
+                        {/*<FormHelperText id="cep-error" className={classes.erro}></FormHelperText>*/}
+                    </FormControl>
+                    <ListaImagem/>
                     <Grid
                         container
                         direction="row"
@@ -222,10 +219,10 @@ export default function CadastroForm() {
                         spacing={2}
                     >
                         <Button variant="contained" color="secondary" className={classes.button}>
-                            Cancelar
+                            Voltar
                         </Button>
                         <Button variant="contained" color="primary" className={classes.button}>
-                            Enviar
+                            Atualizar
                         <Send className={classes.rightIcon} />
                         </Button>
                     </Grid>
