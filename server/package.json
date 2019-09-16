@@ -4,7 +4,8 @@
   "description": "Servidor da aplicação de Defesa Civil de Contagem",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,10 +28,12 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-server": "^0.7.0",
+    "google-auth-library": "^5.2.1",
     "mongoose": "^5.7.0",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "uuid-token-generator": "^1.0.0"
   }
 }
