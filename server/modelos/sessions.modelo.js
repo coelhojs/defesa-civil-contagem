@@ -2,16 +2,10 @@ const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const NOME_MODELO = 'Chamado';
+const NOME_MODELO = 'Sessao';
 
 const schema = new Schema({
-    tipo: { type: String },
-    dataHora: { type: Date },
-    descricao: { type: String },
-    foto: { type: String },
-    vistoriador: { type: String },
-    cidadao: { type: String },
-    local: { type: String },
+    user_id: { type: String },
 
 }, { strict: false });
 
