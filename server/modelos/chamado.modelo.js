@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const NOME_MODELO = 'Chamado';
 
 const schema = new Schema({
+    user_id: { type: String },
     tipo: { type: String },
     dataHora: { type: Date },
     descricao: { type: String },
