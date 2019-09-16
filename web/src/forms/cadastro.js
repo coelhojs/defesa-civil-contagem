@@ -10,6 +10,7 @@ import Send from '@material-ui/icons/Send';
 import React from 'react';
 import { CEPMask, CPFMask, TelefoneMask } from "../masks";
 import { VerificaCEP } from "../validation";
+import { useForm } from "../customHooks/useForm";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -27,24 +28,29 @@ const useStyles = makeStyles(theme => ({
 
 export default function CadastroForm() {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        multiline: 'Controlled',
-    });
+    const { values, handleChange, handleSubmit } = useForm(submit);
+    // const [values, setValues] = React.useState({
+    //     nome: '',
+    //     email: 'hai',
+    //     cpf: '',
+    //     userType: '',
+    //     telefone: '',
+    //     dataNasc: '',
+    //     cep: '',
+    //     logradouro: '',
+    //     numero: '',
+    //     complemento: '',
+    //     bairro: '',
+    //     cidade: '',
+    //     estado: ''
+    // });
 
-    const handleChange = name => event => {
-        setValues({ ...values, [name]: event.target.value });
-    };
-
-    function handleChangeSelect(event) {
-        setValues(oldValues => ({
-            ...oldValues,
-            [event.target.name]: event.target.value,
-        }));
-    };
-
+    function submit() {
+        console.log(values);
+    }
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="nome">Nome Completo</InputLabel>
                 <Input
@@ -52,9 +58,7 @@ export default function CadastroForm() {
                     value={values.nome}
                     onChange={handleChange}
                 />
-                <FormHelperText id="nome-error">
-                    Error?
-                                </FormHelperText>
+                {/* <FormHelperText id="nome-error">Error?</FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>
@@ -64,11 +68,9 @@ export default function CadastroForm() {
                     value={values.email}
                     defaultValue="ccoelho.me@gmail.com"
                     onChange={handleChange}
-                    InputProps={{
-                        readOnly: true,
-                    }}
+                    readOnly
                 />
-                <FormHelperText id="e-mail-error">o telefone deve conter </FormHelperText>
+                {/* <FormHelperText id="e-mail-error">o telefone deve conter </FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>
@@ -79,37 +81,36 @@ export default function CadastroForm() {
                     id="cpf"
                     inputComponent={CPFMask}
                 />
-                <FormHelperText id="cpf-error">o telefone deve conter </FormHelperText>
+                {/* <FormHelperText id="cpf-error">o telefone deve conter </FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>
-                <InputLabel htmlFor="type" shrink>Tipo</InputLabel>
+                <InputLabel htmlFor="userType" >Tipo</InputLabel>
                 <Select
-                    value={values.type}
-                    onChange={handleChangeSelect}
+                    value={values.user}
+                    onChange={handleChange}
                     inputProps={{
-                        name: 'type',
-                        id: 'type',
+                        name: 'user',
+                        id: 'userType',
                     }}
-                    aria-describedby="type-error"
                 >
-                    <MenuItem value='Atendente'>Atendente</MenuItem>
+                    <MenuItem value="Atendente" defaultValue>Atendente</MenuItem>
                     <MenuItem value='Gerente'>Gerente</MenuItem>
                     <MenuItem value='Vistoriador'>Vistoriador</MenuItem>
                 </Select>
-                <FormHelperText id="type-error">o telefone deve conter </FormHelperText>
+                {/* <FormHelperText id="type-error">o telefone deve conter </FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>
                 <InputLabel htmlFor="telefone" shrink>Telefone</InputLabel>
                 <Input
                     value={values.telefone}
-                    onChange={handleChange('telefone')}
+                    onChange={handleChange}
                     id="telefone"
                     inputComponent={TelefoneMask}
                     aria-describedby="telefone-error"
                 />
-                <FormHelperText id="telefone-error">o telefone deve conter </FormHelperText>
+                {/* <FormHelperText id="telefone-error">o telefone deve conter </FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>
@@ -121,7 +122,7 @@ export default function CadastroForm() {
                     type="date"
                     aria-describedby="dataNasc-error"
                 />
-                <FormHelperText id="dataNasc-error">Insira sua data de nascimento</FormHelperText>
+                {/* <FormHelperText id="dataNasc-error">Insira sua data de nascimento</FormHelperText> */}
             </FormControl>
 
             <FormControl className={classes.formControl}>
@@ -133,7 +134,7 @@ export default function CadastroForm() {
                     inputComponent={CEPMask}
                     aria-describedby="cep-error"
                 />
-                <FormHelperText id="cep-error" className={classes.erro}></FormHelperText>
+                {/* <FormHelperText id="cep-error" className={classes.erro}></FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>
@@ -155,7 +156,7 @@ export default function CadastroForm() {
                     onChange={handleChange}
                     aria-describedby="numero-error"
                 />
-                <FormHelperText id="numero-error"></FormHelperText>
+                {/* <FormHelperText id="numero-error"></FormHelperText> */}
             </FormControl>
 
             <FormControl fullWidth className={classes.formControl}>

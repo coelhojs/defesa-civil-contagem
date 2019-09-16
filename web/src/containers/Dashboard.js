@@ -8,9 +8,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import Singnup from '../forms/cadastro';
+import ChamadosList from '../components/chamadosList';
 
 export default function Dashboard() {
     return (
-        <p> Exibir lista de chamados</p>
+        <ChamadosList />
     );
 }

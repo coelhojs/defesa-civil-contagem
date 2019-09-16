@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useAuth } from "../controllers/Auth";
+import { useAuth } from "../customHooks/useAuth";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import history from '../history';
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -12,11 +13,14 @@ const useStyles = makeStyles(theme => ({
 export default function SignOutBtn(props) {
     const classes = useStyles();
     const auth = useAuth();
-    console.log(auth);
+
     if (auth.user) {
         return (
             <Button variant="contained" color="primary" className={classes.button}
-                onClick={() => auth.signout()}>
+                onClick={() => {
+                    auth.signout()
+                    history.push('/')
+                }}>
                 Sair
                 </Button>
         )

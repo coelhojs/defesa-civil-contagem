@@ -7,7 +7,7 @@ import "firebase/auth";
 import React, { useState } from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import { getUsuario } from "../controllers/Usuarios";
-import { useAuth } from "../controllers/Auth";
+import { useAuth } from "../customHooks/useAuth";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
 
     },
     card: {
+        margin: 'auto',
         maxWidth: 345,
         minWidth: 275,
 
@@ -63,10 +64,10 @@ function Signin(props) {
                 </Grid>
             </CardContent>
             <CardActions>
-                <Link to={"/Dashboard"} variant="contained"
+                {/* <Link to={"/Dashboard"} variant="contained"
                     color="primary" className={classes.button}>
                     Dashboard
-                    </Link >
+                    </Link > */}
             </CardActions>
         </Card>
     );
