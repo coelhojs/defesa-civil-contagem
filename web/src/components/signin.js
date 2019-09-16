@@ -4,30 +4,41 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import "firebase/auth";
-import React, { useState } from 'react';
-import { classes } from '../styles';
+import React, { useState } from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import { getUsuario } from "../controllers/Usuarios";
+import { useAuth } from "../controllers/Auth";
+
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(1),
+
+    },
+    card: {
+        maxWidth: 345,
+        minWidth: 275,
+
+    },
+}));
+
 
 function Signin(props) {
-    const [auth, setAuth] = useState(props.auth);
-    const [authProvider] = useState(props.authProvider);
-    const [firebase] = useState(props.firebase);
-    const [usuario, setUsuario] = useState(null);
+    const classes = useStyles();
+    const auth = useAuth();
 
-    const successAuth = (response) => {
-        try {
-            getUsuario(response.user.email).then(
-                isAuth => setAuth(isAuth));
-        } catch (error) {
-            console.error(error)
-        }
-    }
+    //     const successAuth = (response) => {
+    //         try {
+    //             getUsuario(response.user.email).then(
+    //                 isAuth => setAuth(isAuth));
+    //         } catch (error) {
+    //             console.error(error)
+    //         }
+    //     }
 
-    const errorAuth = (response) => {
-        console.error("Erro")
-        console.error(response);
-    }
+    //     const errorAuth = (response) => {
+    //         console.error("Erro")
+    //         console.error(response);
+    //     }
 
     return (
         <Card className={classes.card}>
@@ -46,16 +57,9 @@ function Signin(props) {
                     alignItems="center"
                     spacing={2}
                 >
-                    <button
-                        onClick={() => {
-                            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-                            firebase.auth().signInWithPopup(googleAuthProvider)
-                                .then(successAuth)
-                                .catch(errorAuth);
-                        }}
-                    >
+                    <button onClick={() => { auth.signin() }} >
                         Entrar com a conta do Google
-        </button>
+                    </button>
                 </Grid>
             </CardContent>
             <CardActions>

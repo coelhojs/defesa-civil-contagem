@@ -9,8 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import React from 'react';
-import { classes } from '../styles';
+import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
 
 export default function ChamadoData() {
     const [values, setValues] = React.useState({

@@ -5,13 +5,28 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
 import Send from '@material-ui/icons/Send';
 import React from 'react';
 import { CEPMask, CPFMask, TelefoneMask } from "../masks";
-import { classes } from '../styles';
 import { VerificaCEP } from "../validation";
 
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(1),
+
+    },
+    erro: {
+        color: '#ff0000',
+    },
+    rightIcon: {
+        marginLeft: theme.spacing(1),
+    },
+
+}));
+
 export default function CadastroForm() {
+    const classes = useStyles();
     const [values, setValues] = React.useState({
         multiline: 'Controlled',
     });
