@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAuth } from "../controllers/Auth";
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
-export default function signOutBtn(props) {
-    // console.log(`Auth, ${props.auth}`)
-    if (props.auth) {
+const useStyles = makeStyles(theme => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+}));
+
+export default function SignOutBtn(props) {
+    const classes = useStyles();
+    const auth = useAuth();
+    console.log(auth);
+    if (auth.user) {
         return (
-            <div>
-                <button
-                    onClick={() => {
-                        props.firebase.auth().signOut();
-                        console.log(props.firebase)
-                    }}
-                >
-                    Sign Out
-                    </button>
-                }
-        </div>
-        );
+            <Button variant="contained" color="primary" className={classes.button}
+                onClick={() => auth.signout()}>
+                Sair
+                </Button>
+        )
     } else {
-        return null;
+        return null
     }
 };

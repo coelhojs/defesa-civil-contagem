@@ -1,9 +1,8 @@
-import React from 'react';
+import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
 import { Router } from "react-router-dom";
 import App from './App';
 import history from './history';
-import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

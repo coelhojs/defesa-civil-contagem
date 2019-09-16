@@ -9,8 +9,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import Singnup from '../forms/cadastro';
 
-export default function Dashboard() {
+export default function Chamados() {
     return (
-        <p> Exibir lista de chamados</p>
+        <div></div>
     );
 }

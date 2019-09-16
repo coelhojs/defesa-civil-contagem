@@ -1,6 +1,14 @@
 import GoogleMapReact from 'google-map-react';
-import React, { Component } from 'react';
+import React, { Component } from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import { geolocated } from "react-geolocated";
+
+const useStyles = makeStyles(theme => ({
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
+
+}));
+
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
