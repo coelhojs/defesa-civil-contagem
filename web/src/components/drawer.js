@@ -4,10 +4,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
-import MailIcon from '@material-ui/icons/Mail';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MapIcon from '@material-ui/icons/Map';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Divider from '@material-ui/core/Divider';
 import React from 'react';
-import { useAuth } from "../controllers/Auth";
+import { useAuth } from "../customHooks/useAuth";
 
 const drawerWidth = 240;
 
@@ -39,12 +42,36 @@ export default function AppDrawer() {
             >
                 <div className={classes.toolbar} />
                 <List>
-                    {['Mapa', 'Chamados', 'Usuários'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                    <ListItem button key="Mapa" disabled>
+                        <ListItemIcon>
+                            <MapIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Mapa" />
+                    </ListItem>
+
+                    <ListItem button key="Chamados">
+                        <ListItemIcon>
+                            <FeedbackIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Chamados" />
+                    </ListItem>
+
+                    <ListItem button key="Usuários" disabled>
+                        <ListItemIcon>
+                            <PeopleAltIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Usuários" />
+                    </ListItem>
+                </List>
+                <Divider />
+                <List>
+                    <ListItem button key="Configurações" disabled>
+                        <ListItemIcon>
+                            <SettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Configurações" />
+                    </ListItem>
+
                 </List>
             </Drawer>
         )
