@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import Signin from './signin';
-import Cadastro from '../forms/cadastro';
+import Login from '../components/login';
+import Cadastro from './cadastro';
 
 const useStyles = makeStyles(theme => ({
 
 }));
 
 
-function SignForm() {
+function AutenticacaoForm() {
     const classes = useStyles();
     const authContext = createContext();
     const [usuario, setUsuario] = useState("");
 
     if (!usuario) {
         return (
-            <Signin ></Signin>
+            <Login ></Login>
         )
     } else {
         return (
@@ -23,4 +23,4 @@ function SignForm() {
     }
 };
 
-export default SignForm;
+export default AutenticacaoForm;
