@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function Signin(props) {
+function Login(props) {
     const classes = useStyles();
     const auth = useAuth();
 
@@ -58,7 +58,7 @@ function Signin(props) {
                     alignItems="center"
                     spacing={2}
                 >
-                    <button onClick={() => { auth.signin() }} >
+                    <button onClick={() => { auth.login() }} >
                         Entrar com a conta do Google
                     </button>
                 </Grid>
@@ -73,4 +73,4 @@ function Signin(props) {
     );
 };
 
-export default Signin;
+export default Login;
