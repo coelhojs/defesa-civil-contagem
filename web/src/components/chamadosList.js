@@ -32,20 +32,5 @@ export default function ChamadosList() {
                 <ChamadosItem key={chamados.id} chamados={chamados} />
             ))}
         </GridList>
-        //     <div>
-        //         <Card >
-        //             <CardActionArea>
-        //                 <CardMedia
-        //                     className={classes.media}
-        //                     image={chamados.foto}
-        //                 />
-        //             </CardActionArea>
-        //             <CardContent>
-        //             </CardContent>
-        //         </Card>
-
-        // < span > { JSON.stringify(chamados) }</span >
-        //         {/* <span>Has error: {JSON.stringify(hasError)}</span> */}
-        //     </div>
     );
 };

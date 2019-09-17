@@ -54,7 +54,7 @@ function useProvideAuth() {
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
-  const signin = () => {
+  const login = () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     return firebase
       .auth()
@@ -127,7 +127,7 @@ function useProvideAuth() {
   // Return the user object and auth methods
   return {
     user,
-    signin,
+    login,
     signup,
     signout,
     sendPasswordResetEmail,

@@ -1,5 +1,5 @@
 import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
-import Signin from "../components/signin";
+import Login from "../components/login";
 
 const useStyles = makeStyles(theme => ({
 
@@ -11,7 +11,7 @@ export default function Inicio(props) {
 
     return (
         <div className={classes.content}>
-            <Signin auth={props.auth} firebase={props.firebase} authProvider={props.authProvider} />
+            <Login auth={props.auth} firebase={props.firebase} authProvider={props.authProvider} />
         </div>
     );
 }
