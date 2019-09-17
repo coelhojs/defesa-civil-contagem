@@ -1,3 +1,4 @@
+
 export function VerificaCEP(event) {
     let cepValue = event.target.value.replace(/\D/g, '');
 
