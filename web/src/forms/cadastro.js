@@ -2,18 +2,18 @@
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Send from '@material-ui/icons/Send';
-
-import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { CEPMask, CPFMask, TelefoneMask } from "../masks";
-import { VerificaCEP, text } from "../validation";
+import Send from '@material-ui/icons/Send';
+import React from 'react';
 import { useForm } from "../customHooks/useForm";
+import { CEPMask, CPFMask, TelefoneMask } from "../masks";
+import { VerificaCEP } from "../validation";
+
 
 const useStyles = makeStyles(theme => ({
     formControl: {

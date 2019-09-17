@@ -5,12 +5,22 @@ import "firebase/auth";
 import { getUsuario } from '../controllers/Usuarios';
 import history from '../history';
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA9KI6v1zI8bfNDS8dTe2AiZDKWOwJFKdQ",
+//   authDomain: "defesa-civil-contagem.firebaseapp.com",
+//   databaseURL: "https://defesa-civil-contagem.firebaseio.com",
+//   projectId: "defesa-civil-contagem",
+//   storageBucket: "defesa-civil-contagem.appspot.com",
+//   messagingSenderId: "651305936833",
+//   appId: "1:651305936833:web:456a186aec8d342ddfb140"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyA9KI6v1zI8bfNDS8dTe2AiZDKWOwJFKdQ",
+  apiKey: "AIzaSyAU87-FPUdNrSzn8jWanB93L3jRVA-xyIY",
   authDomain: "defesa-civil-contagem.firebaseapp.com",
   databaseURL: "https://defesa-civil-contagem.firebaseio.com",
   projectId: "defesa-civil-contagem",
-  storageBucket: "",
+  storageBucket: "defesa-civil-contagem.appspot.com",
   messagingSenderId: "651305936833",
   appId: "1:651305936833:web:340ba94339df158d"
 };
