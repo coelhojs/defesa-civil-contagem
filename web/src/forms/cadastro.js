@@ -14,7 +14,6 @@ import { useForm } from "../customHooks/useForm";
 import { CEPMask, CPFMask, TelefoneMask } from "../masks";
 import { VerificaCEP } from "../validation";
 
-
 const useStyles = makeStyles(theme => ({
     formControl: {
         margin: theme.spacing(1),
@@ -33,22 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CadastroForm() {
     const classes = useStyles();
-    const { values, handleChange, handleSubmit } = useForm(submit);
-    /*const [values, setValues] = React.useState({
-        nome: '',
-        email: 'hai',
-        cpf: '',
-        userType: '',
-        telefone: '',
-        dataNasc: '',
-        cep: '',
-        logradouro: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        estado: ''
-    });*/
+    const { values, errors, handleChange, handleSubmit } = useForm(submit);
 
     function submit() {
         console.log(values);
@@ -71,10 +55,14 @@ export default function CadastroForm() {
                     <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="nome">Nome Completo</InputLabel>
                         <Input
-                            id="nome"
+                            name="nome"
                             value={values.nome}
                             onChange={handleChange}
                         />
+                        {
+                            errors.nome &&
+                            <p>deu merda</p>
+                        }
                         {/* <FormHelperText id="nome-error">Error?</FormHelperText> */}
                     </FormControl>
 
