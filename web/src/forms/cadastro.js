@@ -61,20 +61,24 @@ export default function CadastroForm() {
                         />
                         {
                             errors.nome &&
-                            <p>deu merda</p>
+                            <FormHelperText id="nome-error">{errors.nome}</FormHelperText>
                         }
-                        {/* <FormHelperText id="nome-error">Error?</FormHelperText> */}
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="email">E-Mail</InputLabel>
                         <Input
+                            disabled
                             type="email"
                             id="email"
                             value={values.email}
                             onChange={handleChange}
+
                         />
-                        {/* <FormHelperText id="e-mail-error">o telefone deve conter </FormHelperText> */}
+                        {
+                            errors.email &&
+                            <FormHelperText className="email-error">O tamanho mínimo é 8 caracteres, Este campo não aceita números</FormHelperText>
+                        }
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
