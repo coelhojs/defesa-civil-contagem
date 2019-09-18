@@ -1,16 +1,14 @@
 import { api } from "../controllers/index";
 //import { FETCH_ALL_USUARIOS } from '../actions/types';
 
-export const maxLength = max => value =>
+const maxLength = (value, max) =>
     value && value.length > max ? `O tamanho máximo para este campo é ${max}` : undefined;
-export const minLength = min => value =>
+const minLength = (value, min) =>
     value && value.length < min ? `O tamanho mínimo para este campo é ${min}` : undefined;
 
-export const required = value => value ? undefined : 'Campo obrigatório';
-//setar maxLength?
-export const minLength8 = minLength(8);
-export const maxLength15 = maxLength(15);
-export const cnpj = value => {
+const required = value => value ? undefined : 'Campo obrigatório';
+
+const cnpj = value => {
     if (value && value.length === 18) {
         return undefined;
     }
@@ -18,34 +16,20 @@ export const cnpj = value => {
         return "O CNPJ deve ter 14 dígitos ";
     }
 }
-export const cpf = value => value && value.length === 14 ? undefined : "O CPF deve ter 11 dígitos ";
-export const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
-export const letters = value => value && !isNaN(Number(value)) ? 'Must be a number' : undefined;
-export const minValue = min => value =>
+const cpf = value => value && value.length === 14 ? undefined : "O CPF deve ter 11 dígitos ";
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+const letters = value => value && !isNaN(Number(value)) ? 'Must be a number' : undefined;
+const minValue = min => value =>
     value && value < min ? `Must be at least ${min}` : undefined;
-export const minValue18 = minValue(18);
-
-// export const unique = value => async dispatch => {
-//     console.log("valor da requisição: " + value);
-//     const response = await api.get(`/Cabeleireiros?cnpj=${value}`);
-//     console.log(response);
-//     dispatch({ type: FETCH_ALL_USUARIOS, payload: response.data.dados.erro });
-//     if (response.data.dados.erro) {
-//         return undefined;
-//     } else {
-//         return "Este CNPJ já está cadastrado";
-//     }
-// }
-
-
-export const unique = value => {
+const minValue18 = minValue(18);
+const unique = value => {
     if (value && value.length >= 18) {
         console.log(value);
         return checkOnServer(value);
     }
 }
 
-export const checkOnServer = value => api.get(`/Cabeleireiros?cnpj=${value}`).then(response => response.erro) ? undefined : `Este CNPJ já está cadastrado`;
+const checkOnServer = value => api.get(`/Cabeleireiros?cnpj=${value}`).then(response => response.erro) ? undefined : `Este CNPJ já está cadastrado`;
 
 // export const unique = value => api.get(`/Cabeleireiros?cnpj=${value}`).then(response => response.data.dados).then(console.log);
 
@@ -55,6 +39,29 @@ export const checkOnServer = value => api.get(`/Cabeleireiros?cnpj=${value}`).th
 //     console.log(response);
 //     dispatch({ type: FETCH_ALL_USUARIOS, payload: response.mensagem });
 // }
+
+function exemploValidacao(value) {
+    return "Mensagem de erro de validação exemplo";
+}
+
+
+export const validarNomes = (value) => {
+    let errors = [];
+
+    let tamanhoError = minLength(value, 8);
+    if (tamanhoError) {
+        errors.push(tamanhoError);
+    }
+
+    let exemploError = exemploValidacao(value);
+    if (exemploError) {
+        errors.push(exemploError);
+    }
+
+    return errors.toString();
+}
+
+
 
 export const email = value =>
     value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ?
