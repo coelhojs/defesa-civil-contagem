@@ -1,40 +1,46 @@
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
-import GoogleLogin from 'react-google-login';
+import "firebase/auth";
+import React, { useState } from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
-import Header from '../components/header';
-import { getUsuario } from '../controllers/Usuarios';
+import { getUsuario } from "../controllers/Usuarios";
+import { useAuth } from "../customHooks/useAuth";
 
 const useStyles = makeStyles(theme => ({
-    card: {
-        minWidth: 275,
-    },
     button: {
         margin: theme.spacing(1),
+
     },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
+    card: {
+        margin: 'auto',
+        maxWidth: 345,
+        minWidth: 275,
+
     },
 }));
 
-const Signup = () => {
+
+function Login(props) {
     const classes = useStyles();
-    
+    const auth = useAuth();
+
+    //     const successAuth = (response) => {
+    //         try {
+    //             getUsuario(response.user.email).then(
+    //                 isAuth => setAuth(isAuth));
+    //         } catch (error) {
+    //             console.error(error)
+    //         }
+    //     }
+
+    //     const errorAuth = (response) => {
+    //         console.error("Erro")
+    //         console.error(response);
+    //     }
+
     return (
         <Card className={classes.card}>
             <CardContent>
@@ -43,7 +49,7 @@ const Signup = () => {
                     </Typography>
                 <br />
                 <Typography variant="body2" component="p">
-                    Cadastro
+                    Login
                     </Typography>
                 <Grid
                     container
@@ -52,18 +58,19 @@ const Signup = () => {
                     alignItems="center"
                     spacing={2}
                 >
-                    <label htmlFor="">Endereço</label>
-                    <input type="text" />
+                    <button onClick={() => { auth.login() }} >
+                        Entrar com a conta do Google
+                    </button>
                 </Grid>
             </CardContent>
             <CardActions>
-                <Link to={"/Dashboard"} variant="contained"
+                {/* <Link to={"/Dashboard"} variant="contained"
                     color="primary" className={classes.button}>
                     Dashboard
-                    </Link >
+                    </Link > */}
             </CardActions>
         </Card>
     );
 };
 
-export default Signup;
+export default Login;

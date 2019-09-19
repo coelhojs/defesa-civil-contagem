@@ -1,23 +1,17 @@
+const Usuario = require('../modelos/usuario.modelo');
 const express = require('express');
+const request = require('request');
+
 const router = express.Router();
 
-const Usuario = require('../modelos/usuario.modelo');
-
 // Obtém informações do usuário atual:
-router.get('/get', (req, res) => {
-    Usuario.findById(req.userId)
-        .then(result => res.status(200).json(result))
-        .catch(err => res.status(500).json(err));
-});
-
-// Cadastro de novo usuário:
-router.post('/cadastro', (req, res) => {
-
-});
-
-// Login:
-router.post('/login', (req, res) => {
-
+router.get('/account', (req, res) => {
+    Usuario.findOne({ user_id: req.user.user_id })
+        .then(result => {
+            res.status(200).json(result);
+        }).catch(error => {
+            res.status(500).json(error);
+        });
 });
 
 // Modificar as informações do usuário atual:
