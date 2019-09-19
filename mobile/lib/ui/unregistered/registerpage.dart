@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:defesa_civil/helpers/cepvalidator.dart';
 import 'package:defesa_civil/ui/logged/homelogged.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,15 +29,16 @@ class _RegisterPageState extends State<RegisterPage>
   var cepController = new MaskedTextController(mask: '00000-000');
   var cpfController = new MaskedTextController(mask: '000.000.000-00');
   var telController = new MaskedTextController(mask: '(00)00000-0000');
-  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  GlobalKey<FormState> _globalKey1 = GlobalKey<FormState>();
+  GlobalKey<FormState> _keyValidaForm1 = GlobalKey<FormState>();
+  GlobalKey<FormState> _keyValidaForm2 = GlobalKey<FormState>();
+  FocusNode focusTel = FocusNode();
   String next = "Proximo";
   String name;
   String email;
   String image;
   int _enderecoState = 0;
   String endereco = "CEP Inválido";
-  FocusNode node = FocusNode();
+
 
   _RegisterPageState(this.name,this.email,this.image);
 
@@ -61,14 +63,14 @@ class _RegisterPageState extends State<RegisterPage>
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
             if(_tabController.index==0) {
-              if (_globalKey.currentState.validate()) {
+              if (_keyValidaForm1.currentState.validate()) {
                 _tabController.animateTo(_tabController.index + 1);
                 setState(() => next="Cadastrar");
               }
 
             }
             else if(_tabController.index==1){
-              if (_globalKey1.currentState.validate()) {
+              if (_keyValidaForm2.currentState.validate()) {
 
 
                 setCredentials(name, email, image);
@@ -91,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage>
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             Form(
-              key: _globalKey,
+              key: _keyValidaForm1,
               child: Container(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: SingleChildScrollView(
@@ -112,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage>
                       TextFormField(
                         onChanged: (value){
                           if(value.length==14)
-                          FocusScope.of(context).requestFocus(node);
+                          FocusScope.of(context).requestFocus(focusTel);
                         },
                         autofocus: true,
                         controller: cpfController,
@@ -134,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage>
                         padding: EdgeInsets.all(10),
                       ),
                       TextFormField(
-                        focusNode: node,
+                        focusNode: focusTel,
                         controller: telController,
                         maxLength: 14,
                         keyboardType: TextInputType.number,
@@ -155,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage>
               ),
             ),
             Form(
-              key: _globalKey1,
+              key: _keyValidaForm2,
               child: Container(
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                 child: SingleChildScrollView(
@@ -205,6 +207,7 @@ class _RegisterPageState extends State<RegisterPage>
                         ),
                         validator: (value){
                           if(value.isEmpty) return "Insira o CEP";
+                          else if(value.length != 9) return "O tamanho do CEP são 8 dígitos";
                         },
                       ),
                       Padding(
@@ -247,40 +250,6 @@ class _RegisterPageState extends State<RegisterPage>
     userData.setString("name", name);
     userData.setString("email", email);
     userData.setString("image", image);
-  }
-
-  bool validarCPF(String cpf){
-    List<int> sanitizedCPF = cpf
-        .replaceAll(new RegExp(r'\.|-'), '')
-        .split('')
-        .map((String digit) => int.parse(digit))
-        .toList();
-    return !blacklistedCPF(sanitizedCPF.join()) &&
-        sanitizedCPF[9] == gerarDigitoVerificador(sanitizedCPF.getRange(0, 9).toList()) &&
-        sanitizedCPF[10] == gerarDigitoVerificador(sanitizedCPF.getRange(0, 10).toList());
-  }
-
-  int gerarDigitoVerificador(List<int> digits) {
-    int baseNumber = 0;
-    for (var i = 0; i < digits.length; i++) {
-      baseNumber += digits[i] * ((digits.length + 1) - i);
-    }
-    int verificationDigit = baseNumber * 10 % 11;
-    return verificationDigit >= 10 ? 0 : verificationDigit;
-  }
-
-  bool blacklistedCPF(String cpf) {
-    return
-      cpf == '11111111111' ||
-          cpf == '22222222222' ||
-          cpf == '33333333333' ||
-          cpf == '44444444444' ||
-          cpf == '55555555555' ||
-          cpf == '66666666666' ||
-          cpf == '77777777777' ||
-          cpf == '88888888888' ||
-          cpf == '99999999999' ||
-          cpf == '00000000000';
   }
 
 }
