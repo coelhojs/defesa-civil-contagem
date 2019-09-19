@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import AppDrawer from './components/drawer';
 import Header from './components/header';
 import Chamados from "./containers/Chamados";
+import Mapa from "./containers/Mapa";
 import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
 import { ProvideAuth } from "./customHooks/useAuth";
@@ -41,6 +42,7 @@ function App(props) {
             <Route path="/ChamadoForm" component={ChamadoForm} />
             <Route path="/Chamados" component={Chamados} />
             <Route path="/Dashboard" component={Dashboard} />
+            <Route path="/Mapa" component={Mapa} />
           </Switch>
         </main>
       </div >
