@@ -1,8 +1,16 @@
-import history from '../history';
 import { api } from "./index";
+import history from '../history';
 
-export const getUsuario = email => async dispatch => {
-    const response = await api.post(`/Usuarios/getUsuarios/${email}`);
-    console.log(response);
-    dispatch({ type: "POST", payload: response });
-};
+export const getUsuario = async email => {
+    const response = await api.get(`/usuarios?email=${email}`);
+
+    if (response.data.email == email) {
+        console.log("Usuário existente. Logando")
+        history.push('/Dashboard');
+        return true;
+    } else {
+        console.log("Novo usuário. Redirecionando para o formulario")
+        history.push('/Cadastro');
+        return false;
+    }
+}

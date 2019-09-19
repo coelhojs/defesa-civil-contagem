@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Usar com o MongoDB Atlas
 const USUARIO = 'round';
 const SENHA = 'robin9090';
-const STRING = `mongodb+srv://${USUARIO}:${SENHA}@cluster0-u2o3w.mongodb.net/test?retryWrites=true&w=majority`;
+const STRING = `mongodb+srv://${USUARIO}:${SENHA}@cluster0-u2o3w.mongodb.net/defesa-civil?retryWrites=true&w=majority`;
 
 // Usar com o MongoDB Local
 // const STRING = 'mongodb://localhost/defesacivil';

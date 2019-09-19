@@ -1,4 +1,5 @@
 const bodyparser = require('body-parser');
+const auth = require('./auth');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -12,20 +13,28 @@ app.use(morgan('dev'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+// Login e Cadastro:
+app.use('/auth', auth.rotas);
 
-// Rotas
-app.use((req, res, next) => {
-    // Validações de autenticação e sessão
-    next();
+// Controle de todas as rotas de acesso:
+app.use('/acesso/*', (req, res, next) => {
+    let api_token = req.headers.authorization.split(' ')[1];
+    let user_id = auth.getUserId(api_token);
+    if (!user_id) {
+        res.status(500).send('Usuário não logado');
+    } else {
+        req.user = { user_id: user_id };
+        next();
+    }
 });
 
 // Entidades Fisicas:
-app.use('/usuarios', require('./rotas/usuario.rotas'));
-app.use('/chamados', require('./rotas/chamado.rotas'));
+app.use('/acesso/usuarios', require('./rotas/usuario.rotas'));
+app.use('/acesso/chamados', require('./rotas/chamado.rotas'));
 
 // Blog e informativos:
-app.use('/informativos', require('./rotas/informativo.rotas'));
-app.use('/noticias', require('./rotas/noticia.rotas'));
+app.use('/acesso/informativos', require('./rotas/informativo.rotas'));
+app.use('/acesso/noticias', require('./rotas/noticia.rotas'));
 
 // Tratamento de rotas inválidas:
 app.use((req, res, next) => res.status(404).send('Rota Inválida'));
