@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     erro: {
         color: '#ff0000',
     },
-    textarea:{
+    textarea: {
         minWidth: "600px",
         minHeight: "100px",
     },
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function CadastroForm() {
     const classes = useStyles();
-    const { values, handleChange, handleSubmit } = useForm(submit);
+    const { errors, values, handleChange, handleSubmit } = useForm(submit);
     /*const [values, setValues] = React.useState({
         nome: '',
         email: 'hai',
@@ -74,69 +74,192 @@ export default function CadastroForm() {
                     spacing={1}
                 >
                     <FormControl fullWidth className={classes.formControl}>
-                    <InputLabel htmlFor="Informant" shrink>Informante</InputLabel>
-                            <Input
-                                readOnly
-                                id="Informant"
-                                value={values.Informant}
-                                onChange={handleChange}
-                            />
-                        {/* <FormHelperText id="nome-error">Error?</FormHelperText> */}
+                        <InputLabel htmlFor="Informant">Informante</InputLabel>
+                        <Input
+                            readOnly
+                            id="Informant"
+                            value={values.Informant}
+                            onChange={handleChange}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="type">Tipo</InputLabel>
+                        <Select
+                            value={values.type}
+                            onChange={handleChange}
+                            inputProps={{
+                                name: 'type',
+                                id: 'type',
+                            }}
+                        >
+                            <MenuItem value='Deslizamento'>Deslizamento</MenuItem>
+                            <MenuItem value='Rachadura'>Rachadura</MenuItem>
+                        </Select>
+                        <FormHelperText className={classes.erro}>{errors.type}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="status">Estatus</InputLabel>
+                        <Select
+                            value={values.status}
+                            onChange={handleChange}
+                            inputProps={{
+                                name: 'status',
+                                id: 'status',
+                            }}
+                        >
+                            <MenuItem value='Pendente'>Pendente</MenuItem>
+                            <MenuItem value='Vistoriado'>Vistoriado</MenuItem>
+                        </Select>
+                        <FormHelperText className={classes.erro}>{errors.status}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="dataRequisicao" shrink>Data de Requisição</InputLabel>
+                        <Input
+                            readOnly
+                            id="dataRequisicao"
+                            type="datetime-local"
+                            value={values.street}
+                            onChange={handleChange}
+                        />
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="Inspector" shrink>Vistoriador</InputLabel>
-                            <Input
-                                readOnly
-                                id="Inspector"
-                                value={values.Inspector}
-                                onChange={handleChange}
-                            />
-                        {/* <FormHelperText id="e-mail-error">o telefone deve conter </FormHelperText> */}
+                        <InputLabel htmlFor="numeroDiscriminacao">Número da discriminação</InputLabel>
+                        <Input
+                            id="numeroDiscriminacao"
+                            value={values.numeroDiscriminacao}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.numeroDiscriminacao}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="numeroOficioEncaminhado">Número do Oficio Encaminhado</InputLabel>
+                        <Input
+                            id="numeroOficioEncaminhado"
+                            value={values.numeroOficioEncaminhado}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.numeroOficioEncaminhado}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="orgaoDestinoOficio">Orgão de Destino do Oficio</InputLabel>
+                        <Input
+                            id="orgaoDestinoOficio"
+                            value={values.orgaoDestinoOficio}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.orgaoDestinoOficio}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="dataVistoria" shrink>Data da Visita</InputLabel>
+                        <Input
+                            id="dataVistoria"
+                            type="date"
+                            value={values.dataVistoria}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.dataVistoria}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="equipeVistoria">Vistoriador</InputLabel>
+                        <Input
+                            id="equipeVistoria"
+                            value={values.equipeVistoria}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.equipeVistoria}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="dataMonitoramento" shrink>Data para Monitoramento</InputLabel>
+                        <Input
+                            id="dataMonitoramento"
+                            type="date"
+                            value={values.dataMonitoramento}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.dataMonitoramento}</FormHelperText>
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
-                    <InputLabel htmlFor="type">Tipo</InputLabel>
-                            <Select
-                                value={values.type}
-                                onChange={handleChange}
-                                inputProps={{
-                                    name: 'type',
-                                    id: 'type',
-                                }}
-                            >
-                                <MenuItem value='Deslizamento'>Deslizamento</MenuItem>
-                                <MenuItem value='Rachadura'>Rachadura</MenuItem>
-                            </Select>
-                        {/* <FormHelperText id="type-error">o telefone deve conter </FormHelperText> */}
+                        <InputLabel htmlFor="morador">Morador</InputLabel>
+                        <Input
+                            id="morador"
+                            value={values.morador}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.morador}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="telefoneContato" shrink>Telefone para Contato</InputLabel>
+                        <Input
+                            id="telefoneContato"
+                            value={values.telefoneContato}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.telefoneContato}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="pessoasEnvolvidas">Pessoas Envolvidas</InputLabel>
+                        <Input
+                            id="pessoasEnvolvidas"
+                            type="number"
+                            value={values.pessoasEnvolvidas}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.pessoasEnvolvidas}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="vitimaParcial">Vitima Parcial</InputLabel>
+                        <Input
+                            id="vitimaParcial"
+                            type="number"
+                            value={values.vitimaParcial}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.vitimaParcial}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="vitimaFatal">Vitima Fatal</InputLabel>
+                        <Input
+                            readOnly
+                            id="vitimaFatal"
+                            type="number"
+                            value={values.vitimaFatal}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.vitimaFatal}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="interdicao">Interdição</InputLabel>
+                        <Select
+                            value={values.interdicao}
+                            onChange={handleChange}
+                            inputProps={{
+                                name: 'interdicao',
+                                id: 'interdicao',
+                            }}
+                        >
+                            <MenuItem value='Sim'>Sim</MenuItem>
+                            <MenuItem value='Parcial'>Parcial</MenuItem>
+                            <MenuItem value='Não'>Não</MenuItem>
+                        </Select>
+                        <FormHelperText className={classes.erro}>{errors.interdicao}</FormHelperText>
+                    </FormControl>
+                    <FormControl fullWidth className={classes.formControl}>
+                        <InputLabel htmlFor="doacao">Doação</InputLabel>
+                        <Input
+                            id="doacao"
+                            type="number"
+                            value={values.doacao}
+                            onChange={handleChange}
+                        />
+                        <FormHelperText className={classes.erro}>{errors.doacao}</FormHelperText>
                     </FormControl>
 
-                    <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="status">Estatus</InputLabel>
-                            <Select
-                                value={values.status}
-                                onChange={handleChange}
-                                inputProps={{
-                                    name: 'status',
-                                    id: 'status',
-                                }}
-                            >
-                                <MenuItem value='Pendente'>Pendente</MenuItem>
-                                <MenuItem value='Vistoriado'>Vistoriado</MenuItem>
-                            </Select>
-                        </FormControl>
 
-                    <FormControl fullWidth className={classes.formControl}>
-                    <InputLabel htmlFor="date" shrink="true" shrink>Data e Hora</InputLabel>
-                            <Input
-                                readOnly
-                                id="date"
-                                type="datetime-local"
-                                value={values.street}
-                                onChange={handleChange}
-                            />
-                        {/* <FormHelperText id="telefone-error">o telefone deve conter </FormHelperText> */}
-                    </FormControl>
+
+
+
                     <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
                         <Input
@@ -155,7 +278,6 @@ export default function CadastroForm() {
                                 onChange={handleChange}
                                 aria-describedby="numero-error"
                             />
-                            {/* <FormHelperText id="numero-error"></FormHelperText> */}
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} md={7}>
@@ -206,11 +328,27 @@ export default function CadastroForm() {
                                 name: 'description',
                                 id: 'description',
                             }}
-                            
+
                         />
-                        {/*<FormHelperText id="cep-error" className={classes.erro}></FormHelperText>*/}
+                        <FormHelperText className={classes.erro}>{errors.description}</FormHelperText>
                     </FormControl>
-                    <ListaImagem/>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="retornoVistoria" shrink>Retorno da Vistoria</InputLabel>
+                        <TextareaAutosize
+                            className={classes.textarea}
+                            value={values.retornoVistoria}
+                            onChange={handleChange}
+                            rowsMax={4}
+                            aria-label="maximum height"
+                            inputProps={{
+                                name: 'retornoVistoria',
+                                id: 'retornoVistoria',
+                            }}
+
+                        />
+                        <FormHelperText className={classes.erro}>{errors.retornoVistoria}</FormHelperText>
+                    </FormControl>
+                    <ListaImagem />
                     <Grid
                         container
                         direction="row"
