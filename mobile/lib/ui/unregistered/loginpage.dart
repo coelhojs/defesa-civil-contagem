@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 import '../../helpers/size_config.dart';
-
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,12 +15,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool sucess=true;
+  bool sucess = true;
+  SharedPreferences userData;
+
+
+  @override
+  void initState() {
+    super.initState();
+    getCredentials();
+  }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      floatingActionButton:
+          FloatingActionButton.extended(onPressed: () {}, label: Text("Teste")),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -48,8 +58,8 @@ class _LoginPageState extends State<LoginPage> {
                           content: Row(
                             children: <Widget>[
                               CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(Color.fromRGBO(246, 129, 33, 1)),
-
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color.fromRGBO(246, 129, 33, 1)),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -58,20 +68,22 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         );
-                      }
-                  );
-                  signInWithGoogle().then((result){
+                      });
+                  signInWithGoogle().then((result) async {
 
-                      if(sucess){
-                        setCredentials(name,email,image);
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => HomeLogged()),(Route<dynamic> route) => false);
-                      }
-                      else{
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => RegisterPage()),(Route<dynamic> route) => false);
-                      }
-                  }).catchError((erro){
+                    if (sucess) {
+                      setCredentials(name, email, image);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => HomeLogged()),
+                          (Route<dynamic> route) => false);
+                    } else {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => RegisterPage(
+                                  name: name, email: email, image: image)),
+                          (Route<dynamic> route) => false);
+                    }
+                  }).catchError((erro) {
                     print("ERRO");
                   });
                 },
@@ -83,52 +95,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _signInButton() {
-    return OutlineButton(
-      splashColor: Colors.grey,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(
-                image: AssetImage("assets/images/google.jpg"),
-                height: SizeConfig.blockSizeHorizontal * 8),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Fazer login com Google',
-                style: TextStyle(
-                  fontSize: SizeConfig.blockSizeHorizontal * 4.5,
-                  color: Colors.grey,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-      onPressed: () async {
-        signInWithGoogle().whenComplete(() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return LoginPage();
-              },
-            ),
-          );
-        });
-      },
-    );
-  }
-
   setCredentials(String name, String email, String image) async {
-    SharedPreferences userData = await SharedPreferences.getInstance();
     userData.setString("name", name);
     userData.setString("email", email);
     userData.setString("image", image);
+    userData.commit();
+  }
+
+  getCredentials()async{
+    userData = await SharedPreferences.getInstance();
   }
 }

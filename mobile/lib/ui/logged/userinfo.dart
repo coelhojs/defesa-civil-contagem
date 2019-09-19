@@ -2,6 +2,7 @@ import 'package:defesa_civil/helpers/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class UserInfo extends StatefulWidget {
   @override
   _UserInfoState createState() => _UserInfoState();
@@ -36,8 +37,11 @@ class _UserInfoState extends State<UserInfo> {
         ),
       ),
       floatingActionButton:
-          FloatingActionButton.extended(onPressed: () {
-            print(name);
+          FloatingActionButton.extended(onPressed: () async{
+            SharedPreferences userData = await SharedPreferences.getInstance();
+            print(userData.getString("name"));
+            userData.clear();
+            //print(name);
           }, label: Text("Testee", style: TextStyle(color: Colors.white),),
           backgroundColor: Colors.black54,),
     );
@@ -46,9 +50,11 @@ class _UserInfoState extends State<UserInfo> {
   getCredentials()async {
     SharedPreferences userData = await SharedPreferences.getInstance();
     setState(() {
-      name = userData.getString("name");
-      email = userData.getString("email");
-      image = userData.getString("image");
+      if(userData.getString("name") != null) {
+        name = userData.getString("name");
+        email = userData.getString("email");
+        image = userData.getString("image");
+      }
     });
   }
 }
