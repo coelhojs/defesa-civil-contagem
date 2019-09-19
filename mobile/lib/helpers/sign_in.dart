@@ -6,6 +6,7 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 String name;
 String email;
 String image;
+String token;
 
 Future<String> signInWithGoogle() async {
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
@@ -17,7 +18,7 @@ Future<String> signInWithGoogle() async {
     idToken: googleSignInAuthentication.idToken,
   );
 
-  final FirebaseUser user = await _auth.signInWithCredential(credential);
+  final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
 
   assert(user.displayName != null);
   assert(!user.isAnonymous);
@@ -26,6 +27,7 @@ Future<String> signInWithGoogle() async {
   name = user.displayName;
   email = user.email;
   image = user.photoUrl;
+  token = googleSignInAuthentication.idToken;
 
   final FirebaseUser currentUser = await _auth.currentUser();
   assert(user.uid == currentUser.uid);

@@ -12,7 +12,7 @@
         android:label="defesa_civil"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDrud8AunST8uTxV0K7df50dFjnM59kbBg"/>
+            android:value="AIzaSyABW6lsQkTYVnQAOjZVlIlXzYTKejctL5A"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
