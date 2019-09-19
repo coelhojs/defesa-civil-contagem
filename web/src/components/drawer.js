@@ -1,27 +1,23 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import ListItemLink from "./listItemLink";
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import { makeStyles } from '@material-ui/core/styles';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import MapIcon from '@material-ui/icons/Map';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import SettingsIcon from '@material-ui/icons/Settings';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import Chamados from '../containers/Chamados';
+import { useAuth } from "../customHooks/useAuth";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
@@ -29,19 +25,17 @@ const useStyles = makeStyles(theme => ({
     drawerPaper: {
         width: drawerWidth,
     },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
-    toolbar: theme.mixins.toolbar,
+    toolbar: theme.mixins.toolbar
+
 }));
 
-export default function ClippedDrawer() {
-    const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
+export default function AppDrawer() {
+    const classes = useStyles();
+    const auth = useAuth();
+
+    if (auth.user) {
+        return (
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -51,14 +45,36 @@ export default function ClippedDrawer() {
             >
                 <div className={classes.toolbar} />
                 <List>
-                    {['Mapa', 'Chamados', 'Usuários'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                
+                    <ListItem button key="Mapa" disabled>
+                        <ListItemIcon>
+                            <MapIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Mapa" />
+                    </ListItem>
+                
+                    <ListItemLink to="/Chamados" primary="Chamados" icon={<FeedbackIcon />} />
+
+                    <ListItem button key="Usuários" disabled>
+                        <ListItemIcon>
+                            <PeopleAltIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Usuários" />
+                    </ListItem>
+                </List>
+                <Divider />
+                <List>
+                    <ListItem button key="Configurações" disabled>
+                        <ListItemIcon>
+                            <SettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Configurações" />
+                    </ListItem>
+
                 </List>
             </Drawer>
-        </div>
-    );
+        )
+    } else {
+        return null;
+    }
 }

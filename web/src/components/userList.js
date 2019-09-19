@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,8 +8,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 
 import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import DeleteIcon from '@material-ui/icons/Delete';
+import LockIcon from '@material-ui/icons/Lock';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -23,7 +25,15 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import FaceIcon from '@material-ui/icons/Face';
 
+import NewUser from './newUser';
+
 const useStyles = makeStyles(theme => ({
+    margin: {
+        margin: theme.spacing(1),
+      },
+      extendedIcon: {
+        marginRight: theme.spacing(1),
+      },
     grow: {
         flexGrow: 1,
     },
@@ -140,9 +150,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <Button variant="contained" className={classes.button}>
-                            Novo
-                        </Button>
+                        <NewUser></NewUser>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -159,11 +167,12 @@ export default function PrimarySearchAppBar() {
                                         </ListItemIcon>
                                         <ListItemText id={"switch-list-label-"+row.code} primary={row.name} />
                                         <ListItemSecondaryAction>
-                                            {/*<Fab size="small" color="secondary" aria-label="edit" className={classes.fab}>
-                                                <DeleteIcon />
-                                            </Fab>*/}
-                                            <Fab size="small" color="primary" aria-label="edit" className={classes.fab}>
-                                                <EditIcon />
+                                            <Fab size="small" color="success" aria-label="lock" className={classes.margin}>
+                                                <LockIcon />
+                                                <LockOpenIcon />
+                                            </Fab>
+                                            <Fab size="small" color="primary" aria-label="assignment" className={classes.margin}>
+                                                <AssignmentIcon />
                                             </Fab>
                                         </ListItemSecondaryAction>
                                     </ListItem>
@@ -189,6 +198,7 @@ export default function PrimarySearchAppBar() {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </main>
+            
         </div>
     );
 }

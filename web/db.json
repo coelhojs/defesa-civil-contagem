@@ -1,32 +1,51 @@
 {
-    "Chamados": {
-        "tipo": "desabamento",
-        "timestamp": "1568331344",
-        "descricao": "Terreno íngreme propenso a desabamento de terra.",
-        "status": "pendente",
-        "cidadao": 1,
-        "vistoriador": "José Carlos de Oliveira",
-        "foto": "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg",
-        "local": {
-            "lat": "-19.9401644",
-            "lng": "-43.9341399,15z"
+    "Chamados": [
+        {
+            "id": 1,
+            "tipo": "desabamento",
+            "timestamp": "1568331344",
+            "descricao": "Terreno íngreme propenso a desabamento de terra.",
+            "status": "pendente",
+            "cidadao": 1,
+            "vistoriador": "José Carlos de Oliveira",
+            "foto": "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg",
+            "local": {
+                "lat": "-19.9401644",
+                "lng": "-43.9341399,15z"
+            }
+        },
+        {
+            "id": 2,
+            "tipo": "desabamento",
+            "timestamp": "1568331344",
+            "descricao": "Terreno íngreme propenso a desabamento de terra.",
+            "status": "pendente",
+            "cidadao": 1,
+            "vistoriador": "José Carlos de Oliveira",
+            "foto": "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg",
+            "local": {
+                "lat": "-19.9401644",
+                "lng": "-43.9341399,15z"
+            }
         }
-    },
-    "Usuarios": {
-        "id": 1,
-        "tipo": "cidadao",
-        "nome": "Cristiano Coelho de Jesus Souza",
-        "telefone": "(31) 98587-7928",
-        "cpf": "123.456.789-09",
-        "email": "ccoelho.me@gmail.com",
-        "dataNascimento": "15/03/1994",
-        "endereco": {
-            "rua": "Cláudio Manoel",
-            "numero": "1162",
-            "complemento": "",
-            "bairro": "Funcionários",
-            "cidade": "Belo Horizonte",
-            "cep": "00000-000"
+    ],
+    "Usuarios": [
+        {
+            "id": 1,
+            "tipo": "cidadao",
+            "nome": "Cristiano Coelho de Jesus Souza",
+            "telefone": "(31) 98587-7928",
+            "cpf": "123.456.789-09",
+            "email": "ccoelho.me@gmail.com",
+            "dataNascimento": "15/03/1994",
+            "endereco": {
+                "rua": "Cláudio Manoel",
+                "numero": "1162",
+                "complemento": "",
+                "bairro": "Funcionários",
+                "cidade": "Belo Horizonte",
+                "cep": "00000-000"
+            }
         }
-    }
+    ]
 }
