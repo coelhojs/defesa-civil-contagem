@@ -36,6 +36,7 @@ class _RegisterPageState extends State<RegisterPage>
   String image;
   int _enderecoState = 0;
   String endereco = "CEP Inválido";
+  FocusNode node = FocusNode();
 
   _RegisterPageState(this.name,this.email,this.image);
 
@@ -109,6 +110,11 @@ class _RegisterPageState extends State<RegisterPage>
                         padding: EdgeInsets.all(10),
                       ),
                       TextFormField(
+                        onChanged: (value){
+                          if(value.length==14)
+                          FocusScope.of(context).requestFocus(node);
+                        },
+                        autofocus: true,
                         controller: cpfController,
                         maxLength: 14,
                         keyboardType: TextInputType.number,
@@ -128,6 +134,7 @@ class _RegisterPageState extends State<RegisterPage>
                         padding: EdgeInsets.all(10),
                       ),
                       TextFormField(
+                        focusNode: node,
                         controller: telController,
                         maxLength: 14,
                         keyboardType: TextInputType.number,
