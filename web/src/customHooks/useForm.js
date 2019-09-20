@@ -6,6 +6,7 @@ import { useAuth } from "../customHooks/useAuth";
 
 export const useForm = (callback) => {
     const auth = useAuth();
+
     const formInputs = {
         nome: '',
         email: '',
@@ -21,6 +22,7 @@ export const useForm = (callback) => {
         cidade: '',
         estado: ''
     }
+    const [idToken, setIdToken] = useState('');
     const [values, setValues] = useState(formInputs);
     const [errors, setErrors] = useState(formInputs);
     console.log(auth);
@@ -29,7 +31,10 @@ export const useForm = (callback) => {
             setValues({ email: auth.user.email })
         }
     }, [auth.user]);
+
     const handleSubmit = (event) => {
+        console.log(values);
+        auth.signup(idToken, values);
         if (event) event.preventDefault();
         callback();
     };

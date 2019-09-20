@@ -216,7 +216,8 @@ export default function CadastroForm() {
                         <Button variant="contained" color="secondary" className={classes.button}>
                             Cancelar
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.button}>
+                        <Button variant="contained" color="primary" className={classes.button}
+                            type="submit">
                             Enviar
                         <Send className={classes.rightIcon} />
                         </Button>
