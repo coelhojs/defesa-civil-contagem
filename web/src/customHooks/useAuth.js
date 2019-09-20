@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import { getUsuario } from '../controllers/Usuarios';
+import { cadastroUsuario, loginUsuario, getUsuario } from '../controllers/Usuarios';
 import history from '../history';
 
 // const firebaseConfig = {
@@ -51,6 +51,7 @@ export const useAuth = () => {
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
   const [user, setUser] = useState(null);
+  const [idToken, setIdToken] = useState('');
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
@@ -60,25 +61,32 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
-        if (getUsuario(response.user.email)) {
-          console.log(`Usuario cadastrado: ${response.user.email}`);
-          setUser(response.user);
-          return response.user;
+        setIdToken = response.credential.idToken;
+        if (loginUsuario(idToken)) {
+          console.log(response);
+          setUser(response);
+          return response;
         } else {
 
         }
       });
   };
 
-  const signup = (email, password) => {
-    return firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(response => {
-        setUser(response.user);
-        return response.user;
-      });
+  const signup = (idToken, formValues) => {
+    return cadastroUsuario(idToken, formValues);
   };
+
+
+
+  // const signup = (email, password) => {
+  //   return firebase
+  //     .auth()
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then(response => {
+  //       setUser(response.user);
+  //       return response.user;
+  //     });
+  // };
 
   const signout = () => {
     return firebase
