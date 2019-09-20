@@ -1,19 +1,4 @@
 
-export default function validate(values) {
-    let errors = {};
-
-    errors.nome = validarNome(values.nome);
-    errors.cpf = validarCPF(values.cpf);
-    errors.email = validarEmail(values.email);
-
-    if (!values.password) {
-        errors.password = 'Password is required';
-    } else if (values.password.length < 8) {
-        errors.password = 'Password must be 8 or more characters';
-    }
-
-    return errors;
-};
 
 const required = value => value ? undefined : ' Campo obrigatório';
 
