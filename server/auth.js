@@ -2,6 +2,7 @@ const { OAuth2Client } = require('google-auth-library');
 const TokenGenerator = require('uuid-token-generator');
 const Usuario = require('./modelos/usuario.modelo');
 const express = require('express');
+const request = require('request'); ''
 
 const router = express.Router();
 
@@ -91,13 +92,33 @@ function gerarToken() {
 
 // Decodifica o token do Google e retorna o campo 'sub' (subject)
 async function getSubject(token) {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID,
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        const sub = payload['sub'];
+        return sub;
+    } catch (ex) {
+        return await requestSubject(token);
+    }
+}
+
+async function requestSubject(token) {
+    const URL = `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`;
+    return new Promise((resolve, reject) => {
+        request.get(URL, (err, res, body) => {
+            if (err) return reject(err);
+            let bodyObj = JSON.parse(body);
+            if (bodyObj.sub)
+                return resolve(bodyObj.sub);
+            else if (bodyObj.error_description)
+                return reject(bodyObj.error_description);
+            else
+                return reject('Token inválido');
+        });
     });
-    const payload = ticket.getPayload();
-    const sub = payload['sub'];
-    return sub;
 }
 
 // Exportações
