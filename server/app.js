@@ -18,13 +18,17 @@ app.use('/auth', auth.rotas);
 
 // Controle de todas as rotas de acesso:
 app.use('/acesso/*', (req, res, next) => {
-    let api_token = req.headers.authorization.split(' ')[1];
-    let user_id = auth.getUserId(api_token);
-    if (!user_id) {
-        res.status(500).send('Usuário não logado');
-    } else {
-        req.user = { user_id: user_id };
-        next();
+    try {
+        let api_token = req.headers.authorization.split(' ')[1];
+        let user_id = auth.getUserId(api_token);
+        if (!user_id) {
+            res.status(500).send('Usuário não logado');
+        } else {
+            req.user = { user_id: user_id };
+            next();
+        }
+    } catch (ex) {
+        req.status(500).send('Acesso não permitido');
     }
 });
 
