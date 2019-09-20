@@ -1,85 +1,107 @@
 
-export function VerificaCEP(event) {
-    let cepValue = event.target.value.replace(/\D/g, '');
+export default function validate(values) {
+    let errors = {};
 
-    if (cepValue.length == 8) {
-        const https = require('https');
+    errors.nome = validarNome(values.nome);
+    errors.cpf = validarCPF(values.cpf);
+    errors.email = validarEmail(values.email);
 
-        https.get('https://viacep.com.br/ws/' + cepValue + '/json/', (resp) => {
-            let data = '';
-
-            // A chunk of data has been recieved.
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // The whole response has been received. Print out the result.
-            resp.on('end', () => {
-                console.log(JSON.parse(data));
-                data = JSON.parse(data);
-
-                if (Object.keys(data).length > 1) {
-                    document.getElementById("logradouro").value = data.logradouro;
-                    document.getElementById("bairro").value = data.bairro;
-                    document.getElementById("cidade").value = data.localidade;
-                    document.getElementById("estado").value = data.uf;
-                    document.getElementById("cep-error").innerHTML = "";
-                }
-                else {
-                    document.getElementById("logradouro").value = "";
-                    document.getElementById("bairro").value = "";
-                    document.getElementById("cidade").value = "";
-                    document.getElementById("estado").value = "";
-                    document.getElementById("cep-error").innerHTML = "CEP invalido";
-                }
-            });
-
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
+    if (!values.password) {
+        errors.password = 'Password is required';
+    } else if (values.password.length < 8) {
+        errors.password = 'Password must be 8 or more characters';
     }
-    else {
-        document.getElementById("logradouro").value = "";
-        document.getElementById("bairro").value = "";
-        document.getElementById("cidade").value = "";
-        document.getElementById("estado").value = "";
-        document.getElementById("cep-error").innerHTML = "";
-    }
+
+    return errors;
 };
 
-export function MinString(input, min){
-    let valor = input.value;
-    if(input.length < min){
-        document.getElementById(input.id+"-error").innerHTML = "sdafasdfsd";
-        return false;
-    }
-    return false;
+const required = value => value ? undefined : ' Campo obrigatório';
+
+const defLength = (value, length) =>
+    value && value.length != length ? ` Este campo deve ter ${length} digitos` : undefined;
+const maxLength = (value, max) =>
+    value && value.length > max ? ` O tamanho máximo para este campo é ${max}` : undefined;
+const minLength = (value, min) =>
+    value && value.length < min ? ` O tamanho mínimo para este campo é ${min}` : undefined;
+
+const nameText = (value) =>
+    value && !/[a-zA-ZÀ-ÿ]+\ +[a-zA-ZÀ-ÿ]/.test(value) ? ' Deve digitar o nome completo' : undefined;
+const email = value =>
+    value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Endereço de e-mail inválido' : undefined;
+const cpf = (value) => {
+    let origCPF = value.replace(/\D/g, '');
+    let Soma;
+    let Resto;
+    let i;
+    Soma = 0;
+
+    for (i = 1; i <= 9; i++)
+        Soma = Soma + parseInt(origCPF.substring(i - 1, i)) * (11 - i);
+
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11))
+        Resto = 0;
+    if (Resto != parseInt(origCPF.substring(9, 10)))
+        return "CPF invalido";
+
+    Soma = 0;
+    for (i = 1; i <= 10; i++)
+        Soma = Soma + parseInt(origCPF.substring(i - 1, i)) * (12 - i);
+
+    Resto = (Soma * 10) % 11;
+
+    if ((Resto == 10) || (Resto == 11))
+        Resto = 0;
+    if (Resto != parseInt(origCPF.substring(10, 11)))
+        return "CPF invalido";
+
+    return undefined;
 }
 
-export const text = value =>
-    value && !/^([a-zA-Zà-úÀ-Ú]|\s+)+$/i.test(value) ?
-        'Endereço de e-mail inválido' : undefined;
 
-export function ApenasLetras(event) {
-    try {
-        if (window.event) {
-            var charCode = window.event.keyCode;
-        } else if (event) {
-            var charCode = event.which;
-        } else {
-            return true;
-        }
-        if (
-            (charCode > 64 && charCode < 91) ||
-            (charCode > 96 && charCode < 123) ||
-            (charCode > 191 && charCode <= 255) // letras com acentos
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    } catch (err) {
-        alert(err.Description);
+export function validarNome(value) {
+    let resp;
+
+    resp = required(value);
+    if (resp)
+        return resp;
+
+    resp = minLength(value, 8);
+    if (resp)
+        return resp;
+
+    resp = nameText(value);
+    if (resp)
+        return resp;
+}
+
+export function validarEmail(value) {
+    let resp;
+
+    resp = required(value);
+    if (resp)
+        return resp;
+
+    resp = email(value);
+    if (resp)
+        return resp;
+}
+
+export function validarCPF(value) {
+    let resp;
+
+    resp = required(value);
+    if (resp)
+        return resp;
+
+    resp = defLength(value, 14);
+    if (resp)
+        return resp;
+    else {
+        resp = cpf(value);
+        if (resp)
+            return resp;
     }
 }
 
