@@ -36,6 +36,24 @@ export const useForm = (callback) => {
 
     const handleChange = (event) => {
         event.persist();
+        if ((event.target.name == "nome") && !(/[a-zA-ZÀ-ÿ]/.test(event.target.value) || event.target.value == ""))
+            return;
+        setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+        switch (event.target.name) {
+            case "nome":
+                errors.nome = validarNome(values.nome);
+
+                break;
+            default:
+                break;
+        }
+
+        console.log(values);
+        console.log(errors);
+    };
+
+    /*const handleChange = (event) => {
+        event.persist();
         setValues(values => ({ ...values, [event.target.name]: event.target.value }));
         switch (event.target.name) {
             case "nome":
@@ -48,7 +66,7 @@ export const useForm = (callback) => {
 
         console.log(values);
         console.log(errors);
-    };
+    };*/
 
     return {
         handleChange,
