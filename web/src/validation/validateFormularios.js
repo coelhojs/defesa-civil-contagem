@@ -1,4 +1,89 @@
-import { api } from "../controllers/index";
+
+export function VerificaCEP(event) {
+    let cepValue = event.target.value.replace(/\D/g, '');
+
+    if (cepValue.length == 8) {
+        const https = require('https');
+
+        https.get('https://viacep.com.br/ws/' + cepValue + '/json/', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                console.log(JSON.parse(data));
+                data = JSON.parse(data);
+
+                if (Object.keys(data).length > 1) {
+                    document.getElementById("logradouro").value = data.logradouro;
+                    document.getElementById("bairro").value = data.bairro;
+                    document.getElementById("cidade").value = data.localidade;
+                    document.getElementById("estado").value = data.uf;
+                    document.getElementById("cep-error").innerHTML = "";
+                }
+                else {
+                    document.getElementById("logradouro").value = "";
+                    document.getElementById("bairro").value = "";
+                    document.getElementById("cidade").value = "";
+                    document.getElementById("estado").value = "";
+                    document.getElementById("cep-error").innerHTML = "CEP invalido";
+                }
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    }
+    else {
+        document.getElementById("logradouro").value = "";
+        document.getElementById("bairro").value = "";
+        document.getElementById("cidade").value = "";
+        document.getElementById("estado").value = "";
+        document.getElementById("cep-error").innerHTML = "";
+    }
+};
+
+export function MinString(input, min){
+    let valor = input.value;
+    if(input.length < min){
+        document.getElementById(input.id+"-error").innerHTML = "sdafasdfsd";
+        return false;
+    }
+    return false;
+}
+
+export const text = value =>
+    value && !/^([a-zA-Zà-úÀ-Ú]|\s+)+$/i.test(value) ?
+        'Endereço de e-mail inválido' : undefined;
+
+export function ApenasLetras(event) {
+    try {
+        if (window.event) {
+            var charCode = window.event.keyCode;
+        } else if (event) {
+            var charCode = event.which;
+        } else {
+            return true;
+        }
+        if (
+            (charCode > 64 && charCode < 91) ||
+            (charCode > 96 && charCode < 123) ||
+            (charCode > 191 && charCode <= 255) // letras com acentos
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (err) {
+        alert(err.Description);
+    }
+}
+
+/*import { api } from "../controllers/index";
 //import { FETCH_ALL_USUARIOS } from '../actions/types';
 
 const maxLength = (value, max) =>
@@ -85,4 +170,4 @@ export const tooOld = value =>
     value && value > 65 ? 'You might be too old for this' : undefined;
 export const aol = value =>
     value && /.+@aol\.com/.test(value) ?
-        'Really? You still use AOL for your email?' : undefined;
+        'Really? You still use AOL for your email?' : undefined;*/
