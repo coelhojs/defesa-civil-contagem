@@ -1,0 +1,13 @@
+// Padrão de resposta para LOGIN
+{
+    "cod": "number",
+    "mensagem": "string",
+    "api_token": "string"
+}
+/*
+COD      DESCRICAO
+0        Usuário logado com sucesso
+1        Usuário não cadastrado
+2        Token Inválido
+*/
+
