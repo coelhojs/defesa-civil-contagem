@@ -28,7 +28,7 @@ app.use('/acesso/*', (req, res, next) => {
             next();
         }
     } catch (ex) {
-        req.status(500).send('Acesso não permitido');
+        res.status(500).send('Acesso não permitido');
     }
 });
 
