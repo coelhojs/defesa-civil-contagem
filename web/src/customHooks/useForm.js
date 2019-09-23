@@ -1,7 +1,7 @@
 //https://github.com/upmostly/custom-react-hooks-forms/blob/master/src/useForm.js
 import * as _ from 'lodash';
 import { useState, useEffect } from 'react';
-import { validarNomes } from '../validation/validateFormularios'
+// import { validarNome } from '../validation/validateFormularios'
 import { useAuth } from "../customHooks/useAuth";
 
 export const useForm = (callback) => {
@@ -46,7 +46,7 @@ export const useForm = (callback) => {
         setValues(values => ({ ...values, [event.target.name]: event.target.value }));
         switch (event.target.name) {
             case "nome":
-                errors.nome = validarNome(values.nome);
+                // errors.nome = validarNome(values.nome);
 
                 break;
             default:
