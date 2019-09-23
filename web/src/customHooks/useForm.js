@@ -1,7 +1,7 @@
 //https://github.com/upmostly/custom-react-hooks-forms/blob/master/src/useForm.js
 import * as _ from 'lodash';
 import { useState, useEffect } from 'react';
-// import { validarNome } from '../validation/validateFormularios'
+import { validarNome } from '../validation/validateFormularios'
 import { useAuth } from "../customHooks/useAuth";
 
 export const useForm = (callback) => {
