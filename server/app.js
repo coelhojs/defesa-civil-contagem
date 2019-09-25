@@ -19,6 +19,7 @@ app.use(bodyparser.urlencoded({ extended: false }));
 // Login e Cadastro:
 app.use('/auth', auth.rotas);
 
+
 // Controle de todas as rotas de acesso:
 app.use('/acesso/*', (req, res, next) => {
 	try {
