@@ -16,7 +16,6 @@ app.use(morgan('dev'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
-
 // Login e Cadastro:
 app.use('/auth', auth.rotas);
 
