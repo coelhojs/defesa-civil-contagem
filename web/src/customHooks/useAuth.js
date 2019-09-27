@@ -5,16 +5,6 @@ import "firebase/auth";
 import { cadastroUsuario, loginUsuario, getUsuario } from '../controllers/Usuarios';
 import history from '../history';
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyA9KI6v1zI8bfNDS8dTe2AiZDKWOwJFKdQ",
-//   authDomain: "defesa-civil-contagem.firebaseapp.com",
-//   databaseURL: "https://defesa-civil-contagem.firebaseio.com",
-//   projectId: "defesa-civil-contagem",
-//   storageBucket: "defesa-civil-contagem.appspot.com",
-//   messagingSenderId: "651305936833",
-//   appId: "1:651305936833:web:456a186aec8d342ddfb140"
-// };
-
 const firebaseConfig = {
   apiKey: "AIzaSyAU87-FPUdNrSzn8jWanB93L3jRVA-xyIY",
   authDomain: "defesa-civil-contagem.firebaseapp.com",
@@ -51,7 +41,7 @@ export const useAuth = () => {
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
   const [user, setUser] = useState(null);
-  const [idToken, setIdToken] = useState('');
+  const [idToken, setIdToken] = useState("");
 
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
@@ -61,6 +51,8 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
+        console.log(idToken);
+        console.log(response);
         setIdToken = response.credential.idToken;
         if (loginUsuario(idToken)) {
           console.log(response);
@@ -75,8 +67,6 @@ function useProvideAuth() {
   const signup = (idToken, formValues) => {
     return cadastroUsuario(idToken, formValues);
   };
-
-
 
   // const signup = (email, password) => {
   //   return firebase
