@@ -5,6 +5,8 @@ const helmet = require('helmet');
 const auth = require('./auth');
 const cors = require('cors');
 
+const onlineSince = Date();
+
 const app = express();
 
 app.use(express.static('./public'));
@@ -35,7 +37,7 @@ app.use('/acesso/*', (req, res, next) => {
 	}
 });
 
-app.get('/status', (req, res) => res.status(200).send('online v0.0.1'));
+app.get('/status', (req, res) => res.status(200).send('Online desde ' + onlineSince));
 
 // Entidades Fisicas:
 app.use('/acesso/usuarios', require('./rotas/usuario.rotas'));
