@@ -35,7 +35,7 @@ app.use('/acesso/*', (req, res, next) => {
 	}
 });
 
-app.get('/status', (req, res) => res.status(200).send('online'));
+app.get('/status', (req, res) => res.status(200).send('online v0.0.1'));
 
 // Entidades Fisicas:
 app.use('/acesso/usuarios', require('./rotas/usuario.rotas'));
