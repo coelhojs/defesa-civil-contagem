@@ -12,6 +12,7 @@ const CLIENT_ID = [
 	'651305936833-qpt762o2f5669pu9v2de2229jhpc5l05.apps.googleusercontent.com' // ANDROID
 ]
 
+
 const client = new OAuth2Client(CLIENT_ID);
 
 // Controle de sessões:
