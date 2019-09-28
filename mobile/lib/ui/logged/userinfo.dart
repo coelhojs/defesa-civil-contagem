@@ -12,6 +12,7 @@ class _UserInfoState extends State<UserInfo> {
   String name='Name';
   String email='Email';
   String image='http://pluspng.com/img-png/user-png-icon-male-user-icon-512.png';
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -22,6 +23,7 @@ class _UserInfoState extends State<UserInfo> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         child: Column(
           children: <Widget>[
@@ -38,10 +40,7 @@ class _UserInfoState extends State<UserInfo> {
       ),
       floatingActionButton:
           FloatingActionButton.extended(onPressed: () async{
-            SharedPreferences userData = await SharedPreferences.getInstance();
-            print(userData.getString("name"));
-            userData.clear();
-            //print(name);
+            _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Usuário já está cadastrado"),duration: Duration(seconds: 3),backgroundColor: Colors.red,));
           }, label: Text("Testee", style: TextStyle(color: Colors.white),),
           backgroundColor: Colors.black54,),
     );
