@@ -2,16 +2,15 @@ const { OAuth2Client } = require('google-auth-library');
 const TokenGenerator = require('uuid-token-generator');
 const Usuario = require('./modelos/usuario.modelo');
 const express = require('express');
-const request = require('request');
+const request = require('request'); ''
 
 const router = express.Router();
 
-// Client_id para testes:
-const CLIENT_ID = [
-	'651305936833-sov6dac5o5v1d3a91mgb0u6t9o3fkduv.apps.googleusercontent.com', // WEB
-	'651305936833-qpt762o2f5669pu9v2de2229jhpc5l05.apps.googleusercontent.com' // ANDROID
-]
+// Nosso Client_id do projeto:
+//const CLIENT_ID = '651305936833-2o57lou1jo7bmpb9fnt8oemigibg6dgp.apps.googleusercontent.com'; 
 
+// Client_id para testes:
+const CLIENT_ID = '407408718192.apps.googleusercontent.com'; // Client_id apenas para testes
 
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -54,10 +53,10 @@ router.post('/login', async (req, res) => {
 		} else {
 			let api_token = gerarToken();
 			set(user_id, api_token);
-			res.status(200).json(new Resposta(true, 'Usuário logado com sucesso', api_token));
+			res.status(200).json({ api_token: api_token });
 		}
 	} catch (ex) {
-		res.status(500).json(new Resposta(false, 'Erro ao fazer login', ex));
+		res.status(500).send('Erro: ' + ex);
 	}
 });
 
@@ -68,7 +67,7 @@ router.post('/cadastro', async (req, res) => {
 		let user_id = await getSubject(token);
 		if (await Usuario.findOne({ user_id: user_id })) {
 			// Usuário já existe
-			res.status(500).json('O usuário já está cadastrado');
+			res.status(500).send('O usuário já está cadastrado');
 		} else {
 			let req_user = req.body;
 			req_user.user_id = user_id;
