@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/helpers/sign_in.dart';
 import 'package:defesa_civil/ui/logged/homelogged.dart';
 import 'package:defesa_civil/ui/unregistered/registerpage.dart';
@@ -30,7 +33,9 @@ class _LoginPageState extends State<LoginPage> {
     SizeConfig().init(context);
     return Scaffold(
       floatingActionButton:
-          FloatingActionButton.extended(onPressed: () {}, label: Text("Teste")),
+          FloatingActionButton.extended(onPressed: ()async {
+
+          }, label: Text("Teste")),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -70,8 +75,13 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       });
                   signInWithGoogle().then((result) async {
-
-                    if (sucess) {
+                    var url = '$REQ/auth/login';
+                    print(result);
+                    var response = await http.post(url,headers: {"authorization": "Bearer $token"});
+                    print('Response status: ${response.statusCode}');
+                    var responseDecoded = json.decode(response.body);
+                    print('Response body: ${response.body}');
+                    if (response.body!="Usuário não cadastrado") {
                       setCredentials(name, email, image);
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => HomeLogged()),
@@ -80,11 +90,11 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) => RegisterPage(
-                                  name: name, email: email, image: image)),
+                                  name, email, image, token)),
                           (Route<dynamic> route) => false);
                     }
                   }).catchError((erro) {
-                    print("ERRO");
+                    print("ERRO: $erro");
                   });
                 },
               ),
