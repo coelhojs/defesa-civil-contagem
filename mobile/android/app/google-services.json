@@ -8,38 +8,29 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:651305936833:android:f4a0c4c02c6d767ddfb140",
+        "mobilesdk_app_id": "1:651305936833:android:a79a7a095fa7d186dfb140",
         "android_client_info": {
           "package_name": "br.gov.mg.contagem.defesa_civil"
         }
       },
       "oauth_client": [
         {
-          "client_id": "651305936833-5di8k9s52tlrnftdmuntfmfpkrojk7oh.apps.googleusercontent.com",
+          "client_id": "651305936833-np6jk9a0vaqau4h6sln90qkg4c8lbsbt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.gov.mg.contagem.defesa_civil",
-            "certificate_hash": "877964a6711312f482ec3f695f4115705c647408"
+            "certificate_hash": "b46a61d59c4e8f44978c60703be92cdb169149fe"
           }
-        },
-        {
-          "client_id": "651305936833-7geo98uio1cl18l6u3ic4clmjdifqdb5.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyABW6lsQkTYVnQAOjZVlIlXzYTKejctL5A"
+          "current_key": "AIzaSyBD1LluJKJxYj2gf0tFpT456-4POZ3LGbY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "651305936833-7geo98uio1cl18l6u3ic4clmjdifqdb5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
