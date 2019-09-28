@@ -76,10 +76,10 @@ class _LoginPageState extends State<LoginPage> {
                       });
                   signInWithGoogle().then((result) async {
                     var url = '$REQ/auth/login';
-                    print(result);
+                    print(token);
                     var response = await http.post(url,headers: {"authorization": "Bearer $token"});
                     print('Response status: ${response.statusCode}');
-                    var responseDecoded = json.decode(response.body);
+                    //var responseDecoded = json.decode(response.body);
                     print('Response body: ${response.body}');
                     if (response.body!="Usuário não cadastrado") {
                       setCredentials(name, email, image);

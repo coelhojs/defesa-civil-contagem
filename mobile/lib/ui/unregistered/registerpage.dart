@@ -30,6 +30,7 @@ class _RegisterPageState extends State<RegisterPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   SharedPreferences userData;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var cepController = new MaskedTextController(mask: '00000-000');
   var cpfController = new MaskedTextController(mask: '000.000.000-00');
   var telController = new MaskedTextController(mask: '(00)00000-0000');
@@ -65,6 +66,7 @@ class _RegisterPageState extends State<RegisterPage>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        key: _scaffoldKey,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
             if (_tabController.index == 0) {
@@ -231,6 +233,8 @@ class _RegisterPageState extends State<RegisterPage>
                             return "Insira o CEP";
                           else if (value.length != 9)
                             return "O tamanho do CEP são 8 dígitos";
+                          else if(endereco == "CEP não encontrado")
+                            return "CEP não encontrado";
                         },
                       ),
                       Padding(
