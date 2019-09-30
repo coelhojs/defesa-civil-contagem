@@ -1,17 +1,14 @@
 const bodyparser = require('body-parser');
+const auth = require('./auth');
 const express = require('express');
 const morgan = require('morgan');
-const helmet = require('helmet');
-const auth = require('./auth');
 const cors = require('cors');
 
 const app = express();
-
 app.use(express.static('./public'));
 
 // Middlewares:
 app.use(cors());
-app.use(helmet());
 app.use(morgan('dev'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -21,21 +18,19 @@ app.use('/auth', auth.rotas);
 
 // Controle de todas as rotas de acesso:
 app.use('/acesso/*', (req, res, next) => {
-	try {
-		let api_token = req.headers.authorization.split(' ')[1];
-		let user_id = auth.getUserId(api_token);
-		if (!user_id) {
-			res.status(500).send('Usuário não logado');
-		} else {
-			req.user = { user_id: user_id };
-			next();
-		}
-	} catch (ex) {
-		res.status(500).send('Acesso não permitido');
-	}
+    try {
+        let api_token = req.headers.authorization.split(' ')[1];
+        let user_id = auth.getUserId(api_token);
+        if (!user_id) {
+            res.status(500).send('Usuário não logado');
+        } else {
+            req.user = { user_id: user_id };
+            next();
+        }
+    } catch (ex) {
+        res.status(500).send('Acesso não permitido');
+    }
 });
-
-app.get('/status', (req, res) => res.status(200).send('online'));
 
 // Entidades Fisicas:
 app.use('/acesso/usuarios', require('./rotas/usuario.rotas'));
