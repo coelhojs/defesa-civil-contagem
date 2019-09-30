@@ -5,14 +5,14 @@ const Schema = mongoose.Schema;
 const NOME_MODELO = 'Usuario';
 
 const schema = new Schema({
-    user_id: { type: String, unique: true, required: true },
-    tipo: { type: String },
-    nome: { type: String },
-    telefone: { type: String },
-    cpf: { type: String },
-    email: { type: String },
-    nascimento: { type: Date },
-    endereco: { type: String },
+	google_id: { type: String, unique: true },
+	tipo: { type: String },
+	nome: { type: String },
+	telefone: { type: String },
+	cpf: { type: String },
+	email: { type: String },
+	nascimento: { type: Date },
+	endereco: { type: String },
 
 }, { strict: false });
 
