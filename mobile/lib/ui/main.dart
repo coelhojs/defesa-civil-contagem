@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Google Maps Demo',
-      home: RegisterPage(),
+      home: LoginPage(),
       theme: ThemeData(fontFamily: 'Uber',),
       debugShowCheckedModeBanner: false,
     );
