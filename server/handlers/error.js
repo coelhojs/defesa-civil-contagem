@@ -16,11 +16,16 @@ class AppError extends Error {
 	}
 
 	toJSON() {
-		return {
-			stack: this.stack,
-			mensagem: this.mensagem,
-			mensagem_amigavel: this.mensagem_amigavel,
-		}
+		if (process.env.NODE_ENV.toLowerCase() == 'development')
+			return {
+				stack: this.stack,
+				mensagem: this.mensagem,
+				mensagem_amigavel: this.mensagem_amigavel,
+			}
+		else if (process.env.NODE_ENV.toLowerCase() == 'production')
+			return {
+				mensagem_amigavel: this.mensagem_amigavel,
+			}
 	}
 }
 
