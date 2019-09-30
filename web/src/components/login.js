@@ -42,7 +42,7 @@ export default function Login(props) {
                     alignItems="center"
                     spacing={2}
                 >
-                    <TextField
+                    {/* <TextField
                         label="Email"
                         className={classes.textField}
                         type="email"
@@ -60,7 +60,7 @@ export default function Login(props) {
                         autoComplete="current-password"
                         margin="normal"
                         variant="outlined"
-                    />
+                    /> */}
 
                     <button onClick={() => { auth.login() }} >
                         Entrar
