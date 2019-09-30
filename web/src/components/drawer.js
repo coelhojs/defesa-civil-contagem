@@ -45,32 +45,16 @@ export default function AppDrawer() {
             >
                 <div className={classes.toolbar} />
                 <List>
-                
-                    <ListItem button key="Mapa" disabled>
-                        <ListItemIcon>
-                            <MapIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Mapa" />
-                    </ListItem>
-                
+                    <ListItemLink to="/Mapa" primary="Mapa" icon={<MapIcon />} />
+
                     <ListItemLink to="/Chamados" primary="Chamados" icon={<FeedbackIcon />} />
 
-                    <ListItem button key="Usuários" disabled>
-                        <ListItemIcon>
-                            <PeopleAltIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Usuários" />
-                    </ListItem>
+                    <ListItemLink to="/Usuários" primary="Usuários" icon={<PeopleAltIcon />} />
                 </List>
                 <Divider />
                 <List>
-                    <ListItem button key="Configurações" disabled>
-                        <ListItemIcon>
-                            <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Configurações" />
-                    </ListItem>
 
+                    <ListItemLink to="/Configurações" primary="Configurações" icon={<SettingsIcon />} />
                 </List>
             </Drawer>
         )
