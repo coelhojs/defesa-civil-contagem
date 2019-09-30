@@ -1,17 +1,21 @@
 const Usuario = require('../modelos/usuario.modelo');
+const { AppError } = require('../handlers/error');
 const express = require('express');
-const request = require('request');
 
 const router = express.Router();
 
 // Obtém informações do usuário atual:
-router.get('/account', (req, res) => {
-    Usuario.findOne({ user_id: req.user.user_id })
-        .then(result => {
-            res.status(200).json(result);
-        }).catch(error => {
-            res.status(500).json(error);
-        });
+router.get('/account', (req, res, next) => {
+	Usuario.findOne({ user_id: req.user.id })
+		.then(result => {
+			res.status(200).json(result.format());
+		}).catch(error => {
+			next(new AppError({
+				http_cod: 500,
+				mensagem: error.message,
+				mensagem_amigavel: 'Erro ao recuperar informações do usuário',
+			}));
+		});
 });
 
 // Modificar as informações do usuário atual:
