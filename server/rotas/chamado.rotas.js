@@ -31,7 +31,7 @@ router.post('/', (req, res, next) => {
 			next(new AppError({
 				http_cod: 500,
 				mensagem: error.message,
-				mensagem_amigavel: 'Erro ao recuperar informações do chamado'
+				mensagem_amigavel: 'Erro ao salvar novo chamado'
 			}));
 		});
 });
@@ -47,7 +47,7 @@ router.delete('/', (req, res, next) => {
 			next(new AppError({
 				http_cod: 500,
 				mensagem: error.message,
-				mensagem_amigavel: 'Erro ao recuperar informações do chamado'
+				mensagem_amigavel: 'Erro ao apagar o chamado'
 			}));
 		});
 });

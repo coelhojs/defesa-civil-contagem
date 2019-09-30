@@ -22,7 +22,7 @@ app.use('/auth/google', require('./auth/google'));
 app.use('/acesso/*', auth.acesso);
 
 // Rotas de DESENVOLVIMENTO (Apenas no modo development)
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV.toLowerCase() === 'development') {
 	app.use('/dev', require('./dev'));
 }
 
