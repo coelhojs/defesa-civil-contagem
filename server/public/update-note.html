@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<title>Notas de atualização da API (v2.0)</title>
+</head>
+
+<body>
+	<div class="container">
+		<h3><b>Notas de atualização da API (v2.0) - 30/09/2019</b></h3>
+		<hr>
+
+		<h4>ROTAS DE LOGIN E CADASTRO:</h4>
+		<h5>Como era antes:</h5>
+		<div class="alert alert-danger" role="alert">
+			<p>POST /auth/login e POST /auth/cadastro</p>
+		</div>
+		<h5>Como ficou:</h5>
+		<div class="alert alert-success" role="alert">
+			<p>POST /auth/google/login e POST /auth/google/cadastro</p>
+		</div>
+		<h5>Motivo da mudança:</h5>
+		<p>Facilidade na adição novos métodos de autenticação, como email e senha, facebook, twitter, etc...</p>
+		<hr>
+
+
+
+		<h4>MÉTODO DE AUTENTICAÇÃO (Não muda nada no front-end):</h4>
+		<h5>Como era antes:</h5>
+		<div class="alert alert-danger" role="alert">
+			<p>UUID-Token gerado a cada login</p>
+		</div>
+		<h5>Como ficou:</h5>
+		<div class="alert alert-success" role="alert">
+			<p>JWT (Json Web Token)</p>
+		</div>
+		<h5>Motivo da mudança:</h5>
+		<p>
+			JWT (JSON Web Token) é um método RCT 7519 padrão da indústria para realizar autenticação entre duas partes
+			por meio de um token assinado que autentica uma requisição web:
+			<a href="https://www.devmedia.com.br/como-o-jwt-funciona/40265">Fonte: Devmedia</a>
+		</p>
+		<h5>Observações:</h5>
+		<p>Agora a api_key não vai mudar caso o servidor seja reiniciado ou ocorra qualquer falha interna.</p>
+		<hr>
+
+
+
+		<h4>NOME DO API_TOKEN:</h4>
+		<h5>Como era antes:</h5>
+		<div class="alert alert-danger" role="alert">
+			<p>api_token</p>
+		</div>
+		<h5>Como ficou:</h5>
+		<div class="alert alert-success" role="alert">
+			<p>api_key</p>
+		</div>
+		<h5>Motivo da mudança:</h5>
+		<p>Padronização. <a href="https://en.wikipedia.org/wiki/Application_programming_interface_key">Fonte:
+				Wikipedia</a></p>
+		<hr>
+
+
+
+		<h4>PADRÃO DE RESPOSTAS:</h4>
+		<h5>Como era antes:</h5>
+		<div class="alert alert-danger" role="alert">
+			<p>Não tinha.</p>
+		</div>
+		<h5>Como ficou:</h5>
+		<div class="alert alert-success" role="alert">
+			<p>
+				A resposta é baseada nos códigos HTTP. 200 é OK, e o recurso que vc quer vai estar na resposta. Qualquer
+				outro
+				código é um ERRO, e a resposta será um JSON com 3 atributos:
+			</p>
+			<ul>
+				<li><b>stack</b>: em qual arquivo/módulo/função ocorreu o erro (apenas para fins de debug)</li>
+				<li><b>mensagem</b>: mensagem original de erro - ex: "Cannot read property 'split' of undefined" (apenas
+					para fins de debug)</li>
+				<li><b>mensagem_amigavel</b>: descrição amigável do erro - (ex: usuário não cadastrado)</li>
+			</ul>
+		</div>
+		<h5>Motivo da mudança:</h5>
+		<p>Facilidade na adição novos métodos de autenticação, como email e senha, facebook, twitter, etc...</p>
+		<h5>Observações:</h5>
+		<p>Os atributos stack e mensagem só aparecerão caso o NODE_ENV esteja setado para "development".
+			Eles não existirão no modo produção (production)</p>
+		<p>Link: <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status">Códigos de status de respostas
+				HTTP (Mozilla)</a></p>
+		<hr>
+
+
+
+
+
+
+
+	</div>
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

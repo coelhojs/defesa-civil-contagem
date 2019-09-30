@@ -5,49 +5,10 @@
 <head></head>
 
 <body>
-	<h3>Notas de mudança da API v2.0</h3>
-	<hr>
-	<h5><b>ROTAS DE LOGIN E CADASTRO:</b></h5>
-	<p><b>Como era antes:</b> POST /auth/login e POST /auth/cadastro</p>
-	<p><b>Como ficou:</b> POST /auth/google/login e POST /auth/google/cadastro</p>
-	<p><b>Motivo da Mudança:</b> Facilitar a adição novos métodos de autenticação (ex: email e senha, facebook, twitter,
-		etc...)</p>
-	<hr>
-
-	<h5><b>MÉTODO DE AUTENTICAÇÃO (Não muda nada no front-end):</b></h5>
-	<p><b>Como era antes:</b> UUID-Token gerado a cada login</p>
-	<p><b>Como ficou:</b> JWT (Json Web Token)</p>
-	<p><b>Motivo da Mudança:</b> JWT (JSON Web Token) é um método RCT 7519 padrão da indústria para realizar
-		autenticação entre duas partes por meio de um token assinado que autentica uma requisição web:
-		https://www.devmedia.com.br/como-o-jwt-funciona/40265</p>
-	<p><b>Observações:</b> Agora a api_key não vai mudar caso o servidor seja reiniciado ou ocorra qualquer falha
-		interna.</p>
-	<hr>
-
-	<h5><b>NOME DO API_TOKEN:</b></h5>
-	<p><b>Como era antes:</b> api_token</p>
-	<p><b>Como ficou:</b> api_key</p>
-	<p><b>Motivo da Mudança:</b> Padronização: https://en.wikipedia.org/wiki/Application_programming_interface_key</p>
-	<hr>
-
-	<h5><b>PADRÃO DE RESPOSTAS:</b></h5>
-	<p><b>Como era antes:</b> Não tinha</p>
-	<p><b>Como ficou:</b>
-		A resposta é baseada nos códigos HTTP. 200 é OK, e o recurso que vc quer vai estar na resposta. Qualquer outro
-		código é um ERRO, e a resposta será um JSON com 3 atributos:<br>
-		<ul>
-			<li><b>stack</b>: em qual arquivo/módulo/função ocorreu o erro (apenas para fins de debug)</li>
-			<li><b>mensagem</b>: mensagem original de erro - ex: "Cannot read property 'split' of undefined" (apenas
-				para fins de debug)</li>
-			<li><b>mensagem_amigavel</b>: descrição amigável do erro - (ex: usuário não cadastrado)</li>
-		</ul>
-
-	</p>
-	<p><b>Observações:</b> Os atributos stack e mensagem só aparecerão caso o NODE_ENV esteja setado para "development".
-		Eles não existirão no modo produção (production)</p>
-	<p><b>Códigos de status de respostas HTTP:</b> https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status</p>
-	<hr>
-	
+	<p>Links:</p>
+	<ul>
+		<li> <a href="update-note.html">Notas de atualização da API v2.0</a></li>
+	</ul>
 </body>
 
 </html>
