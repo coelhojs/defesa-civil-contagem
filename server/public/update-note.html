@@ -9,16 +9,31 @@
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style>
+		.titulo-mudanca {
+			text-align: center;
+		}
+	</style>
 
 	<title>Notas de atualização da API (v2.0)</title>
 </head>
 
 <body>
 	<div class="container">
-		<h3><b>Notas de atualização da API (v2.0) - 30/09/2019</b></h3>
+		<h3><b>Notas de atualização da API (v2.0)</b> - 30/09/2019</h3>
 		<hr>
-
-		<h4>ROTAS DE LOGIN E CADASTRO:</h4>
+		<h4>Resumo:</h4>
+		<ul>
+			<li>Façam login e cadastro em /auth/google/login e /auth/google/cadastro</li>
+			<li>Agora o "api_token" chama "api_key"</li>
+			<li>Usem o status code da resposta para fazer diagnósticos:
+				<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status">
+					Códigos de status de respostas
+					HTTP (Mozilla)
+				</a>
+			</li>
+		</ul>
+		<h4 class="titulo-mudanca">ROTAS DE LOGIN E CADASTRO:</h4>
 		<h5>Como era antes:</h5>
 		<div class="alert alert-danger" role="alert">
 			<p>POST /auth/login e POST /auth/cadastro</p>
@@ -33,7 +48,7 @@
 
 
 
-		<h4>MÉTODO DE AUTENTICAÇÃO (Não muda nada no front-end):</h4>
+		<h4 class="titulo-mudanca">MÉTODO DE AUTENTICAÇÃO (Não muda nada no front-end):</h4>
 		<h5>Como era antes:</h5>
 		<div class="alert alert-danger" role="alert">
 			<p>UUID-Token gerado a cada login</p>
@@ -54,7 +69,7 @@
 
 
 
-		<h4>NOME DO API_TOKEN:</h4>
+		<h4 class="titulo-mudanca">NOME DO API_TOKEN:</h4>
 		<h5>Como era antes:</h5>
 		<div class="alert alert-danger" role="alert">
 			<p>api_token</p>
@@ -70,7 +85,7 @@
 
 
 
-		<h4>PADRÃO DE RESPOSTAS:</h4>
+		<h4 class="titulo-mudanca">PADRÃO DE RESPOSTAS:</h4>
 		<h5>Como era antes:</h5>
 		<div class="alert alert-danger" role="alert">
 			<p>Não tinha.</p>
@@ -97,12 +112,6 @@
 		<p>Link: <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status">Códigos de status de respostas
 				HTTP (Mozilla)</a></p>
 		<hr>
-
-
-
-
-
-
 
 	</div>
 
