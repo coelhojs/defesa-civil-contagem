@@ -36,6 +36,7 @@ router.post('/', (req, res, next) => {
 		});
 });
 
+
 // Deleta chamado(s) do usuário atual:
 router.delete('/', (req, res, next) => {
 	let user_id = req.user.id;
