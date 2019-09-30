@@ -19,15 +19,15 @@ const schema = new Schema({
 schema.plugin(muv);
 
 // Retorna apenas os atributos visíveis do modelo:
-schema.methods.format = function () {
+schema.methods.toJSON = function () {
 	return {
+		cpf: this.cpf,
 		tipo: this.tipo,
 		nome: this.nome,
-		telefone: this.telefone,
-		cpf: this.cpf,
 		email: this.email,
-		nascimento: this.nascimento,
 		endereco: this.endereco,
+		telefone: this.telefone,
+		nascimento: this.nascimento,
 	}
 }
 
