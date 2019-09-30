@@ -6,9 +6,9 @@ const router = express.Router();
 
 // Obtém informações do usuário atual:
 router.get('/account', (req, res, next) => {
-	Usuario.findOne({ user_id: req.user.id })
+	Usuario.findById(req.user.id)
 		.then(result => {
-			res.status(200).json(result.format());
+			res.status(200).json(result.toJSON());
 		}).catch(error => {
 			next(new AppError({
 				http_cod: 500,
