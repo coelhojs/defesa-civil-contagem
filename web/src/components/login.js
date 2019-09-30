@@ -22,24 +22,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
-function Login(props) {
+export default function Login(props) {
     const classes = useStyles();
     const auth = useAuth();
-
-    //     const successAuth = (response) => {
-    //         try {
-    //             getUsuario(response.user.email).then(
-    //                 isAuth => setAuth(isAuth));
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-
-    //     const errorAuth = (response) => {
-    //         console.error("Erro")
-    //         console.error(response);
-    //     }
 
     return (
         <Card className={classes.card}>
@@ -64,13 +49,11 @@ function Login(props) {
                 </Grid>
             </CardContent>
             <CardActions>
-                {/* <Link to={"/Dashboard"} variant="contained"
+                <Link to={"/Dashboard"} variant="contained"
                     color="primary" className={classes.button}>
                     Dashboard
-                    </Link > */}
+                    </Link >
             </CardActions>
         </Card>
     );
 };
-
-export default Login;

@@ -6,13 +6,13 @@ import { cadastroUsuario, loginUsuario, getUsuario } from '../controllers/Usuari
 import history from '../history';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAU87-FPUdNrSzn8jWanB93L3jRVA-xyIY",
-  authDomain: "defesa-civil-contagem.firebaseapp.com",
-  databaseURL: "https://defesa-civil-contagem.firebaseio.com",
-  projectId: "defesa-civil-contagem",
-  storageBucket: "defesa-civil-contagem.appspot.com",
-  messagingSenderId: "651305936833",
-  appId: "1:651305936833:web:340ba94339df158d"
+  apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
+  authDomain: "defesa-civil-contagem-54fe7.firebaseapp.com",
+  databaseURL: "https://defesa-civil-contagem-54fe7.firebaseio.com",
+  projectId: "defesa-civil-contagem-54fe7",
+  storageBucket: "",
+  messagingSenderId: "985053180633",
+  appId: "1:985053180633:web:4d105c6bc93f1ae8e7c4c8"
 };
 
 // Add your Firebase credentials
@@ -51,11 +51,8 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
-        console.log(idToken);
-        console.log(response);
-        setIdToken = response.credential.idToken;
+        setIdToken(response.credential.idToken);
         if (loginUsuario(idToken)) {
-          console.log(response);
           setUser(response);
           return response;
         } else {
