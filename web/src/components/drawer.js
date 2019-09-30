@@ -53,7 +53,6 @@ export default function AppDrawer() {
                 </List>
                 <Divider />
                 <List>
-
                     <ListItemLink to="/Configurações" primary="Configurações" icon={<SettingsIcon />} />
                 </List>
             </Drawer>
