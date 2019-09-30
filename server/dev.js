@@ -1,10 +1,14 @@
 const express = require('express');
+const moment = require('moment');
 const router = express.Router();
+
+const tempoInicial = moment().format();
 
 router.get('/status', (req, res) => {
 	res.status(200).json({
-		status: 'online',
-		versão: 'v2.0'
+		'Status': 'online',
+		'Versão': 'v2.0',
+		'Online Desde': tempoInicial,
 	});
 });
 

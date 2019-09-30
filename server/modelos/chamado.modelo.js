@@ -6,9 +6,9 @@ const NOME_MODELO = 'Chamado';
 
 const schema = new Schema({
 	user_id: { type: String },
-	tipo: { type: String },
+	tipo: { type: String, required: true },
 	dataHora: { type: Date },
-	descricao: { type: String },
+	descricao: { type: String, required: true },
 	foto: { type: String },
 	vistoriador: { type: String },
 	cidadao: { type: String },
