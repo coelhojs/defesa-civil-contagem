@@ -46,11 +46,11 @@ function useProvideAuth() {
   // Wrap any Firebase methods we want to use making sure ...
   // ... to save the user to state.
   const login = (email, password) => {
-    // const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     return firebase
       .auth()
-      // .signInWithPopup(googleAuthProvider)
-      .signInWithEmailAndPassword(email, password)
+      .signInWithPopup(googleAuthProvider)
+      //.signInWithEmailAndPassword(email, password)
       .then(response => {
         setIdToken(response.credential.idToken);
         if (loginUsuario(idToken)) {
