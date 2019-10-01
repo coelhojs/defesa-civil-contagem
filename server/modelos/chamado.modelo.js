@@ -9,7 +9,7 @@ const schema = new Schema({
 	tipo: { type: String, required: true },
 	dataHora: { type: Date },
 	descricao: { type: String, required: true },
-	foto: { type: String },
+	// foto: { type: String },
 	vistoriador: { type: String },
 	cidadao: { type: String },
 	local: { type: String },
