@@ -41,7 +41,7 @@ router.get('/usuarios', (req, res, next) => {
 router.get('/chamados', (req, res, next) => {
 	Chamado.find(req.query)
 		.then(results => {
-			res.status(200).json(results);
+			res.status(200).json(results.map(r=>r.toJSON()));
 		}).catch(error => {
 			next(new AppError({
 				http_cod: 500,
