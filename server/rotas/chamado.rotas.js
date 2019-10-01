@@ -36,6 +36,32 @@ router.post('/', (req, res, next) => {
 		});
 });
 
+// Adiciona um chamado para o usuário atual (COM IMAGEM):
+router.post('/novo', (req, res, next) => {
+	let user_id = req.user.id;
+	let chamado = new Chamado(req.body);
+	chamado.user_id = user_id;
+	chamado.save()
+		.then(chamado => {
+			req.files.foto.mv('./imagens/' + chamado.id + '.jpg')
+				.then(foto => {
+					res.status(200).json(chamado.toJSON());
+				}).catch(error => {
+					next(new AppError({
+						http_cod: 500,
+						mensagem: error.message,
+						mensagem_amigavel: 'Erro ao salvar arquivo',
+					}));
+				});
+		}).catch(error => {
+			next(new AppError({
+				http_cod: 500,
+				mensagem: error.message,
+				mensagem_amigavel: 'Erro ao salvar novo chamado'
+			}));
+		});
+});
+
 
 // Deleta chamado(s) do usuário atual:
 router.delete('/', (req, res, next) => {
