@@ -2,16 +2,18 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import "firebase/auth";
 import React from 'react';
 import { useAuth } from "../customHooks/useAuth";
+import Button from '@material-ui/core/Button';
+import CardMedia from '@material-ui/core/CardMedia';
+
 const useStyles = makeStyles(theme => ({
     button: {
         margin: theme.spacing(1),
-
     },
     card: {
         margin: 'auto',
@@ -21,6 +23,27 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const ColorButton = withStyles(theme => ({
+    root: {
+      color: theme.palette.getContrastText("#f46524"),
+      backgroundColor: "#f46524",
+      color: "white",
+      '&:hover': {
+        backgroundColor: "#a54318",
+      },
+    },
+  }))(Button);
+
+  const ColorTextField = withStyles(theme => ({
+    root: {
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: '#f46524',
+          },
+        },
+      },
+    }))(TextField);
+
 export default function Login(props) {
     const classes = useStyles();
     const auth = useAuth();
@@ -28,13 +51,20 @@ export default function Login(props) {
     return (
         <Card className={classes.card}>
             <CardContent>
-                <Typography variant="h5" component="h2">
+                <CardMedia
+                    component="img"
+                    alt="Defesa Civil de Contagem - MG"
+                    height="140"
+                    image="../Imagens/escudo.jpg"
+                    title="Defesa Civil de Contagem - MG"
+                />
+                {/*<Typography variant="h5" component="h2">
                     Gestão de chamados
                     </Typography>
                 <br />
-                <Typography variant="body2" component="p">
+                <Typography variant="h5" component="h2">
                     Login
-                    </Typography>
+                </Typography>*/}
                 <Grid
                     container
                     direction="row"
@@ -42,7 +72,7 @@ export default function Login(props) {
                     alignItems="center"
                     spacing={2}
                 >
-                    {/* <TextField
+                    <ColorTextField
                         label="Email"
                         className={classes.textField}
                         type="email"
@@ -52,19 +82,23 @@ export default function Login(props) {
                         variant="outlined"
                     />
 
-                    <TextField
-                        label="Password"
+                    <ColorTextField
+                        label="Senha"
                         className={classes.textField}
                         type="password"
                         name="password"
                         autoComplete="current-password"
                         margin="normal"
                         variant="outlined"
-                    /> */}
-
-                    <button onClick={() => { auth.login() }} >
+                    /> 
+                    <Grid item>
+                    <ColorButton variant="contained" color="#4CAF50" className={classes.button} onClick={() => { auth.login() }}>
                         Entrar
-                    </button>
+                    </ColorButton>
+                    </Grid>
+                    {/*<button className={classes.button} onClick={() => { auth.login() }} >
+                        Entrar
+    </button>*/}
                 </Grid>
             </CardContent>
             <CardActions>
