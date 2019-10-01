@@ -1,4 +1,6 @@
 const Usuario = require('./modelos/usuario.modelo');
+const Chamado = require('./modelos/chamado.modelo');
+
 const auth = require('./auth/authorization');
 const express = require('express');
 const moment = require('moment');
@@ -31,6 +33,20 @@ router.get('/usuarios', (req, res, next) => {
 				http_cod: 500,
 				mensagem: error.message,
 				mensagem_amigavel: 'Erro ao recuperar informações de usuários',
+			}));
+		});
+});
+
+// Obtem chamados (pode filtrar pela URL)
+router.get('/chamados', (req, res, next) => {
+	Chamado.find(req.query)
+		.then(results => {
+			res.status(200).json(results);
+		}).catch(error => {
+			next(new AppError({
+				http_cod: 500,
+				mensagem: error.message,
+				mensagem_amigavel: 'Erro ao recuperar informações de chamados',
 			}));
 		});
 });
