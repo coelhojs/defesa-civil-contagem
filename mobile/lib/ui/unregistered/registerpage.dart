@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage>
               }
             } else if (_tabController.index == 1) {
               if (_keyValidaForm2.currentState.validate()) {
-                var url = '$REQ/auth/cadastro';
+                var url = '$REQ/auth/google/cadastro';
                 var response = await http.post(url, headers: {
                   "authorization": "Bearer $token"
                 }, body: {
@@ -85,15 +85,18 @@ class _RegisterPageState extends State<RegisterPage>
                   "telefone": telController.text,
                   "cpf": cpfController.text,
                   "email": email,
-                  "endereco": cepController.text
+                  "endereco": endereco
                 });
-                print('Response status: ${response.statusCode}');
-                //var responseDecoded = json.decode(response.body);
-                print('Response body: ${response.body}');
-                setCredentials();
-                /*Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => HomeLogged()),
-                    (Route<dynamic> route) => false);*/
+                var responseDecoded = json.decode(response.body);
+
+                if(response.statusCode==200) {
+                  setCredentials(responseDecoded['api_key']);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => HomeLogged()),
+                          (Route<dynamic> route) => false);
+                }else if(responseDecoded['mensagem']=='Usuário já cadastrado'){
+                  _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Usuário já está cadastrado"),duration: Duration(seconds: 3),backgroundColor: Colors.red,));
+                }
               }
             }
           },
@@ -210,8 +213,10 @@ class _RegisterPageState extends State<RegisterPage>
                             print('Response status: ${response.statusCode}');
                             var responseDecoded = json.decode(response.body);
                             print('Response body: ${response.body}');
-                            if (responseDecoded['logradouro'] != null)
-                              endereco = responseDecoded['logradouro'];
+                            if (responseDecoded['logradouro'] != null) {
+                              endereco =
+                              "${responseDecoded['logradouro']}, ${responseDecoded['bairro']} - ${responseDecoded['localidade']} / ${responseDecoded['uf']}";
+                            }
                             else
                               endereco = "CEP não encontrado";
                             setState(() {
@@ -271,13 +276,14 @@ class _RegisterPageState extends State<RegisterPage>
     }
   }
 
-  setCredentials() async {
+  setCredentials(String api_key) async {
     userData.setString("name", name);
     userData.setString("email", email);
     userData.setString("image", image);
-    userData.setString("endereco", cepController.text);
+    userData.setString("endereco", endereco);
     userData.setString("telefone", telController.text);
     userData.setString("cpf", cpfController.text);
+    userData.setString("api_key", api_key);
   }
 
   getCredentials() async {

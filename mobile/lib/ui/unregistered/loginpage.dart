@@ -18,9 +18,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool sucess = true;
   SharedPreferences userData;
-
 
   @override
   void initState() {
@@ -32,10 +30,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton:
-          FloatingActionButton.extended(onPressed: ()async {
-
-          }, label: Text("Teste")),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {}, label: Text("Teste")),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -75,22 +71,23 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       });
                   signInWithGoogle().then((result) async {
-                    var url = '$REQ/auth/login';
+                    var url = '$REQ/auth/google/login';
+                    var response = await http
+                        .post(url, headers: {"authorization": "Bearer $token"});
+                    var responseDecoded = json.decode(response.body);
                     print(token);
-                    var response = await http.post(url,headers: {"authorization": "Bearer $token"});
-                    print('Response status: ${response.statusCode}');
-                    //var responseDecoded = json.decode(response.body);
-                    print('Response body: ${response.body}');
-                    if (response.body!="Usuário não cadastrado") {
-                      setCredentials(name, email, image);
+                    print(responseDecoded['api_key']);
+                    if (response.statusCode == 200) {
+                      setCredentials(responseDecoded['api_key']);
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => HomeLogged()),
                           (Route<dynamic> route) => false);
-                    } else {
+                    } else if (responseDecoded['mensagem'] ==
+                        "Usuário não cadastrado") {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                              builder: (context) => RegisterPage(
-                                  name, email, image, token)),
+                              builder: (context) =>
+                                  RegisterPage(name, email, image, token)),
                           (Route<dynamic> route) => false);
                     }
                   }).catchError((erro) {
@@ -105,14 +102,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  setCredentials(String name, String email, String image) async {
+  setCredentials(String api_key) async {
     userData.setString("name", name);
     userData.setString("email", email);
     userData.setString("image", image);
-    userData.commit();
+    userData.setString("api_key", api_key);
+
   }
 
-  getCredentials()async{
+  getCredentials() async {
     userData = await SharedPreferences.getInstance();
   }
 }

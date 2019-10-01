@@ -40,7 +40,7 @@ class _UserInfoState extends State<UserInfo> {
       ),
       floatingActionButton:
           FloatingActionButton.extended(onPressed: () async{
-            _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Usuário já está cadastrado"),duration: Duration(seconds: 3),backgroundColor: Colors.red,));
+
           }, label: Text("Testee", style: TextStyle(color: Colors.white),),
           backgroundColor: Colors.black54,),
     );
