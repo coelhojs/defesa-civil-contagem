@@ -1,6 +1,8 @@
 const { AppError } = require('../handlers/error');
 const express = require('express');
+const path = require('path');
 const router = express.Router();
+
 
 const Chamado = require('../modelos/chamado.modelo');
 
@@ -17,6 +19,19 @@ router.get('/', (req, res, next) => {
 				mensagem_amigavel: 'Erro ao recuperar informações do chamado'
 			}));
 		});
+});
+
+// Obtem a foto de um chamado
+router.get('/foto/:id', (req, res, next) => {
+	try {
+		res.status(200).sendFile(path.join(__dirname, '../imagens/', req.params.id + '.jpg'));
+	} catch (ex) {
+		next(new AppError({
+			http_cod: 500,
+			mensagem: ex.message,
+			mensagem_amigavel: 'Erro ao enviar foto do chamado',
+		}));
+	}
 });
 
 // Adiciona um chamado para o usuário atual:
