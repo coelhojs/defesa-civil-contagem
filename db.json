@@ -1,8 +1,19 @@
 {
-    "Chamados": [
-        {            
+    "Avisos": [
+        {
             "id": 1,
-            "idMorador":"",
+            "idUsuario": 1,
+            "tipo": "desabamento",
+            "logradouro": "",
+            "numero": "",
+            "bairro": "",
+            "imagens": []
+        }
+    ],
+    "Chamados": [
+        {
+            "id": 1,
+            "idMorador": "",
             "Morador": "João das coves",
             "idInformante": 1,
             "Endereço": "",
@@ -13,7 +24,7 @@
             "dataVistoria": "1568331344",
             "pessoasEnvolvidas": "3",
             "equipeVistoria": "João/Maria",
-            "ROsAnteriores":"",
+            "ROsAnteriores": "",
             "numeroOficioEncaminhado": "0090/19",
             "orgaoDestinoOficio ": "Fiscalização/Regional ",
             "doacao": "lona",
@@ -25,11 +36,11 @@
             "dataMonitoramento": "1568331344",
             "situacaoAtual": "Terreno íngreme propenso a desabamento de terra.",
             "retornoVistoria": "VISA informou no dia 23/10/2018, OF. 008/2018, que não dispõe de recursos técnicos",
-            
+
             "tipo": "desabamento",
             "dataRequisicao": "1568331344",
             "status": "[aberto, finalizado]",
-            "foto": "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg",
+            "foto": "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
         },
         {
             "id": 2,
