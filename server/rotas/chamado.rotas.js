@@ -36,6 +36,7 @@ router.post('/', (req, res, next) => {
 		});
 });
 
+
 // Adiciona um chamado para o usuário atual (COM IMAGEM):
 router.post('/novo', (req, res, next) => {
 	let user_id = req.user.id;
