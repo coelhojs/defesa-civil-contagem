@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 
 // Usar com o MongoDB Atlas
-const USUARIO = 'round';
-const SENHA = 'robin9090';
-const STRING = `mongodb+srv://${USUARIO}:${SENHA}@cluster0-u2o3w.mongodb.net/defesa-civil?retryWrites=true&w=majority`;
+const URI = process.env.MONGODB_URI;
+//const URI = process.env.MONGODB_URI_LOCAL;
 
 // Usar com o MongoDB Local
 // const STRING = 'mongodb://localhost/defesacivil';
@@ -11,13 +10,13 @@ const STRING = `mongodb+srv://${USUARIO}:${SENHA}@cluster0-u2o3w.mongodb.net/def
 module.exports = {
     init: function (callback) {
         mongoose.connection.once('open', callback);
-        mongoose.connect(STRING, {
+        mongoose.connect(URI, {
             useCreateIndex: true,
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
     },
     isLocal: function () {
-        return STRING.indexOf('localhost') != -1;
+        return URI.indexOf('localhost') != -1;
     }
 };
