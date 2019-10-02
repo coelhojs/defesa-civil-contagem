@@ -1,6 +1,7 @@
 
 import 'package:defesa_civil/ui/logged/homelogged.dart';
 import 'package:defesa_civil/ui/logged/relatarincidente.dart';
+import 'package:defesa_civil/ui/teste.dart';
 import 'package:defesa_civil/ui/unregistered/home.dart';
 import 'package:defesa_civil/ui/unregistered/loginpage.dart';
 import 'package:defesa_civil/ui/unregistered/registerpage.dart';
