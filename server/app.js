@@ -15,7 +15,8 @@ app.use(express.static('./public'));
 app.use(cors());
 app.use(morgan('dev'));
 app.use(fileupload({
-
+	createParentPath: true,
+	debug: process.env.NODE_ENV.toLowerCase() == 'development',
 }));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -28,7 +29,6 @@ app.use('/acesso/*', auth.acesso);
 
 // Rotas de DESENVOLVIMENTO (Apenas no modo development)
 if (process.env.NODE_ENV.toLowerCase() === 'development') {
-	app.use('/dev/imagens', express.static(__dirname + '/imagens'));
 	app.use('/dev', require('./dev'));
 }
 
