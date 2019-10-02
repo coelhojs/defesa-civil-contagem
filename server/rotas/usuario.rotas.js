@@ -9,6 +9,7 @@ router.get('/account', (req, res, next) => {
 	Usuario.findById(req.user.id)
 		.then(result => {
 			res.status(200).json(result.toJSON());
+
 		}).catch(error => {
 			next(new AppError({
 				http_cod: 500,
@@ -18,9 +19,20 @@ router.get('/account', (req, res, next) => {
 		});
 });
 
-// Modificar as informações do usuário atual:
-router.put('/update', (req, res) => {
 
+// Modificar as informações do usuário atual:
+router.put('/edit', (req, res, next) => {
+	Usuario.findByIdAndUpdate(req.user.id, req.body)
+		.then(result => {
+			res.status(200).json(result.toJSON());
+
+		}).catch(error => {
+			next(new AppError({
+				http_cod: 500,
+				mensagem: error.message,
+				mensagem_amigavel: 'Erro ao atualizar informações do usuário',
+			}));
+		});
 });
 
 module.exports = router;
