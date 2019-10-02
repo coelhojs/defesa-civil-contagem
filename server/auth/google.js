@@ -52,7 +52,7 @@ router.post('/login', async (req, res, next) => {
 		});
 		// Gera e retorna uma api_key com o id do usuário:
 		let api_key = auth.gerarApiKey(user.id);
-		res.status(200).json({ api_key: api_key });
+		res.status(200).json({ api_key: api_key, usuario: user });
 
 	} catch (ex) {
 		if (ex instanceof AppError) next(ex);
