@@ -2,4 +2,5 @@
 2) Organizar rotas de fotos
 3) Edição de chamados
 4) Criar diretório "dev" com rotas para cada entidade
-5) Testar o file.mv com createParentPath
+5) Adicionar modulo jest
+6) Testar o file.mv com createParentPath

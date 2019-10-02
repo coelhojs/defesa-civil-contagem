@@ -29,7 +29,9 @@ app.use('/acesso/*', auth.acesso);
 
 // Rotas de DESENVOLVIMENTO (Apenas no modo development)
 if (process.env.NODE_ENV.toLowerCase() === 'development') {
-	app.use('/dev', require('./dev'));
+	app.use('/dev', require('./dev/dev'));
+	app.use('/dev/usuarios', require('./dev/usuarios.dev'));
+	app.use('/dev/chamados', require('./dev/chamados.dev'));
 }
 
 // Rotas de acesso:
