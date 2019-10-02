@@ -14,7 +14,7 @@ export default function SignOutBtn(props) {
     const classes = useStyles();
     const auth = useAuth();
 
-    if (auth.user) {
+    if (auth.usuario) {
         return (
             <Button variant="contained" color="primary" className={classes.button}
                 onClick={() => {

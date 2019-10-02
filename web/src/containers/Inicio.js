@@ -9,7 +9,7 @@ export default function Inicio(props) {
     const classes = useStyles();
     const auth = useAuth();
 
-    if (auth.user) {
+    if (auth.usuario) {
         return null
     } else {
         return (
