@@ -1,5 +1,3 @@
-const jest = require('jest');
-
 // Testes de criação de entidades:
 
 function criarUsuario() {
@@ -13,3 +11,4 @@ function criarChamado() {
 function adicionarFoto() {
 	// Teste para adicionar uma foto a um chamado
 }
+
