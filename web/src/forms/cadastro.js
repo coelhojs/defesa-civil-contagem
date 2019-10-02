@@ -30,36 +30,38 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
+const formInputs = {
+    nome: '',
+    email: '',
+    cpf: '',
+    userType: '',
+    telefone: '',
+    dataNasc: '',
+    cep: '',
+    logradouro: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cidade: '',
+    estado: ''
+}
+
 export default function CadastroForm() {
     const classes = useStyles();
-    const { values, errors, handleChange, handleSubmit } = useForm(submit);
+    const { values, errors, handleChange, handleSubmit } = useForm(callbackSubmit, formInputs);
 
-    function submit() {
+    function callbackSubmit() {
         console.log(values);
     }
 
     return (
-
         <form onSubmit={handleSubmit}>
             {/* TODO: Remover Grids duplos */}
-            <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-            >
-                <Grid item xs={12} md={8}
-                    container
-                    justify="space-between"
-                    spacing={1}
-                >
+            <Grid container direction="row" justify="center" alignItems="center" >
+                <Grid item xs={12} md={8} container justify="space-between" spacing={1} >
                     <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="nome">Nome Completo</InputLabel>
-                        <Input
-                            name="nome"
-                            value={values.nome}
-                            onChange={handleChange}
-                        />
+                        <Input name="nome" value={values.nome} onChange={handleChange} />
                         {
                             errors.nome &&
                             <FormHelperText id="nome-error">{errors.nome}</FormHelperText>
