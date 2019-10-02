@@ -37,11 +37,21 @@ router.get('/usuarios', (req, res, next) => {
 		});
 });
 
+// Obtem usuarios (pode filtrar pela URL) com seus ids e api_keys
+router.post('/usuarios', async (req, res, next) => {
+	let user = new Usuario(req.body);
+	user.save();
+	let obj = user.toJSON();
+	obj.id = user.id;
+	obj.api_key = auth.gerarApiKey(user.id);
+	res.status(200).json(obj);
+});
+
 // Obtem chamados (pode filtrar pela URL)
 router.get('/chamados', (req, res, next) => {
 	Chamado.find(req.query)
 		.then(results => {
-			res.status(200).json(results.map(r=>r.toJSON()));
+			res.status(200).json(results.map(r => r.toJSON()));
 		}).catch(error => {
 			next(new AppError({
 				http_cod: 500,
