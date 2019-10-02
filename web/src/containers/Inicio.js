@@ -1,10 +1,9 @@
 import React from 'react'; import { makeStyles } from '@material-ui/core/styles';
-import Login from "../components/login";
+import Login from "../forms/login";
 import { useAuth } from "../customHooks/useAuth";
 
 const useStyles = makeStyles(theme => ({
 }));
-
 
 export default function Inicio(props) {
     const classes = useStyles();

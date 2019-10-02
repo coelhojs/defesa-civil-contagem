@@ -1,10 +1,12 @@
 import { api } from "./index";
 import history from '../history';
+import { useAuth } from "../customHooks/useAuth";
+import { useState, useEffect } from 'react';
 
 export const cadastroUsuario = async (idToken, formValues) => {
     try {
 
-        const response = await api.post(`/auth/cadastro`,
+        const response = await api.post(`/auth/google/cadastro`,
             { ...formValues },
             {
                 headers: {
@@ -22,22 +24,24 @@ export const cadastroUsuario = async (idToken, formValues) => {
 }
 
 export const loginUsuario = async idToken => {
-    try {
-        const response = await api.post(`/auth/login`, {},
-            {
-                headers: {
-                    'authorization': `Bearer ${idToken}`
-                }
-            })
-        if (response.data == "Usuário não cadastrado") {
-            //Mandar pro form de cadastro
-            console.log("não cadastrado.")
-            history.push('/Cadastro');
-        }
-    } catch (error) {
-        console.error(error);
-    }
+    api.post(`/auth/google/login`, {},
+        {
+            headers: {
+                'authorization': `Bearer ${idToken}`
+            }
+        })
+        .then(function (response) {
+            if (response.data.mensagem == "Usuário não cadastrado") {
+                history.push('/Cadastro');
+            } else {
+                history.push('/')
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
 }
+
 
 export const getUsuario = async email => {
     const response = await api.get(`/usuarios?email=${email}`);

@@ -4,28 +4,13 @@ import { useState, useEffect } from 'react';
 import { validarNome } from '../validation/validateFormularios'
 import { useAuth } from "../customHooks/useAuth";
 
-export const useForm = (callback) => {
+export const useForm = (callback, inputs) => {
     const auth = useAuth();
 
-    const formInputs = {
-        nome: '',
-        email: '',
-        cpf: '',
-        userType: '',
-        telefone: '',
-        dataNasc: '',
-        cep: '',
-        logradouro: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        estado: ''
-    }
     const [idToken, setIdToken] = useState('');
-    const [values, setValues] = useState(formInputs);
-    const [errors, setErrors] = useState(formInputs);
-    console.log(auth);
+    const [values, setValues] = useState(inputs);
+    const [errors, setErrors] = useState(inputs);
+
     useEffect(() => {
         if (auth.user) {
             setValues({ email: auth.user.email })
@@ -33,7 +18,6 @@ export const useForm = (callback) => {
     }, [auth.user]);
 
     const handleSubmit = (event) => {
-        console.log(values);
         auth.signup(idToken, values);
         if (event) event.preventDefault();
         callback();
@@ -52,9 +36,6 @@ export const useForm = (callback) => {
             default:
                 break;
         }
-
-        console.log(values);
-        console.log(errors);
     };
 
     /*const handleChange = (event) => {
