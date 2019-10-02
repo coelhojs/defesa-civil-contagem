@@ -23,25 +23,7 @@ export const cadastroUsuario = async (idToken, formValues) => {
     }
 }
 
-export const loginUsuario = async idToken => {
-    api.post(`/auth/google/login`, {},
-        {
-            headers: {
-                'authorization': `Bearer ${idToken}`
-            }
-        })
-        
-        .then(function (response) {
-            if (response.data.mensagem == "Usuário não cadastrado") {
-                history.push('/Cadastro');
-            } else {
-                history.push('/')
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
+
 
 
 export const getUsuario = async email => {
