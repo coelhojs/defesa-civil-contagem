@@ -30,6 +30,7 @@ export const loginUsuario = async idToken => {
                 'authorization': `Bearer ${idToken}`
             }
         })
+        
         .then(function (response) {
             if (response.data.mensagem == "Usuário não cadastrado") {
                 history.push('/Cadastro');
