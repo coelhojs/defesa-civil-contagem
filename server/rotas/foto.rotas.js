@@ -9,6 +9,20 @@ const router = express.Router();
 
 const Chamado = require('../modelos/chamado.modelo');
 
+// Buscar fotos (pode filtrar pela URL) do usuário atual
+router.get('/', (req, res, next) => {
+	Foto.find({ ...req.body, user_id: req.user.id })
+		.then(result => {
+			res.status(200).json(result);
+		}).catch(error => {
+			next(new AppError({
+				http_cod: 500,
+				mensagem: error.message,
+				mensagem_amigavel: 'Erro ao recuperar fotos do usuário',
+			}));
+		});
+});
+
 // Obtem a foto de um chamado
 router.get('/:idchamado/:arquivo', (req, res, next) => {
 	try {

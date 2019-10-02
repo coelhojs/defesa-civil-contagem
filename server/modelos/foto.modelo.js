@@ -9,6 +9,7 @@ const schema = new Schema({
 	filename: String,
 	url: String,
 	horario: String,
+	user_id: { type: String },
 
 }, { strict: false });
 
