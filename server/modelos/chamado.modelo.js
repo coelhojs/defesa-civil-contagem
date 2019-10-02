@@ -13,10 +13,7 @@ const schema = new Schema({
 	vistoriador: { type: String },
 	cidadao: { type: String },
 	local: { type: String },
-	fotos: [{
-		url: String,
-		horario: String,
-	}],
+	fotos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Foto' }],
 
 }, { strict: false });
 
@@ -33,12 +30,7 @@ schema.methods.toJSON = function () {
 		vistoriador: this.vistoriador,
 		cidadao: this.cidadao,
 		local: this.local,
-		fotos: this.fotos.map(f => {
-			return {
-				url: f.url,
-				horario: moment.unix(f.horario).toString()
-			}
-		}),
+		fotos: this.fotos,
 	}
 }
 
