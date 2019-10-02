@@ -60,7 +60,7 @@ export default function Login(props) {
                     component="img"
                     alt="Defesa Civil de Contagem - MG"
                     height="140"
-                    image="../Imagens/escudo.jpg"
+                    image="../../public/logo.jpg"
                     title="Defesa Civil de Contagem - MG"
                 />
                 <Grid
@@ -71,7 +71,7 @@ export default function Login(props) {
                     spacing={2}
                 >
                     <Grid item>
-                        <ColorButton variant="contained" color="#4CAF50"
+                        <ColorButton variant="contained"
                             type="submit" className={classes.button}
                             onClick={() => { auth.login() }}>
                             Entrar

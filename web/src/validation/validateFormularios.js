@@ -3,7 +3,7 @@
 const required = value => value ? undefined : ' Campo obrigatório';
 
 const defLength = (value, length) =>
-    value && value.length != length ? ` Este campo deve ter ${length} digitos` : undefined;
+    value && value.length != length ? ` Este campo deve ter ${length} digitos ${value.length}` : undefined;
 const maxLength = (value, max) =>
     value && value.length > max ? ` O tamanho máximo para este campo é ${max}` : undefined;
 const minLength = (value, min) =>
@@ -47,7 +47,7 @@ const cpf = (value) => {
 
 export function validarNome(value) {
     let resp;
-
+    
     resp = required(value);
     if (resp)
         return resp;
@@ -73,6 +73,18 @@ export function validarEmail(value) {
         return resp;
 }
 
+export function validarTelefone(value) {
+    let resp;
+    
+    resp = required(value);
+    if (resp)
+        return resp;
+
+    resp = defLength(value, 9);
+    if (resp)
+        return resp;
+}
+
 export function validarCPF(value) {
     let resp;
 
@@ -80,16 +92,94 @@ export function validarCPF(value) {
     if (resp)
         return resp;
 
-    resp = defLength(value, 14);
+    resp = defLength(value, 8);
     if (resp)
-        return resp;
-    else {
-        resp = cpf(value);
-        if (resp)
-            return resp;
-    }
+        return resp;    
 }
 
+export function validarCEP(value) {
+    let resp;
+    //let endereco = {logradouro:'', bairro: '', cidade: '', estado: ''};
+
+    resp = required(value);
+    if (resp)
+        //return {erro:resp, endereco};
+        return resp;
+
+    resp = defLength(value, 14);
+    if (resp)
+        //return {erro:resp, endereco};
+        return resp;
+
+    resp = VerificaCEP(value);
+    if (resp)
+        //return {erro:resp, endereco};
+        return resp;
+}
+
+function VerificaCEP(value) {
+    //let endereco = {logradouro:'', bairro: '', cidade: '', estado: ''};
+    let cepValue = value.replace(/\D/g, '');
+
+    if (cepValue.length == 8) {
+        
+        const https = require('https');
+
+        https.get('https://viacep.com.br/ws/' + cepValue + '/json/', (resp) => {
+            let data = '';
+
+            // A chunk of data has been recieved.
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            // The whole response has been received. Print out the result.
+            resp.on('end', () => {
+                data = JSON.parse(data);
+                console.log(data);
+                if (Object.keys(data).length > 1) {
+                    /*endereco.logradouro = data.logradouro;
+                    endereco.bairro = data.bairro;
+                    endereco.cidade = data.localidade;
+                    endereco.estado = data.uf;
+                    return {erro:'a', endereco};*/
+                    document.getElementById("logradouro").value = data.logradouro;
+                    document.getElementById("bairro").value = data.bairro;
+                    document.getElementById("cidade").value = data.localidade;
+                    document.getElementById("estado").value = data.uf;
+                    return "";
+                }
+                else {
+                    /*endereco.logradouro = "";
+                    endereco.bairro = "";
+                    endereco.cidade = "";
+                    endereco.estado = "";
+                    return {erro:'CEP invalido', endereco};*/
+                    document.getElementById("logradouro").value = "";
+                    document.getElementById("bairro").value = "";
+                    document.getElementById("cidade").value = "";
+                    document.getElementById("estado").value = "";
+                    return "CEP invalido";
+                }
+            });
+
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    }
+    else {
+        /*endereco.logradouro = "";
+        endereco.bairro = "";
+        endereco.cidade = "";
+        endereco.estado = "";
+        return {erro:'a', endereco};*/
+        document.getElementById("logradouro").value = "";
+        document.getElementById("bairro").value = "";
+        document.getElementById("cidade").value = "";
+        document.getElementById("estado").value = "";
+        return "";
+    }
+};
 /*import { api } from "../controllers/index";
 //import { FETCH_ALL_USUARIOS } from '../actions/types';
 
