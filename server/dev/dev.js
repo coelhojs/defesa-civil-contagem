@@ -14,7 +14,7 @@ const tempoInicial = moment().format();
 router.get('/status', (req, res) => {
 	res.status(200).json({
 		'Status': 'online',
-		'Versão': 'v2.1',
+		'Versão': 'v3.0',
 		'Online Desde': tempoInicial,
 	});
 });

@@ -13,6 +13,7 @@ const schema = new Schema({
 	vistoriador: { type: String },
 	cidadao: { type: String },
 	local: { type: String },
+	url: { type: String },
 	fotos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Foto' }],
 
 }, { strict: false });
@@ -31,6 +32,7 @@ schema.methods.toJSON = function () {
 		cidadao: this.cidadao,
 		local: this.local,
 		fotos: this.fotos,
+		url: this.url,
 	}
 }
 

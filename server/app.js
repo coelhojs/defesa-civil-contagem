@@ -10,7 +10,6 @@ const cors = require('cors');
 const app = express();
 app.use(express.static('./public'));
 
-
 // Middlewares:
 app.use(cors());
 app.use(morgan('dev'));
@@ -37,7 +36,6 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 // Rotas de acesso:
 app.use('/acesso/usuarios', require('./rotas/usuario.rotas'));
 app.use('/acesso/chamados', require('./rotas/chamado.rotas'));
-app.use('/acesso/chamados/foto', require('./rotas/foto.rotas'));
 app.use('/acesso/noticias', require('./rotas/noticia.rotas'));
 app.use('/acesso/informativos', require('./rotas/informativo.rotas'));
 

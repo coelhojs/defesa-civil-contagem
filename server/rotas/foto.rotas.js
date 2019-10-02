@@ -24,12 +24,12 @@ router.get('/', (req, res, next) => {
 });
 
 // Obtem a foto de um chamado
-router.get('/:idchamado/:arquivo', (req, res, next) => {
+router.get('/:arquivo', (req, res, next) => {
 	try {
 		// Diretório do usuário:
 		let user_dir = path.join(__dirname, `../imagens/${req.user.id}`);
 		// Diretório do chamado:
-		let files_dir = `${user_dir}/${req.params.idchamado}`;
+		let files_dir = `${user_dir}/${req.chamado.id}`;
 		// Caminho do arquivo de imagem:
 		let img = `${files_dir}/${req.params.arquivo}.jpg`;
 		res.status(200).sendFile(img);
@@ -43,10 +43,10 @@ router.get('/:idchamado/:arquivo', (req, res, next) => {
 });
 
 // Recebe a foto de um chamado
-router.post('/:idchamado', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	try {
 		// Obtem o chamado correspondente:
-		let chamado = await Chamado.findById(req.params.idchamado);
+		let chamado = await Chamado.findById(req.chamado.id);
 		if (!chamado) throw new AppError({
 			http_cod: 401,
 			mensagem: 'Chamado Inexistente',
@@ -54,7 +54,7 @@ router.post('/:idchamado', async (req, res, next) => {
 		});
 		// Diretorio do usuario e do chamado:
 		let user_dir = path.join(__dirname, `../imagens/${req.user.id}`);
-		let files_dir = `${user_dir}/${req.params.idchamado}`;
+		let files_dir = `${user_dir}/${req.chamado.id}`;
 		// Cria os diretorios caso não existam:
 		if (!fs.existsSync(user_dir)) { fs.mkdirSync(user_dir); }
 		if (!fs.existsSync(files_dir)) { fs.mkdirSync(files_dir); }
@@ -62,8 +62,8 @@ router.post('/:idchamado', async (req, res, next) => {
 		let horario = moment().valueOf();
 		let filename = horario;
 		let fileExt = 'jpg';
-		let url = `/acesso/chamados/foto/${req.params.idchamado}/${filename}`;
-		let foto = new Foto({ horario: horario, filename: `${filename}.${fileExt}`, url: url });
+		let url = `${req.baseUrl}/${filename}`;
+		let foto = new Foto({ horario: horario, filename: `${filename}.${fileExt}`, url: url, user_id: req.user.id });
 		// Move o arquivo recebido para o diretório do chamado:
 		await req.files.foto.mv(`${files_dir}/${filename}.${fileExt}`);
 		// Salva o modelo e adiciona foto ao chamado:
