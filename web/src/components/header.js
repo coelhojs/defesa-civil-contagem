@@ -9,9 +9,11 @@ import SignOutBtn from './signOutBtn';
 const useStyles = makeStyles(theme => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        backgroundColor: "#f46524",
     },
     link: {
-        color: 'white'
+        color: 'white',
+        fontFamily: 'Lucida Bright',
     }
 }));
 

@@ -1,4 +1,5 @@
 const { AppError } = require('./handlers/error');
+const fileupload = require('express-fileupload');
 const auth = require('./auth/authorization');
 const bodyparser = require('body-parser');
 const express = require('express');
@@ -9,9 +10,13 @@ const cors = require('cors');
 const app = express();
 app.use(express.static('./public'));
 
+
 // Middlewares:
 app.use(cors());
 app.use(morgan('dev'));
+app.use(fileupload({
+
+}));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
