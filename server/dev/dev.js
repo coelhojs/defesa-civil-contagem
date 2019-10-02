@@ -10,6 +10,7 @@ const router = express.Router();
 
 const tempoInicial = moment().format();
 
+
 // Status geral do servidor 
 router.get('/status', (req, res) => {
 	res.status(200).json({
