@@ -10,6 +10,7 @@ const cors = require('cors');
 const app = express();
 app.use(express.static('./public'));
 
+
 // Middlewares:
 app.use(cors());
 app.use(morgan('dev'));
