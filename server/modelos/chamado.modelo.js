@@ -1,3 +1,4 @@
+const Foto = require('./foto.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const moment = require('moment');
@@ -31,9 +32,14 @@ schema.methods.toJSON = function () {
 		vistoriador: this.vistoriador,
 		cidadao: this.cidadao,
 		local: this.local,
-		fotos: this.fotos,
 		url: this.url,
+		fotos: this.fotos,
 	}
 }
+
+schema.pre('remove', function (next) {
+	console.log('removendo chamado');
+	Foto.deleteMany({ chamado: this._id }, next);
+});
 
 module.exports = mongoose.model(NOME_MODELO, schema);

@@ -1,7 +1,13 @@
+const Usuario = require('../modelos/usuario.modelo');
+const Chamado = require('../modelos/chamado.modelo');
+const Foto = require('../modelos/foto.modelo');
+
+const moment = require('moment');
+
 // Testes de criação de entidades:
 
 function criarUsuario() {
-	// Teste para criar um usuário
+
 }
 
 function criarChamado() {

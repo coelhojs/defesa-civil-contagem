@@ -13,10 +13,6 @@ app.use(express.static('./public'));
 // Middlewares:
 app.use(cors());
 app.use(morgan('dev'));
-app.use(fileupload({
-	createParentPath: true,
-	debug: process.env.NODE_ENV.toLowerCase() == 'development',
-}));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 

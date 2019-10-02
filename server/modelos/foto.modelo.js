@@ -1,3 +1,4 @@
+const Chamado = require('./chamado.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const moment = require('moment');

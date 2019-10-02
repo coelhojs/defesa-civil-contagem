@@ -72,8 +72,24 @@ router.post('/', async (req, res, next) => {
 
 // Deleta chamado(s) do usuário atual:
 router.delete('/', (req, res, next) => {
-	let user_id = req.user.id;
-	Chamado.findOneAndRemove(req.body)
+	req.body.user_id = req.user.id;
+	Chamado.deleteMany(req.body)
+		.then(result => {
+			res.status(200).json(result.toJSON());
+		}).catch(error => {
+			next(new AppError({
+				http_cod: 500,
+				mensagem: error.message,
+				mensagem_amigavel: 'Erro ao apagar o chamado'
+			}));
+		});
+});
+
+// Deleta um chamado do usuário atual:
+router.delete('/:id', (req, res, next) => {
+	req.body.user_id = req.user.id;
+	req.body._id = req.params.id;
+	Chamado.findOneAndDelete(req.body)
 		.then(result => {
 			res.status(200).json(result.toJSON());
 		}).catch(error => {

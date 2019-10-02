@@ -1,5 +1,6 @@
 const Foto = require('../modelos/foto.modelo');
 const { AppError } = require('../handlers/error');
+const fileupload = require('express-fileupload');
 const express = require('express');
 const moment = require('moment');
 const path = require('path');
@@ -43,7 +44,10 @@ router.get('/:arquivo', (req, res, next) => {
 });
 
 // Recebe a foto de um chamado
-router.post('/', async (req, res, next) => {
+router.post('/', fileupload({
+	createParentPath: true,
+	debug: process.env.NODE_ENV.toLowerCase() == 'development',
+}), async (req, res, next) => {
 	try {
 		// Obtem o chamado correspondente:
 		let chamado = await Chamado.findById(req.chamado.id);
@@ -55,9 +59,6 @@ router.post('/', async (req, res, next) => {
 		// Diretorio do usuario e do chamado:
 		let user_dir = path.join(__dirname, `../imagens/${req.user.id}`);
 		let files_dir = `${user_dir}/${req.chamado.id}`;
-		// Cria os diretorios caso não existam:
-		if (!fs.existsSync(user_dir)) { fs.mkdirSync(user_dir); }
-		if (!fs.existsSync(files_dir)) { fs.mkdirSync(files_dir); }
 		// Cria o objeto modelo da foto:
 		let horario = moment().valueOf();
 		let filename = horario;
