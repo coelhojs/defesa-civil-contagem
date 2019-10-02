@@ -1,9 +1,10 @@
 // Hook (use-auth.js)
-import React, { useState, useEffect, useContext, createContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import { cadastroUsuario, loginUsuario, getUsuario } from '../controllers/Usuarios';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { cadastroUsuario } from '../controllers/Usuarios';
 import history from '../history';
+import { api } from "../controllers/index";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -40,24 +41,50 @@ export const useAuth = () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
+  //user = autenticacao Google
   const [user, setUser] = useState(null);
+  //usuario = autenticacao Aplicação  
+  const [usuario, setUsuario] = useState(null);
   const [idToken, setIdToken] = useState("");
+  const [apiKey, setApiKey] = useState("");
 
   const login = () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     try {
-      console.log(user);
       return firebase
         .auth()
         .signInWithPopup(googleAuthProvider)
         .then(response => {
-          console.log(user);
+          console.log(response)
           return loginUsuario(response.credential.idToken)
         });
     } catch (error) {
       console.error(error);
     }
   };
+
+  const loginUsuario = async idToken => {
+    api.post(`/auth/google/login`, {},
+      {
+        headers: {
+          'authorization': `Bearer ${idToken}`
+        }
+      })
+      .then(function (response) {
+        console.log(response)
+        if (response.data.mensagem == "Usuário não cadastrado") {
+          history.push('/Cadastro');
+        } else {
+          setApiKey(response.data.api_key);
+          setUsuario(response.data.usuario);
+          history.push('/')
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
+
 
   const loginEmailSenha = (email, password) => {
     return firebase
@@ -95,6 +122,7 @@ function useProvideAuth() {
       .signOut()
       .then(() => {
         setUser(false);
+        setUsuario(false);
       });
   };
 
@@ -126,6 +154,7 @@ function useProvideAuth() {
         setUser(user);
       } else {
         setUser(false);
+        setUsuario(false);
       }
     });
 
@@ -136,6 +165,7 @@ function useProvideAuth() {
   // Return the user object and auth methods
   return {
     user,
+    usuario,
     login,
     signup,
     signout,
