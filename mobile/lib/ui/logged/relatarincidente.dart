@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:defesa_civil/helpers/constants.dart';
+import 'package:defesa_civil/helpers/size_config.dart';
 import 'package:defesa_civil/ui/logged/registraraviso.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,18 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
   Future _getChamados() async {
     http.Response response;
     response = await http.get("$REQ/acesso/chamados", headers: {"authorization": "Bearer $api_key"});
+    var decod = json.decode(response.body);
+    print(decod);
     return json.decode(response.body);
+  }
+
+  Future _loadImage(String url) async {
+    print("$REQ$url");
+    var response = await http.get("$REQ$url", headers: {"authorization": "Bearer $api_key"});
+    //var responseDecoded = json.decode(response.body);
+
+    //print(response.bodyBytes);
+    return response.bodyBytes;
   }
 
   @override
@@ -38,6 +50,7 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(backgroundColor: Colors.orange,onPressed: (){
         Navigator.of(context).push(
@@ -60,11 +73,43 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
                     return Expanded(
                       child: ListView.builder(itemCount: snapshot.data.length,itemBuilder: (context,index){
                         return Card(
-                          child: Column(
-                            children: <Widget>[
-                              Text("${snapshot.data[index]['descricao']}"),
-                              Text("${snapshot.data[index]['tipo']}"),
-                            ],
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              children: <Widget>[
+                                FutureBuilder(
+                                  future: _loadImage(snapshot.data[index]['fotos'][0]['url']),
+                                  builder: (context,snapshot){
+                                    if (snapshot.connectionState != ConnectionState.done)
+                                      return Container(
+                                          width: SizeConfig.blockSizeHorizontal*20,
+                                          height: SizeConfig.blockSizeHorizontal*20,
+                                        child: Center(child: CircularProgressIndicator(),),
+                                      );
+                                    else{
+                                      //print(snapshot.data);
+                                      return Container(
+                                        width: SizeConfig.blockSizeHorizontal*20,
+                                        height: SizeConfig.blockSizeHorizontal*20,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(image: MemoryImage(snapshot.data), fit: BoxFit.cover,),
+
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                                Padding(padding: EdgeInsets.only(left: 10),),
+                                Column(
+                                  children: <Widget>[
+                                    Text("${snapshot.data[index]['tipo']}"),
+                                    Text("${snapshot.data[index]['descricao']}"),
+
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }),
