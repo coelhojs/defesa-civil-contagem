@@ -286,19 +286,19 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                   children: <Widget>[
                     _image[0] == null
                         ? _circuloSemImagem(0)
-                        : _circuloComImagem(0),
+                        : _circuloComImagem(0, context),
                     Padding(
                       padding: EdgeInsets.only(right: 5),
                     ),
                     _image[1] == null
                         ? _circuloSemImagem(1)
-                        : _circuloComImagem(1),
+                        : _circuloComImagem(1, context),
                     Padding(
                       padding: EdgeInsets.only(right: 5),
                     ),
                     _image[2] == null
                         ? _circuloSemImagem(2)
-                        : _circuloComImagem(2),
+                        : _circuloComImagem(2, context),
                   ],
                 ),
               ],
@@ -309,17 +309,28 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     );
   }
 
-  Widget _circuloComImagem(int imageNumber) {
-    return Container(
-      height: SizeConfig.blockSizeHorizontal * 30,
-      width: SizeConfig.blockSizeHorizontal * 30,
-      decoration: new BoxDecoration(
-        image: DecorationImage(
-          image: FileImage(_image[imageNumber]),
-          fit: BoxFit.fill,
+  Widget _circuloComImagem(int imageNumber, BuildContext context) {
+    return GestureDetector(
+      child: Hero(
+        tag: 'image$imageNumber',
+        child: Container(
+          height: SizeConfig.blockSizeHorizontal * 30,
+          width: SizeConfig.blockSizeHorizontal * 30,
+          decoration: new BoxDecoration(
+            border: Border.all(color: Colors.orange, width: SizeConfig.blockSizeHorizontal* 0.6),
+            image: DecorationImage(
+              image: FileImage(_image[imageNumber]),
+              fit: BoxFit.fill,
+            ),
+            shape: BoxShape.circle,
+          ),
         ),
-        shape: BoxShape.circle,
       ),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return DetailScreen(_image, imageNumber);
+          }));
+        }
     );
   }
 
@@ -366,7 +377,12 @@ class _RegistroAvisoState extends State<RegistroAviso> {
         source: ImageSource.camera, imageQuality: 80);
 
     setState(() {
-      _image[imageNumber] = image;
+      if(_image[0]==null)
+        _image[0] = image;
+      else if(_image[1]==null)
+        _image[1] = image;
+      else
+        _image[imageNumber]=image;
     });
   }
 
@@ -381,3 +397,77 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     return items;
   }
 }
+
+class DetailScreen extends StatefulWidget {
+  List<File> image;
+  int imageNumber;
+  DetailScreen(this.image, this.imageNumber);
+
+  @override
+  _DetailScreenState createState() => _DetailScreenState(image,imageNumber);
+}
+
+class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin{
+  TabController _tabController;
+  List<File> image;
+  int imageNumber;
+  int total=0;
+  List<Widget> list = List<Widget>();
+  
+  buildWidgets(BuildContext context){
+    print(total);
+    print(imageNumber);
+    for(int i = 0; i < total ; i++){
+
+        list.add(GestureDetector(
+          child: Center(
+            child: Hero(
+              tag: 'image$imageNumber',
+              child: Image.file(
+                image[i],
+              ),
+            ),
+          ),
+          onTap: () {
+
+            Navigator.pop(context);
+          },
+        ));
+    }
+    return list;
+  }
+
+  _DetailScreenState(this.image,this.imageNumber);
+  @override
+  void initState() {
+    super.initState();
+    for(int i=0; i<image.length;i++)
+      if(image[i]!=null)
+        total++;
+
+    _tabController = new TabController(vsync: this, length: total);
+    if(total!=1)
+    _tabController.animateTo(imageNumber);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: total,
+      child: Scaffold(
+        body: TabBarView(
+          controller: _tabController,
+          children: buildWidgets(context),
+        ),
+      ),
+    );
+  }
+}
+
+
