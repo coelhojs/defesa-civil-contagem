@@ -6,23 +6,8 @@ import { validarNome, validarTelefone, validarCPF, validarCEP } from '../validat
 import { useAuth } from "./useAuth";
 
 
-export const useForm = (callback) => {
+export const useForm = (callback, inputs) => {
     const auth = useAuth();
-    const inputs = {
-        nome: '',
-        email: '',
-        cpf: '',
-        userType: '',
-        telefone: '',
-        dataNasc: '',
-        cep: '',
-        logradouro: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        estado: ''
-    }
 
     const [idToken, setIdToken] = useState('');
     const [values, setValues] = useState(inputs);

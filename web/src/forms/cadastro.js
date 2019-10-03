@@ -41,9 +41,26 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const formInputs = {
+    nome: '',
+    email: '',
+    cpf: '',
+    userType: '',
+    telefone: '',
+    dataNasc: '',
+    cep: '',
+    logradouro: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cidade: '',
+    estado: ''
+}
+
 export default function CadastroForm() {
     const classes = useStyles();
-    const { values, errors, handleChange, handleSubmit } = useForm(callbackSubmit);
+    const { values, errors, handleChange, handleSubmit } = useForm(callbackSubmit, formInputs);
+
 
     function callbackSubmit() {
         console.log(values);
