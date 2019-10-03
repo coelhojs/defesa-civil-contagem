@@ -2,22 +2,44 @@
 import * as _ from 'lodash';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { validarNome, validarTelefone, validarCPF, validarCEP} from '../validation/validateFormularios'
-import { useAuth } from "../customHooks/useAuth";
+import { validarNome, validarTelefone, validarCPF, validarCEP } from '../validation/validateFormularios'
+import { useAuth } from "./useAuth";
 
-export const useForm = (callback, inputs) => {
+
+export const useForm = (callback) => {
     const auth = useAuth();
+    const inputs = {
+        nome: '',
+        email: '',
+        cpf: '',
+        userType: '',
+        telefone: '',
+        dataNasc: '',
+        cep: '',
+        logradouro: '',
+        numero: '',
+        complemento: '',
+        bairro: '',
+        cidade: '',
+        estado: ''
+    }
 
     const [idToken, setIdToken] = useState('');
-    const [values, setValues] = useState(inputs);;
+    const [values, setValues] = useState(inputs);
     const [errors, setErrors] = useState(inputs);
 
-    {/*isso daqui esta gerando dois erros*/}
-    {/*useEffect(() => {
+    useEffect(() => {
         if (auth.user) {
-            setValues({ email: auth.user.email })
+            setValues({
+                ...values,
+                ["email"]:
+                    auth.user.email
+
+            });
+            // setValues(values => values.email = auth.user.email)
         }
-    }, [auth.user]);*/}
+    }, [auth.user]);
+
 
     const handleSubmit = (event) => {
         auth.signup(idToken, values);
@@ -64,12 +86,12 @@ export const useForm = (callback, inputs) => {
         switch (event.target.name) {
             case "nome":
                 errors.nome = validarNomes(values.nome);
-
+     
                 break;
             default:
                 break;
         }
-
+     
         console.log(values);
         console.log(errors);
     };*/

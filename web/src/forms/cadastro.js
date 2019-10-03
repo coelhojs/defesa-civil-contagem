@@ -9,11 +9,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Send from '@material-ui/icons/Send';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useForm } from "../customHooks/useForm";
-import Typography from '@material-ui/core/Typography';
 //import { CEPMask, CPFMask, TelefoneMask } from "../masks";
 
 const useStyles = makeStyles(theme => ({
@@ -36,44 +36,27 @@ const useStyles = makeStyles(theme => ({
     rightIcon: {
         marginLeft: theme.spacing(1),
     },
-    text:{
+    text: {
         textAlign: "center",
     }
 }));
 
-const formInputs = {
-    nome: '',
-    email: '',
-    cpf: '',
-    userType: '',
-    telefone: '',
-    dataNasc: '',
-    cep: '',
-    logradouro: '',
-    numero: '',
-    complemento: '',
-    bairro: '',
-    cidade: '',
-    estado: ''
-}
-
 export default function CadastroForm() {
     const classes = useStyles();
-    const { values, errors, handleChange, handleSubmit, validaNome } = useForm(callbackSubmit, formInputs);
+    const { values, errors, handleChange, handleSubmit } = useForm(callbackSubmit);
 
     function callbackSubmit() {
         console.log(values);
     }
-
+    console.log(values);
     return (
         <Paper className={classes.root}>
             <Typography variant="h5" component="h2" className={classes.text}>
                 Cadastro
             </Typography>
-            <form onSubmit={handleSubmit}>
-                {/* TODO: Remover Grids duplos */}
-                {/*<Grid container direction="row" justify="center" alignItems="center" >
-                    <Grid item xs={12} md={8}>*/}
+            <form onSubmit={handleSubmit} autoComplete="off">
+                <Grid container direction="row" justify="center" alignItems="center" >
+                    <Grid item xs={12} md={8}>
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="nome">Nome Completo</InputLabel>
                             <Input required name="nome" value={values.nome} onChange={handleChange} />
@@ -81,23 +64,23 @@ export default function CadastroForm() {
                                 <FormHelperText className={classes.erro}>{errors.nome}</FormHelperText>
                             )}
                         </FormControl>
-                        <br/>
+                        <br />
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="email">E-Mail</InputLabel>
-                            <Input readOnly type="email" name="email" value={values.email}/>
+                            <InputLabel htmlFor="email">E-mail</InputLabel>
+                            <Input readOnly type="email" value={values.email} />
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="telefone" shrink>Telefone</InputLabel>
                             <Input required name="telefone" value={values.telefone} onChange={handleChange}
-                                //inputComponent={TelefoneMask}
+                            //inputComponent={TelefoneMask}
                             />
                             <FormHelperText className={classes.erro}>{errors.telefone}</FormHelperText>
                         </FormControl>
-                        <br/>
+                        <br />
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="cpf" shrink>CPF</InputLabel>
                             <Input required name="cpf" value={values.cpf} onChange={handleChange}
-                                //inputComponent={CPFMask}
+                            //inputComponent={CPFMask}
                             />
                             <FormHelperText className={classes.erro}>{errors.cpf}</FormHelperText>
                         </FormControl>
@@ -106,10 +89,10 @@ export default function CadastroForm() {
                             <Input required name="dataNasc" value={values.dataNasc} onChange={handleChange} type="date" />
                             <FormHelperText className={classes.erro}>{errors.dataNasc}</FormHelperText>
                         </FormControl>
-                        <br/>
+                        <br />
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="userType" >Tipo</InputLabel>
-                            <Select  value={values.userType} onChange={handleChange}
+                            <Select value={values.userType} onChange={handleChange}
                                 inputProps={{
                                     name: 'userType',
                                     id: 'userType',
@@ -122,31 +105,31 @@ export default function CadastroForm() {
                             </Select>
                             <FormHelperText className={classes.erro}>{errors.userType}</FormHelperText>
                         </FormControl>
-                        <br/>
+                        <br />
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="cep" shrink>CEP</InputLabel>
                             <Input required name="cep" value={values.cep} onChange={handleChange}
-                                //inputComponent={CEPMask}
+                            //inputComponent={CEPMask}
                             />
                             <FormHelperText className={classes.erro}>{errors.cep}</FormHelperText>
                         </FormControl>
-                        <br/>
+                        <br />
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="logradouro" shrink>Logradouro</InputLabel>
                             <Input readOnly id="logradouro" name="logradouro" value={values.logradouro} onChange={handleChange} />
                         </FormControl>
                         <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="numero">Número</InputLabel>
-                                <Input required name="numero" type="number" value={values.numero} onChange={handleChange} />
-                                <FormHelperText className={classes.erro}>{errors.numero}</FormHelperText>
-                            </FormControl>
-                            <FormControl  className={classes.formControl}>
-                                <InputLabel htmlFor="complemento">Complemento</InputLabel>
-                                <Input name="complemento" value={values.complemento} onChange={handleChange} />
+                            <InputLabel htmlFor="numero">Número</InputLabel>
+                            <Input required name="numero" type="number" value={values.numero} onChange={handleChange} />
+                            <FormHelperText className={classes.erro}>{errors.numero}</FormHelperText>
                         </FormControl>
-                        <FormControl  className={classes.formControl}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="complemento">Complemento</InputLabel>
+                            <Input name="complemento" value={values.complemento} onChange={handleChange} />
+                        </FormControl>
+                        <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
-                            <Input readOnly id="bairro" name="bairro" value={values.bairro}onChange={handleChange}/>
+                            <Input readOnly id="bairro" name="bairro" value={values.bairro} onChange={handleChange} />
                         </FormControl>
 
                         <FormControl className={classes.formControl}>
@@ -175,10 +158,9 @@ export default function CadastroForm() {
                                 <Send className={classes.rightIcon} />
                             </Button>
                         </Grid>
-                    {/*</Grid>
-                </Grid>*/}
-            </form>
-        </Paper>
-
+                    </Grid>
+                </Grid>
+            </form >
+        </Paper >
     )
 }
