@@ -1,7 +1,7 @@
-const Chamado = require('./chamado.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const moment = require('moment');
+const fs = require('fs-extra');
 const Schema = mongoose.Schema;
 
 const NOME_MODELO = 'Foto';
@@ -11,6 +11,7 @@ const schema = new Schema({
 	url: String,
 	horario: String,
 	user_id: { type: String },
+	chamado_id: { type: String },
 
 }, { strict: false });
 
@@ -24,5 +25,10 @@ schema.methods.toJSON = function () {
 		horario: moment().unix(this.horario),
 	}
 }
+
+schema.pre('remove', function (next) {
+	fs.removeSync(`./imagens/${this.user_id}/${this.chamado_id}/${this.filename}`);
+	next();
+});
 
 module.exports = mongoose.model(NOME_MODELO, schema);

@@ -1,6 +1,6 @@
-const Chamado = require('../modelos/chamado.modelo');
-const Foto = require('../modelos/foto.modelo');
-const { AppError } = require('../handlers/error');
+const Chamado = require('../models/chamado.modelo');
+const Foto = require('../models/foto.modelo');
+const { AppError } = require('../models/error');
 const express = require('express');
 const fs = require('fs');
 

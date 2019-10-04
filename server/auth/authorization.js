@@ -1,5 +1,5 @@
-const Usuario = require('../modelos/usuario.modelo');
-const { AppError } = require('../handlers/error');
+const Usuario = require('../models/usuario.modelo');
+const { AppError } = require('../models/error');
 const JWT = require('jsonwebtoken');
 
 // Senha para codificar/decodificar o id de usuários:

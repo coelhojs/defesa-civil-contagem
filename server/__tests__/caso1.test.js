@@ -3,7 +3,7 @@
  * Este teste simula o fluxo de uso de um cidadão a partir
  * do aplicativo (Mobile). É feito o cadastro do usuário,
  * de um chamado, a adição de uma foto ao chamado, e a visualização
- * das entidades criadas.
+ * das entidades criadas. Depois é feita a remoção dos itens criados.
  * 
  * SUMÁRIO:
  * Cadastro e login de usuário
@@ -29,20 +29,20 @@ process.env.DB_HOST = 'Local';
 
 
 const app = require('../app');
+const fs = require('fs-extra');
 const db = require('../database');
 const server = require('../server');
 const request = require('supertest');
 
 const Util = require('../dev/util');
 
-// Modelos:
-const Usuario = require('../modelos/usuario.modelo');
-const Chamado = require('../modelos/chamado.modelo');
-const Foto = require('../modelos/foto.modelo');
+// Objetos dos modelos
+var api_key, usuario, chamado, foto;
 
 beforeAll(async done => {
 	await db.init();
 	await db.mongoose.connection.dropDatabase();
+	fs.removeSync('./imagens');
 	server.listen(process.env.PORTA || 3001, done);
 });
 
@@ -52,13 +52,14 @@ afterAll(async done => {
 	done();
 });
 
-var api_key, usuario, chamado, foto;
 
 describe('Cadastro e login de usuário', () => {
 
 	it('deve cadastrar um usuário', async done => {
 		let user = Util.gerarUsuario('Cidadão');
-		let res = await request(app).post('/dev/usuarios').send(user);
+		let res = await request(app)
+			.post('/dev/usuarios')
+			.send(user);
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toHaveProperty('api_key');
 		api_key = res.body.api_key;
@@ -81,6 +82,8 @@ describe('Cadastro e login de usuário', () => {
 
 });
 
+// ========================================================================
+
 describe('Criação de um chamado', () => {
 
 	it('deve criar um chamado', async done => {
@@ -97,7 +100,7 @@ describe('Criação de um chamado', () => {
 	it('deve enviar uma foto para o último chamado criado', async done => {
 		let res = await request(app)
 			.post('/acesso/chamados/' + chamado.id + '/fotos')
-			.attach('foto', './imagens/teste.jpg')
+			.attach('foto', './__tests__/teste.jpg')
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toHaveProperty('horario');
@@ -107,6 +110,8 @@ describe('Criação de um chamado', () => {
 
 });
 
+// ========================================================================
+
 describe('Visualização de chamados e fotos de chamados', () => {
 
 	it('deve recuperar o último chamado do usuário', async done => {
@@ -115,7 +120,8 @@ describe('Visualização de chamados e fotos de chamados', () => {
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
 		expect(res.body[0]).toHaveProperty('descricao');
-		chamado = res.body;
+		chamado = res.body[0];
+		expect(chamado).toBeDefined();
 		done();
 	});
 
@@ -125,6 +131,22 @@ describe('Visualização de chamados e fotos de chamados', () => {
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toBeDefined();
+		done();
+	});
+
+});
+
+// ========================================================================
+
+describe('Exclusão de chamados e fotos de chamados', () => {
+
+	it('deve deletar o último chamado do usuário', async done => {
+		let res = await request(app)
+			.delete('/acesso/chamados/' + chamado.id)
+			.auth(api_key, { type: 'bearer' });
+		expect(res.statusCode).toEqual(200);
+		expect(res.body).toBeDefined();
+		expect(fs.existsSync(`./imagens/${usuario.id}/${chamado.id}`)).toBeFalsy();
 		done();
 	});
 

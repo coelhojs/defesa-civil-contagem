@@ -1,5 +1,5 @@
-const Usuario = require('../modelos/usuario.modelo');
-const Chamado = require('../modelos/chamado.modelo');
+const Usuario = require('../models/usuario.modelo');
+const Chamado = require('../models/chamado.modelo');
 
 const auth = require('../auth/authorization');
 const express = require('express');

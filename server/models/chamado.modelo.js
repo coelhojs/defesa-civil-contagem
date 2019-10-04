@@ -2,6 +2,7 @@ const Foto = require('./foto.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const moment = require('moment');
+const fs = require('fs-extra');
 const Schema = mongoose.Schema;
 
 const NOME_MODELO = 'Chamado';
@@ -37,9 +38,20 @@ schema.methods.toJSON = function () {
 	}
 }
 
+// Cria o diretório de fotos:
+schema.post('save', function (next) {
+	fs.mkdirpSync(`./imagens/${this.user_id}/${this._id}`);
+	this.url = '/acesso/chamados/' + this._id;
+	next();
+});
+
+// Remove o diretório de fotos:
 schema.pre('remove', function (next) {
-	console.log('removendo chamado');
-	Foto.deleteMany({ chamado: this._id }, next);
+	Foto.find({ chamado_id: this._id }).then(async fotos => {
+		fotos.forEach(async f => await f.remove());
+	});
+	fs.removeSync(`./imagens/${this.user_id}/${this._id}`);
+	next();
 });
 
 module.exports = mongoose.model(NOME_MODELO, schema);

@@ -1,5 +1,5 @@
-const Foto = require('../modelos/foto.modelo');
-const { AppError } = require('../handlers/error');
+const Foto = require('../models/foto.modelo');
+const { AppError } = require('../models/error');
 const fileupload = require('express-fileupload');
 const express = require('express');
 const moment = require('moment');
@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const router = express.Router();
 
-const Chamado = require('../modelos/chamado.modelo');
+const Chamado = require('../models/chamado.modelo');
 
 // Buscar fotos (pode filtrar pela URL) do usuário atual
 router.get('/', (req, res, next) => {

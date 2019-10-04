@@ -1,11 +1,13 @@
+const Chamado = require('./chamado.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const fs = require('fs-extra');
 
 const NOME_MODELO = 'Usuario';
 
 const schema = new Schema({
-	google_id: { type: String},
+	google_id: { type: String },
 	tipo: { type: String },
 	nome: { type: String },
 	telefone: { type: String },
@@ -30,5 +32,19 @@ schema.methods.toJSON = function () {
 		nascimento: this.nascimento,
 	}
 }
+
+schema.pre('save', function (next) {
+	fs.createFileSync(`./imagens/${this._id}/.gitkeep`);
+	next();
+});
+
+schema.pre('remove', function (next) {
+	Chamado.find({ user_id: this._id })
+		.then(async chamados => {
+			chamados.forEach(async c => c.remove());
+		});
+	fs.removeSync(`./imagens/${this._id}`);
+	next();
+});
 
 module.exports = mongoose.model(NOME_MODELO, schema);

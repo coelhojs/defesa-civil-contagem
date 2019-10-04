@@ -1,4 +1,4 @@
-const { AppError } = require('./handlers/error');
+const { AppError } = require('./models/error');
 const fileupload = require('express-fileupload');
 const auth = require('./auth/authorization');
 const bodyparser = require('body-parser');
@@ -30,10 +30,10 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 }
 
 // Rotas de acesso:
-app.use('/acesso/usuarios', require('./rotas/usuario.rotas'));
-app.use('/acesso/chamados', require('./rotas/chamado.rotas'));
-app.use('/acesso/noticias', require('./rotas/noticia.rotas'));
-app.use('/acesso/informativos', require('./rotas/informativo.rotas'));
+app.use('/acesso/usuarios', require('./controllers/usuario.rotas'));
+app.use('/acesso/chamados', require('./controllers/chamado.rotas'));
+app.use('/acesso/noticias', require('./controllers/noticia.rotas'));
+app.use('/acesso/informativos', require('./controllers/informativo.rotas'));
 
 // Tratamento de rotas inválidas:
 app.use((req, res, next) => {
@@ -45,6 +45,6 @@ app.use((req, res, next) => {
 });
 
 // Tratamento de erros:
-app.use(require('./handlers/error').error_route);
+app.use(require('./models/error').error_route);
 
 module.exports = app;

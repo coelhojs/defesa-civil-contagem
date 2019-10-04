@@ -1,5 +1,5 @@
-const Usuario = require('../modelos/usuario.modelo');
-const Chamado = require('../modelos/chamado.modelo');
+const Usuario = require('../models/usuario.modelo');
+const Chamado = require('../models/chamado.modelo');
 const faker = require('faker');
 
 faker.locale = 'pt_BR';
@@ -8,7 +8,7 @@ faker.locale = 'pt_BR';
 function gerarUsuario(tipo) {
 	let fname = faker.name.firstName();
 	let lname = faker.name.lastName();
-	return new Usuario({
+	return {
 		google_id: faker.random.uuid(),
 		tipo: tipo,
 		nome: fname + ' ' + lname,
@@ -17,19 +17,19 @@ function gerarUsuario(tipo) {
 		email: faker.internet.email(fname, lname),
 		nascimento: faker.date.past(80),
 		endereco: faker.address.streetAddress(true),
-	});
+	};
 }
 
 function gerarChamado() {
 	let tipos = ['Tornado', 'Terremoto', 'Invasão alienígena'];
-	return new Chamado({
+	return {
 		tipo: tipos[Math.floor(Math.random() * tipos.length)],
 		dataHora: new Date(),
 		descricao: 'Ocorreu uma catástrofe',
 		vistoriador: faker.name.firstName(),
 		cidadao: faker.name.firstName(),
 		local: faker.address.city(),
-	});
+	};
 }
 
 module.exports = {
