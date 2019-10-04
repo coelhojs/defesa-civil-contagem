@@ -4,8 +4,8 @@
   "description": "Servidor da aplicação de Defesa Civil de Contagem",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "jest"
   },
   "repository": {
@@ -41,6 +41,8 @@
     "uuid-token-generator": "^1.0.0"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
   }
 }

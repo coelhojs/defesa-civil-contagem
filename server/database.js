@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
-
-// Usar com o MongoDB Atlas
-const URI = process.env.MONGODB_URI;
-//const URI = process.env.MONGODB_URI_LOCAL;
-
-// Usar com o MongoDB Local
-// const STRING = 'mongodb://localhost/defesacivil';
+mongoose.Promise = global.Promise;
 
 module.exports = {
-    init: function (callback) {
-        mongoose.connection.once('open', callback);
-        mongoose.connect(URI, {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useUnifiedTopology: true
+    init: function (uri) {
+        let mongoUri;
+        if (uri) {
+            mongoUri = uri;
+        } else {
+            mongoUri = (process.env.DB_HOST.toLowerCase() == 'local')
+                ? process.env.MONGODB_URI_LOCAL
+                : process.env.MONGODB_URI_REMOTO;
+        }
+        return new Promise((resolve, reject) => {
+            mongoose.connect(mongoUri, {
+                useCreateIndex: true,
+                useNewUrlParser: true,
+                useUnifiedTopology: true
+            }).then(resolve).catch(reject);
         });
     },
-    isLocal: function () {
-        return URI.indexOf('localhost') != -1;
-    }
+    mongoose: mongoose,
 };

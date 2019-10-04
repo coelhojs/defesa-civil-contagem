@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const NOME_MODELO = 'Usuario';
 
 const schema = new Schema({
-	google_id: { type: String, unique: true },
+	google_id: { type: String},
 	tipo: { type: String },
 	nome: { type: String },
 	telefone: { type: String },
