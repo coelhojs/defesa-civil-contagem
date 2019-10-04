@@ -46,7 +46,7 @@ router.get('/:arquivo', (req, res, next) => {
 // Recebe a foto de um chamado
 router.post('/', fileupload({
 	createParentPath: true,
-	debug: process.env.NODE_ENV.toLowerCase() == 'development',
+	// debug: process.env.NODE_ENV.toLowerCase() == 'development',
 }), async (req, res, next) => {
 	try {
 		// Obtem o chamado correspondente:

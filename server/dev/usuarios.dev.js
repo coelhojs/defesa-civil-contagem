@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
 router.post('/', async (req, res, next) => {
     try {
         let user = new Usuario(req.body);
-        user.save();
+        await user.save();
         let obj = user.toJSON();
         obj.id = user.id;
         obj.api_key = auth.gerarApiKey(user.id);
