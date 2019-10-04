@@ -52,9 +52,7 @@ afterAll(async done => {
 	done();
 });
 
-// api_key do usuário sendo testado
-var api_key = '';
-var usuario, chamado, foto;
+var api_key, usuario, chamado, foto;
 
 describe('Cadastro e login de usuário', () => {
 
