@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
 
 function AutenticacaoForm() {
     const classes = useStyles();
-    const authContext = createContext();
+    const useFirebaseContext = createContext();
     const [usuario, setUsuario] = useState("");
 
     if (!usuario) {

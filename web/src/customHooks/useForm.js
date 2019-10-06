@@ -1,21 +1,11 @@
 //https://github.com/upmostly/custom-react-hooks-forms/blob/master/src/useForm.js
-import * as _ from "lodash";
-import React from "react";
-import { useState, useEffect } from "react";
-import {
-  validarNome,
-  validarTelefone,
-  validarCPF,
-  validarCEP,
-  validarNumero,
-  buscaCEP
-} from "../validation/validateFormularios";
+import { useEffect, useState } from "react";
+import { buscaCEP, validarCEP, validarCPF, validarNome, validarNumero, validarTelefone } from "../validation/validateFormularios";
 import { useAuth } from "./useAuth";
 
 export const useForm = (callback, inputs) => {
   const auth = useAuth();
 
-  const [idToken, setIdToken] = useState("");
   const [values, setValues] = useState(inputs);
   const [errors, setErrors] = useState(inputs);
 
@@ -25,12 +15,10 @@ export const useForm = (callback, inputs) => {
         ...values,
         ["email"]: auth.user.email
       });
-      // setValues(values => values.email = auth.user.email)
     }
   }, [auth.user]);
 
   const handleSubmit = event => {
-    auth.signup(idToken, values);
     if (event) event.preventDefault();
     callback();
   };
@@ -58,6 +46,7 @@ export const useForm = (callback, inputs) => {
         errors.cpf = validarCPF(values.cpf);
         break;
       case "numero":
+        console.log(values)
         errors.numero = validarNumero(values.numero);
         break;
       case "cep":
@@ -71,6 +60,7 @@ export const useForm = (callback, inputs) => {
               values.bairro = resolve.endereco.bairro;
               values.cidade = resolve.endereco.localidade;
               values.estado = resolve.endereco.uf;
+              console.log(values)
               errors.cep = resolve.error;
             })
             .catch(reject => {

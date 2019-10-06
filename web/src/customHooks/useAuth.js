@@ -1,10 +1,11 @@
 // Hook (use-auth.js)
+import history from '../history';
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { cadastroUsuario } from '../controllers/Usuarios';
-import history from '../history';
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { api } from "../controllers/index";
+
+var token = "";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -24,19 +25,19 @@ firebase.initializeApp({
   appID: firebaseConfig.appId
 });
 
-const authContext = createContext();
+const useFirebaseContext = createContext();
 
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <useFirebaseContext.Provider value={auth}>{children}</useFirebaseContext.Provider>;
 }
 
 // Hook for child components to get the auth object ...
 // ... and re-render when it changes.
 export const useAuth = () => {
-  return useContext(authContext);
+  return useContext(useFirebaseContext);
 };
 
 // Provider hook that creates auth object and handles state
@@ -45,66 +46,61 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
   //usuario = autenticacao Aplicação  
   const [usuario, setUsuario] = useState(null);
-  const [idToken, setIdToken] = useState("");
-  const [apiKey, setApiKey] = useState("");
+  const [idToken, setIdToken] = useState(null);
+  const [apiKey, setApiKey] = useState(null);
 
-  const login = () => {
+  const login = async () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    try {
-      return firebase
-        .auth()
-        .signInWithPopup(googleAuthProvider)
-        .then(response => {
-          console.log(response)
-          return loginUsuario(response.credential.idToken)
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const loginUsuario = async idToken => {
-    api.post(`/auth/google/login`, {},
-      {
-        headers: {
-          'authorization': `Bearer ${idToken}`
-        }
-      })
-      .then(function (response) {
-        console.log(response)
-        if (response.data.mensagem == "Usuário não cadastrado") {
-          history.push('/Cadastro');
-        } else {
-          setApiKey(response.data.api_key);
-          setUsuario(response.data.usuario);
-          history.push('/')
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-  }
-
-
-  const loginEmailSenha = (email, password) => {
     return firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithPopup(googleAuthProvider)
       .then(response => {
-        console.log(response)
-        setIdToken(response.credential.idToken);
-        if (loginUsuario(idToken)) {
-          setUser(response);
-          return response;
-        } else {
-
-        }
+        return response.credential.idToken;
       });
   };
 
-  const signup = (idToken, formValues) => {
-    return cadastroUsuario(idToken, formValues);
+  // const loginEmailSenha = (email, password) => {
+  //   return firebase
+  //     .auth()
+  //     .signInWithEmailAndPassword(email, password)
+  //     .then(response => {
+  //       //console.log(response)
+  //       setIdToken(response.credential.idToken);
+  //       if (loginUsuario()) {
+  //         setUser(response);
+  //         return response;
+  //       } else {
+
+  //       }
+  //     }).catch(error => {
+
+  //     });
+  // };
+
+  const signup = (formValues) => {
+    return cadastroUsuario(formValues);
   };
+
+  const cadastroUsuario = async (formValues) => {
+    try {
+      console.log(token)
+      const response = await api.post(`/auth/google/cadastro`,
+        { ...formValues },
+        {
+          headers: {
+            'authorization': `Bearer ${token}`
+          }
+        })
+      console.log(response);
+      if (response.data === "Usuário não cadastrado") {
+        //Mandar pro form de cadastro
+        console.log("não cadastrado.")
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // const signup = (email, password) => {
   //   return firebase
@@ -166,7 +162,10 @@ function useProvideAuth() {
   return {
     user,
     usuario,
+    idToken,
+    apiKey,
     login,
+    // useFirebaseLogin,
     signup,
     signout,
     sendPasswordResetEmail,

@@ -1,9 +1,11 @@
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 import AppBar from '@material-ui/core/AppBar';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import React, { useState } from 'react'; import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useAuth } from "../customHooks/useAuth";
 import SignOutBtn from './signOutBtn';
 
 const useStyles = makeStyles(theme => ({
@@ -13,23 +15,29 @@ const useStyles = makeStyles(theme => ({
     },
     link: {
         color: 'white',
-        fontFamily: 'Lucida Bright',
+        // fontFamily: 'Lucida Bright',
     }
 }));
 
 export default function Header(props) {
     const classes = useStyles();
+    const auth = useAuth();
 
-    return (
-        <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar>
-                <Typography variant="h6" noWrap>
-                    <Link component={RouterLink} to="/" className={classes.link}>
-                        Defesa Civil de Contagem
+    if (auth.user) {
+        return (
+            <AppBar position="fixed" className={classes.appBar}>
+                <Toolbar>
+                    <Typography variant="h6" noWrap>
+                        <Link component={RouterLink} to="/" className={classes.link}>
+                            Defesa Civil de Contagem
                     </Link>
-                </Typography>
-                <SignOutBtn />
-            </Toolbar>
-        </AppBar>
-    );
+                    </Typography>
+                    <SignOutBtn />
+                </Toolbar>
+            </AppBar>
+        );
+    }
+    else {
+        return null;
+    }
 }

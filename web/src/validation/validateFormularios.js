@@ -1,3 +1,5 @@
+import { cepApi } from "../controllers";
+
 const required = value => (value ? undefined : " Campo obrigatório");
 
 const defLength = (value, length) =>
@@ -50,8 +52,8 @@ const cpf = value => {
 export function validarNome(value) {
   let resp;
 
-  resp = required(value);
-  if (resp) return resp;
+  // resp = required(value);
+  // if (resp) return resp;
 
   resp = minLength(value, 8);
   if (resp) return resp;
@@ -63,8 +65,8 @@ export function validarNome(value) {
 export function validarEmail(value) {
   let resp;
 
-  resp = required(value);
-  if (resp) return resp;
+  // resp = required(value);
+  // if (resp) return resp;
 
   resp = email(value);
   if (resp) return resp;
@@ -74,8 +76,8 @@ export function validarTelefone(value) {
   let resp;
   value = value.replace(/\D/g, "");
 
-  resp = required(value);
-  if (resp) return resp;
+  // resp = required(value);
+  // if (resp) return resp;
 
   resp = minLength(value, 10);
   if (resp) return resp;
@@ -85,8 +87,8 @@ export function validarCPF(value) {
   let resp;
   value = value.replace(/\D/g, "");
 
-  resp = required(value);
-  if (resp) return resp;
+  // resp = required(value);
+  // if (resp) return resp;
 
   resp = defLength(value, 11);
   if (resp) return resp;
@@ -96,8 +98,8 @@ export function validarNumero(value) {
     let resp;
     value = value.replace(/\D/g, "");
   
-    resp = required(value);
-    if (resp) return resp;
+  // resp = required(value);
+  // if (resp) return resp;
   
     resp = Limite(value, 1, 9999);
     if (resp) return resp;
@@ -139,9 +141,8 @@ export function validarCEP(value) {
     estado: "MG"
   };
 
-  resp = required(value);
-  if (resp)
-    return resp;
+  // resp = required(value);
+  // if (resp) return resp;
 
   resp = defLength(value, 8);
   if (resp)

@@ -1,6 +1,5 @@
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
@@ -8,8 +7,9 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import "firebase/auth";
 import React from 'react';
-import { useAuth } from "../customHooks/useAuth";
-import { useForm } from "../customHooks/useForm";
+import { useApiAuth } from '../customHooks/useApiAuth';
+import { useAuth } from '../customHooks/useAuth';
+import logo from "../img/logo.jpg";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -52,6 +52,7 @@ const ColorTextField = withStyles(theme => ({
 export default function Login(props) {
     const classes = useStyles();
     const auth = useAuth();
+    const { loginUsuario } = useApiAuth();
 
     return (
         <Card className={classes.card}>
@@ -60,7 +61,7 @@ export default function Login(props) {
                     component="img"
                     alt="Defesa Civil de Contagem - MG"
                     height="140"
-                    image="../../public/logo.jpg"
+                    image={logo}
                     title="Defesa Civil de Contagem - MG"
                 />
                 <Grid
@@ -73,7 +74,7 @@ export default function Login(props) {
                     <Grid item>
                         <ColorButton variant="contained"
                             type="submit" className={classes.button}
-                            onClick={() => { auth.login() }}>
+                            onClick={loginUsuario}>
                             Entrar
                             </ColorButton>
                     </Grid>
