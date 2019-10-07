@@ -63,7 +63,6 @@ export default function Login(props) {
                 <CardMedia
                     component="img"
                     alt="Defesa Civil de Contagem - MG"
-                    height="140"
                     image={logo}
                     title="Defesa Civil de Contagem - MG"
                 />

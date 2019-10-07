@@ -23,28 +23,27 @@ const email = value =>
     ? "Endereço de e-mail inválido"
     : undefined;
 const cpf = value => {
-  let origCPF = value.replace(/\D/g, "");
   let Soma;
   let Resto;
   let i;
   Soma = 0;
 
   for (i = 1; i <= 9; i++)
-    Soma = Soma + parseInt(origCPF.substring(i - 1, i)) * (11 - i);
+    Soma = Soma + parseInt(value.substring(i - 1, i)) * (11 - i);
 
   Resto = (Soma * 10) % 11;
 
   if (Resto == 10 || Resto == 11) Resto = 0;
-  if (Resto != parseInt(origCPF.substring(9, 10))) return "CPF invalido";
+  if (Resto != parseInt(value.substring(9, 10))) return "CPF invalido";
 
   Soma = 0;
   for (i = 1; i <= 10; i++)
-    Soma = Soma + parseInt(origCPF.substring(i - 1, i)) * (12 - i);
+    Soma = Soma + parseInt(value.substring(i - 1, i)) * (12 - i);
 
   Resto = (Soma * 10) % 11;
 
   if (Resto == 10 || Resto == 11) Resto = 0;
-  if (Resto != parseInt(origCPF.substring(10, 11))) return "CPF invalido";
+  if (Resto != parseInt(value.substring(10, 11))) return "CPF invalido";
 
   return undefined;
 };
@@ -92,6 +91,9 @@ export function validarCPF(value) {
 
   resp = defLength(value, 11);
   if (resp) return resp;
+
+  resp = cpf(value);
+  if (resp) return resp;
 }
 
 export function validarNumero(value) {
@@ -131,15 +133,8 @@ export function buscaCEP(cep) {
 }
 
 export function validarCEP(value) {
-  value = value.replace(/\D/g, "");
-  //return new Promise((resolve, reject) => {
   let resp;
-  let endereco = {
-    logradouro: "asdf",
-    bairro: "sdf",
-    cidade: "asdf",
-    estado: "MG"
-  };
+  value = value.replace(/\D/g, "");
 
   // resp = required(value);
   // if (resp) return resp;

@@ -11,10 +11,15 @@ import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
 import { ProvideAuth } from "./customHooks/useAuth";
 import Cadastro from "./forms/cadastro";
+import fundo from "./img/fundo.jpg";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    //backgroundImage: {fundo},
+    backgroundImage: 'url("https://www.hojeemdia.com.br/polopoly_fs/1.722380!/image/image.png_gen/derivatives/landscape_653/image.png")',
+    //backgroundRepeat: 'repeat-y',
+    backgroundSize: 'cover',
   },
   main: {
     flexGrow: 1,

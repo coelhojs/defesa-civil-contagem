@@ -16,6 +16,7 @@ import { useAuth } from "../customHooks/useAuth";
 import { useForm } from "../customHooks/useForm";
 import { CEPMask, CPFMask, TelefoneMask } from "../validation/masks";
 import { usuarioModel } from "../models/usuario"
+import { fontFamily } from "@material-ui/system";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,7 +42,8 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(1)
     },
     text: {
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "Impact",
     }
 }));
 
@@ -56,7 +58,7 @@ export default function CadastroForm() {
 
     return (
         <Paper className={classes.root}>
-            <Typography variant="h5" component="h2" className={classes.text}>
+            <Typography variant="h4" component="h2" className={classes.text}>
                 Cadastro</Typography>
 
             <form onSubmit={handleSubmit} autoComplete="off">
