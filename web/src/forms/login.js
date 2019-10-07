@@ -7,7 +7,6 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import "firebase/auth";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useApiAuth } from '../customHooks/useApiAuth';
 import { useAuth } from '../customHooks/useAuth';
 import logo from "../img/logo.jpg";
 
@@ -47,16 +46,12 @@ const ColorTextField = withStyles(theme => ({
 export default function Login(props) {
     const classes = useStyles();
     const auth = useAuth();
-    const { loginUsuario } = useApiAuth();
-    const [idToken, setIdToken] = useState(null);
-    const [apiKey, setApiKey] = useState("");
     const [makeRequest, setMakeRequest] = useState(false);
 
     useEffect(() => {
         const login = async () => {
             if (makeRequest) {
-                const result = await loginUsuario();
-                setApiKey(result);
+                const result = await auth.loginUsuario();
             };
         }
         login();

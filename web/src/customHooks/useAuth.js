@@ -2,10 +2,8 @@
 import history from '../history';
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../controllers/index";
-
-var token = "";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -49,6 +47,29 @@ function useProvideAuth() {
   const [idToken, setIdToken] = useState(null);
   const [apiKey, setApiKey] = useState(null);
 
+  const loginUsuario = async () => {
+    return login()
+      .then(token => {
+        setIdToken(token);
+        api.post(`/auth/google/login`, {},
+          {
+            headers: {
+              'authorization': `Bearer ${token}`
+            }
+          })
+          .then(function (response) {
+            console.log(response)
+            if (response.data.mensagem == "Usuário não cadastrado") {
+              history.push('/Cadastro');
+            } else {
+              setApiKey(response.data.api_key);
+              setUsuario(response.data.usuario);
+              history.push('/Dashboard')
+            }
+          })
+      })
+  }
+
   const login = async () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -84,12 +105,11 @@ function useProvideAuth() {
 
   const cadastroUsuario = async (formValues) => {
     try {
-      console.log(token)
       const response = await api.post(`/auth/google/cadastro`,
         { ...formValues },
         {
           headers: {
-            'authorization': `Bearer ${token}`
+            'authorization': `Bearer ${idToken}`
           }
         })
       console.log(response);
@@ -165,7 +185,7 @@ function useProvideAuth() {
     idToken,
     apiKey,
     login,
-    // useFirebaseLogin,
+    loginUsuario,
     signup,
     signout,
     sendPasswordResetEmail,
