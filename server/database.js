@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 // Usar com o MongoDB Atlas
-const URI = process.env.MONGODB_URI;
-//const URI = process.env.MONGODB_URI_LOCAL;
+// const URI = process.env.MONGODB_URI;
+const URI = process.env.MONGODB_URI_LOCAL;
 
 // Usar com o MongoDB Local
 // const STRING = 'mongodb://localhost/defesacivil';

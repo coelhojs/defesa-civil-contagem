@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
 	// Restringe os chamados para os do usuário atual:
 	req.query.user_id = req.user.id;
 	Chamado.find(req.query)
+		.populate('fotos')
 		.then(result => {
 			res.status(200).json(result.map(e => e.toJSON()));
 		}).catch(error => {
