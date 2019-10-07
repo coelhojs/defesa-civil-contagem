@@ -40,7 +40,7 @@ schema.methods.toJSON = function () {
 
 // Cria o diretório de fotos:
 schema.post('save', function (next) {
-	fs.mkdirpSync(`./imagens/${this.user_id}/${this._id}`);
+	fs.mkdirpSync(`./files/${this.user_id}/${this._id}`);
 	this.url = '/acesso/chamados/' + this._id;
 	next();
 });
@@ -50,7 +50,7 @@ schema.pre('remove', function (next) {
 	Foto.find({ chamado_id: this._id }).then(async fotos => {
 		fotos.forEach(async f => await f.remove());
 	});
-	fs.removeSync(`./imagens/${this.user_id}/${this._id}`);
+	fs.removeSync(`./files/${this.user_id}/${this._id}`);
 	next();
 });
 

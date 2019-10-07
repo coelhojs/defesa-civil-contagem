@@ -30,8 +30,8 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 }
 
 // Rotas de acesso:
-app.use('/acesso/usuarios', require('./controllers/usuario.rotas'));
-app.use('/acesso/chamados', require('./controllers/chamado.rotas'));
+app.use('/acesso/usuarios', require('./routes/usuario.rotas'));
+app.use('/acesso/chamados', require('./routes/chamado.rotas'));
 
 // Tratamento de rotas inválidas:
 app.use((req, res, next) => {

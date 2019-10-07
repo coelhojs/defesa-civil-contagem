@@ -34,7 +34,7 @@ schema.methods.toJSON = function () {
 }
 
 schema.pre('save', function (next) {
-	fs.createFileSync(`./imagens/${this._id}/.gitkeep`);
+	fs.createFileSync(`./files/${this._id}/.gitkeep`);
 	next();
 });
 
@@ -43,7 +43,7 @@ schema.pre('remove', function (next) {
 		.then(async chamados => {
 			chamados.forEach(async c => c.remove());
 		});
-	fs.removeSync(`./imagens/${this._id}`);
+	fs.removeSync(`./files/${this._id}`);
 	next();
 });
 

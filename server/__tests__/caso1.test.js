@@ -27,7 +27,6 @@ require('dotenv').config({ path: '.env' });
 process.env.NODE_ENV = 'development';
 process.env.DB_HOST = 'Local';
 
-
 const app = require('../app');
 const fs = require('fs-extra');
 const db = require('../database');
@@ -42,7 +41,7 @@ var api_key, usuario, chamado, foto;
 beforeAll(async done => {
 	await db.init();
 	await db.mongoose.connection.dropDatabase();
-	fs.removeSync('./imagens');
+	fs.removeSync('./files');
 	server.listen(process.env.PORTA || 3001, done);
 });
 
@@ -146,7 +145,7 @@ describe('Exclusão de chamados e fotos de chamados', () => {
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toBeDefined();
-		expect(fs.existsSync(`./imagens/${usuario.id}/${chamado.id}`)).toBeFalsy();
+		expect(fs.existsSync(`./files/${usuario.id}/${chamado.id}`)).toBeFalsy();
 		done();
 	});
 

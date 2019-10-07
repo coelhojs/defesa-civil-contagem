@@ -28,7 +28,7 @@ router.get('/', (req, res, next) => {
 router.get('/:arquivo', (req, res, next) => {
 	try {
 		// Diretório do usuário:
-		let user_dir = path.join(__dirname, `../imagens/${req.user.id}`);
+		let user_dir = path.join(__dirname, `../files/${req.user.id}`);
 		// Diretório do chamado:
 		let files_dir = `${user_dir}/${req.chamado.id}`;
 		// Caminho do arquivo de imagem:
@@ -57,7 +57,7 @@ router.post('/', fileupload({
 			mensagem_amigavel: this.mensagem,
 		});
 		// Diretorio do usuario e do chamado:
-		let user_dir = path.join(__dirname, `../imagens/${req.user.id}`);
+		let user_dir = path.join(__dirname, `../files/${req.user.id}`);
 		let files_dir = `${user_dir}/${req.chamado.id}`;
 		// Cria o objeto modelo da foto:
 		let horario = moment().valueOf();

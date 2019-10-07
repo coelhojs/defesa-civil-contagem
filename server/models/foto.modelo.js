@@ -27,7 +27,7 @@ schema.methods.toJSON = function () {
 }
 
 schema.pre('remove', function (next) {
-	fs.removeSync(`./imagens/${this.user_id}/${this.chamado_id}/${this.filename}`);
+	fs.removeSync(`./files/${this.user_id}/${this.chamado_id}/${this.filename}`);
 	next();
 });
 

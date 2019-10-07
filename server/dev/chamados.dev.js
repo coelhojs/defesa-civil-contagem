@@ -21,14 +21,14 @@ router.get('/', (req, res, next) => {
 });
 
 
-// CUIDADO: Remove TODOS os chamados que não possuem usuário atrelado e (opcionalmente) que não possuem imagens
+// CUIDADO: Remove TODOS os chamados que não possuem usuário atrelado e (opcionalmente) que não possuem files
 router.get('/sync', async (req, res, next) => {
 	try {
 		let chamados = await Chamado.find({});
 		for (let i = 0; i < chamados.length; i++) {
 			let c = chamados[i];
 			let user = await Usuario.findById(c.user_id);
-			if (!user || (req.query.nodir && !(fs.existsSync(`./imagens/${user.id}/${c.id}`)))) {
+			if (!user || (req.query.nodir && !(fs.existsSync(`./files/${user.id}/${c.id}`)))) {
 				c.remove();
 			}
 		}

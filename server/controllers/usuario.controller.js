@@ -28,5 +28,3 @@ exports.get_account_info = async (req, res, next) => {
 	await user.remove();
 	res.status(200).json(user);
 }
-
-module.exports = router;

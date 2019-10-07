@@ -48,7 +48,7 @@ exports.deletar_chamados = async (req, res, next) => {
 	try {
 		req.params.user_id = req.user.id;
 		let chamados = await Chamado.find(req.params);
-		chamados.forEach(c => {
+		chamados.forEach(async c => {
 			await c.remove();
 		});
 		res.status(200).json(chamados);
