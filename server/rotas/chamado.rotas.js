@@ -6,6 +6,7 @@ const router = express.Router();
 
 const Chamado = require('../modelos/chamado.modelo');
 
+
 // Pesquisar chamado(s) do usuário atual:
 router.get('/', (req, res, next) => {
 	// Restringe os chamados para os do usuário atual:
