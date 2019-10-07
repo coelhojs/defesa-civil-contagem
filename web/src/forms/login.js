@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import "firebase/auth";
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useApiAuth } from '../customHooks/useApiAuth';
 import { useAuth } from '../customHooks/useAuth';
 import logo from "../img/logo.jpg";
@@ -22,11 +22,6 @@ const useStyles = makeStyles(theme => ({
 
     },
 }));
-
-const formInputs = {
-    email: '',
-    password: ''
-}
 
 const ColorButton = withStyles(theme => ({
     root: {
@@ -53,6 +48,19 @@ export default function Login(props) {
     const classes = useStyles();
     const auth = useAuth();
     const { loginUsuario } = useApiAuth();
+    const [idToken, setIdToken] = useState(null);
+    const [apiKey, setApiKey] = useState("");
+    const [makeRequest, setMakeRequest] = useState(false);
+
+    useEffect(() => {
+        const login = async () => {
+            if (makeRequest) {
+                const result = await loginUsuario();
+                setApiKey(result);
+            };
+        }
+        login();
+    }, [makeRequest]);
 
     return (
         <Card className={classes.card}>
@@ -74,7 +82,7 @@ export default function Login(props) {
                     <Grid item>
                         <ColorButton variant="contained"
                             type="submit" className={classes.button}
-                            onClick={loginUsuario}>
+                            onClick={() => setMakeRequest(true)}>
                             Entrar
                             </ColorButton>
                     </Grid>

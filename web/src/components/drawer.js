@@ -12,7 +12,7 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import Chamados from '../containers/Chamados';
+import Avisos from '../containers/Avisos';
 import { useAuth } from "../customHooks/useAuth";
 
 const drawerWidth = 240;
@@ -47,7 +47,7 @@ export default function AppDrawer() {
                 <List>
                     <ListItemLink to="/Mapa" primary="Mapa" icon={<MapIcon />} />
 
-                    <ListItemLink to="/Chamados" primary="Chamados" icon={<FeedbackIcon />} />
+                    <ListItemLink to="/Avisos" primary="Avisos" icon={<FeedbackIcon />} />
 
                     <ListItemLink to="/Usuários" primary="Usuários" icon={<PeopleAltIcon />} />
                 </List>

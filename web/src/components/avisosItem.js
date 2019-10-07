@@ -40,10 +40,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function ChamadosItem({ chamados }) {
-    console.log(chamados)
+export default function AvisosItem({ avisos }) {
+    console.log(avisos)
     const classes = useStyles();
-    const [chamado] = useState(chamados);
+    const [aviso] = useState(avisos);
     const [expanded, setExpanded] = React.useState(false);
 
     function handleExpandClick() {
@@ -58,16 +58,16 @@ export default function ChamadosItem({ chamados }) {
                         <MoreVertIcon />
                     </IconButton>
                 }
-                title={chamado.tipo}
-                subheader={moment.unix(chamado.timestamp).format("DD/MM/YYYY hh:mm")}
+                title={aviso.tipo}
+                subheader={moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
             />
             <CardMedia
                 className={classes.media}
-                image={chamado.foto}
+                image={aviso.foto}
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {chamado.descricao}
+                    {aviso.descricao}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>

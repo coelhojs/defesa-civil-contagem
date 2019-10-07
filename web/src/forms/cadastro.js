@@ -14,7 +14,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../customHooks/useAuth";
 import { useForm } from "../customHooks/useForm";
-import { CEPMask, CPFMask, TelefoneMask } from "../masks";
+import { CEPMask, CPFMask, TelefoneMask } from "../validation/masks";
 import { usuarioModel } from "../models/usuario"
 
 const useStyles = makeStyles(theme => ({
