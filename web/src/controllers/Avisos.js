@@ -8,7 +8,7 @@ export const useFetchAllAvisos = aviso => {
 
     useEffect(() => {
         (async aviso => {
-            const response = await api.get('/Chamados', {},
+            const response = await api.get('/dev/Chamados', {},
                 {
                     headers: {
                         'authorization': `Bearer ${auth.apiKey}`

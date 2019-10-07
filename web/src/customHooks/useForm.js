@@ -53,17 +53,21 @@ export const useForm = (callback, inputs) => {
         let cep = values.cep.replace(/\D/g, "");
         let resp = validarCEP(cep);
         if (resp) errors.cep = resp;
-        else if(cep.length > 0){
+        else if (cep.length > 0) {
           buscaCEP(cep)
             .then(resolve => {
               console.log(resolve);
-              /*setValues({...values, ["logradouro"]: resolve.endereco.logradouro});
-              setValues({...values, ["bairro"]: resolve.endereco.bairro});
-              setValues({...values, ["cidade"]: resolve.endereco.cidade});
-              setValues({...values, ["estado"]: resolve.endereco.estado});*/
+              /*setValues({...values, ["logradouro"]: resolve.endereco.logradouro});*/
+              setValues({
+                ...values,
+                ["logradouro"]: resolve.endereco.logradouro,
+                ["bairro"]: resolve.endereco.bairro,
+                ["cidade"]: resolve.endereco.cidade,
+                ["estado"]: resolve.endereco.estado
+              });
 
-              setErrors({...errors, ["cep"]: resolve.error});
-              
+              setErrors({ ...errors, ["cep"]: resolve.error });
+
               values.logradouro = resolve.endereco.logradouro;
               values.bairro = resolve.endereco.bairro;
               values.cidade = resolve.endereco.localidade;
@@ -71,7 +75,7 @@ export const useForm = (callback, inputs) => {
               errors.cep = resolve.error;
             })
             .catch(reject => {
-              setErrors({...errors, ["cep"]: "CEP invalido"});
+              setErrors({ ...errors, ["cep"]: "CEP invalido" });
             });
         }
         /*errors.cep = resp.error;

@@ -44,7 +44,7 @@ export default function AvisosItem({ avisos }) {
     console.log(avisos)
     const classes = useStyles();
     const [aviso] = useState(avisos);
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
 
     function handleExpandClick() {
         setExpanded(!expanded);
@@ -63,7 +63,7 @@ export default function AvisosItem({ avisos }) {
             />
             <CardMedia
                 className={classes.media}
-                image={aviso.foto}
+                image={`http://104.197.124.173:3001${aviso.fotos[0].url}`}
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
