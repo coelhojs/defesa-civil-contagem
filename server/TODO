@@ -1,6 +1,6 @@
 1) Criar modelo para fotos
 2) Organizar rotas de fotos
-3) Edição de chamados
+3) Edição de avisos
 4) Criar diretório "dev" com rotas para cada entidade
 5) Adicionar modulo jest
 6) Testar o file.mv com createParentPath

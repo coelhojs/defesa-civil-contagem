@@ -2,7 +2,7 @@
  * DESCRIÇÃO:
  * Este teste simula o fluxo de uso de um cidadão a partir
  * do aplicativo (Mobile). É feito o cadastro do usuário,
- * de um chamado, a adição de uma foto ao chamado, e a visualização
+ * de um aviso, a adição de uma foto ao aviso, e a visualização
  * das entidades criadas. Depois é feita a remoção dos itens criados.
  * 
  * SUMÁRIO:
@@ -11,13 +11,13 @@
  * 		- deve fazer login do usuário e obter a api_key
  * 		- deve buscar o usuário no banco
  * 
- * Criação de um chamado
- * 		- deve criar um chamado
- *		- deve enviar uma foto para o último chamado criado
+ * Criação de um aviso
+ * 		- deve criar um aviso
+ *		- deve enviar uma foto para o último aviso criado
  * 		
- * Visualização de chamados e fotos de chamados
- * 		- deve recuperar o último chamado do usuário
- * 		- deve visualizar a foto do último chamado criado
+ * Visualização de avisos e fotos de avisos
+ * 		- deve recuperar o último aviso do usuário
+ * 		- deve visualizar a foto do último aviso criado
  * 
  */
 
@@ -36,7 +36,7 @@ const request = require('supertest');
 const Util = require('../dev/util');
 
 // Objetos dos modelos
-var api_key, usuario, chamado, foto;
+var api_key, usuario, aviso, foto;
 
 beforeAll(async done => {
 	await db.init();
@@ -83,22 +83,22 @@ describe('Cadastro e login de usuário', () => {
 
 // ========================================================================
 
-describe('Criação de um chamado', () => {
+describe('Criação de um aviso', () => {
 
-	it('deve criar um chamado', async done => {
+	it('deve criar um aviso', async done => {
 		let res = await request(app)
-			.post('/acesso/chamados/')
+			.post('/acesso/avisos/')
 			.auth(api_key, { type: 'bearer' })
-			.send(Util.gerarChamado());
+			.send(Util.gerarAviso());
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toHaveProperty('fotos');
-		chamado = res.body;
+		aviso = res.body;
 		done();
 	});
 
-	it('deve enviar uma foto para o último chamado criado', async done => {
+	it('deve enviar uma foto para o último aviso criado', async done => {
 		let res = await request(app)
-			.post('/acesso/chamados/' + chamado.id + '/fotos')
+			.post('/acesso/avisos/' + aviso.id + '/fotos')
 			.attach('foto', './__tests__/teste.jpg')
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
@@ -111,20 +111,20 @@ describe('Criação de um chamado', () => {
 
 // ========================================================================
 
-describe('Visualização de chamados e fotos de chamados', () => {
+describe('Visualização de avisos e fotos de avisos', () => {
 
-	it('deve recuperar o último chamado do usuário', async done => {
+	it('deve recuperar o último aviso do usuário', async done => {
 		let res = await request(app)
-			.get('/acesso/chamados')
+			.get('/acesso/avisos')
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
 		expect(res.body[0]).toHaveProperty('descricao');
-		chamado = res.body[0];
-		expect(chamado).toBeDefined();
+		aviso = res.body[0];
+		expect(aviso).toBeDefined();
 		done();
 	});
 
-	it('deve visualizar a foto do último chamado criado', async done => {
+	it('deve visualizar a foto do último aviso criado', async done => {
 		let res = await request(app)
 			.get(foto.url)
 			.auth(api_key, { type: 'bearer' });
@@ -137,15 +137,15 @@ describe('Visualização de chamados e fotos de chamados', () => {
 
 // ========================================================================
 
-describe('Exclusão de chamados e fotos de chamados', () => {
+describe('Exclusão de avisos e fotos de avisos', () => {
 
-	it('deve deletar o último chamado do usuário', async done => {
+	it('deve deletar o último aviso do usuário', async done => {
 		let res = await request(app)
-			.delete('/acesso/chamados/' + chamado.id)
+			.delete('/acesso/avisos/' + aviso.id)
 			.auth(api_key, { type: 'bearer' });
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toBeDefined();
-		expect(fs.existsSync(`./files/${usuario.id}/${chamado.id}`)).toBeFalsy();
+		expect(fs.existsSync(`./files/${usuario.id}/${aviso.id}`)).toBeFalsy();
 		done();
 	});
 

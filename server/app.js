@@ -26,12 +26,12 @@ app.use('/acesso/*', auth.acesso);
 if (process.env.NODE_ENV.toLowerCase() === 'development') {
 	app.use('/dev', require('./dev/dev'));
 	app.use('/dev/usuarios', require('./dev/usuarios.dev'));
-	app.use('/dev/chamados', require('./dev/chamados.dev'));
+	app.use('/dev/avisos', require('./dev/avisos.dev'));
 }
 
 // Rotas de acesso:
 app.use('/acesso/usuarios', require('./routes/usuario.rotas'));
-app.use('/acesso/chamados', require('./routes/chamado.rotas'));
+app.use('/acesso/avisos', require('./routes/aviso.rotas'));
 
 // Tratamento de rotas inválidas:
 app.use((req, res, next) => {

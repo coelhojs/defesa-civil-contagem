@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const router = express.Router();
 
-const Chamado = require('../models/chamado.modelo');
+const Aviso = require('../models/aviso.modelo');
 
 // Buscar fotos (pode filtrar pela URL) do usuário atual
 router.get('/', (req, res, next) => {
@@ -24,13 +24,13 @@ router.get('/', (req, res, next) => {
 		});
 });
 
-// Obtem a foto de um chamado
+// Obtem a foto de um aviso
 router.get('/:arquivo', (req, res, next) => {
 	try {
 		// Diretório do usuário:
 		let user_dir = path.join(__dirname, `../files/${req.user.id}`);
-		// Diretório do chamado:
-		let files_dir = `${user_dir}/${req.chamado.id}`;
+		// Diretório do aviso:
+		let files_dir = `${user_dir}/${req.aviso.id}`;
 		// Caminho do arquivo de imagem:
 		let img = `${files_dir}/${req.params.arquivo}.jpg`;
 		res.status(200).sendFile(img);
@@ -38,46 +38,46 @@ router.get('/:arquivo', (req, res, next) => {
 		next(new AppError({
 			http_cod: 500,
 			mensagem: ex.message,
-			mensagem_amigavel: 'Erro ao enviar foto do chamado',
+			mensagem_amigavel: 'Erro ao enviar foto do aviso',
 		}));
 	}
 });
 
-// Recebe a foto de um chamado
+// Recebe a foto de um aviso
 router.post('/', fileupload({
 	createParentPath: true,
 	// debug: process.env.NODE_ENV.toLowerCase() == 'development',
 }), async (req, res, next) => {
 	try {
-		// Obtem o chamado correspondente:
-		let chamado = await Chamado.findById(req.chamado.id);
-		if (!chamado) throw new AppError({
+		// Obtem o aviso correspondente:
+		let aviso = await Aviso.findById(req.aviso.id);
+		if (!aviso) throw new AppError({
 			http_cod: 401,
-			mensagem: 'Chamado Inexistente',
+			mensagem: 'Aviso Inexistente',
 			mensagem_amigavel: this.mensagem,
 		});
-		// Diretorio do usuario e do chamado:
+		// Diretorio do usuario e do aviso:
 		let user_dir = path.join(__dirname, `../files/${req.user.id}`);
-		let files_dir = `${user_dir}/${req.chamado.id}`;
+		let files_dir = `${user_dir}/${req.aviso.id}`;
 		// Cria o objeto modelo da foto:
 		let horario = moment().valueOf();
 		let filename = horario;
 		let fileExt = 'jpg';
 		let url = `${req.baseUrl}/${filename}`;
 		let foto = new Foto({ horario: horario, filename: `${filename}.${fileExt}`, url: url, user_id: req.user.id });
-		// Move o arquivo recebido para o diretório do chamado:
+		// Move o arquivo recebido para o diretório do aviso:
 		await req.files.foto.mv(`${files_dir}/${filename}.${fileExt}`);
-		// Salva o modelo e adiciona foto ao chamado:
+		// Salva o modelo e adiciona foto ao aviso:
 		foto.save().then(resultfoto => {
-			chamado.fotos.push(resultfoto);
-			chamado.save().then(resultchamado => {
+			aviso.fotos.push(resultfoto);
+			aviso.save().then(resultaviso => {
 				res.status(200).json(resultfoto.toJSON());
-			}).catch(errochamado => {
-				// Erro ao atualizar chamado
+			}).catch(erroaviso => {
+				// Erro ao atualizar aviso
 				next(new AppError({
 					http_cod: 500,
-					mensagem: errochamado.message,
-					mensagem_amigavel: 'Erro ao atualizar chamado',
+					mensagem: erroaviso.message,
+					mensagem_amigavel: 'Erro ao atualizar aviso',
 				}));
 			});
 		}).catch(errofoto => {
@@ -93,7 +93,7 @@ router.post('/', fileupload({
 		next(new AppError({
 			http_cod: 500,
 			mensagem: ex.message,
-			mensagem_amigavel: 'Erro ao salvar foto do chamado',
+			mensagem_amigavel: 'Erro ao salvar foto do aviso',
 		}));
 	}
 });

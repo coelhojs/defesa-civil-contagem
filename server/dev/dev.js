@@ -1,5 +1,5 @@
 const Usuario = require('../models/usuario.modelo');
-const Chamado = require('../models/chamado.modelo');
+const Aviso = require('../models/aviso.modelo');
 
 const auth = require('../auth/authorization');
 const express = require('express');
@@ -23,7 +23,7 @@ router.get('/status', (req, res) => {
 // CUIDADO: Apaga TUDO do banco
 router.get('/wipeAll', async (req, res, next) => {
 	await Usuario.find({}).remove();
-	await Chamado.find({}).remove();
+	await Aviso.find({}).remove();
 	res.status(200).send('ok');
 });
 

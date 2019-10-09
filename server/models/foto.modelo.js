@@ -11,7 +11,7 @@ const schema = new Schema({
 	url: String,
 	horario: String,
 	user_id: { type: String },
-	chamado_id: { type: String },
+	aviso_id: { type: String },
 
 }, { strict: false });
 
@@ -27,7 +27,7 @@ schema.methods.toJSON = function () {
 }
 
 schema.pre('remove', function (next) {
-	fs.removeSync(`./files/${this.user_id}/${this.chamado_id}/${this.filename}`);
+	fs.removeSync(`./files/${this.user_id}/${this.aviso_id}/${this.filename}`);
 	next();
 });
 

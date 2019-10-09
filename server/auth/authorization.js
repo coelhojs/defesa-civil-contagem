@@ -5,6 +5,7 @@ const JWT = require('jsonwebtoken');
 // Senha para codificar/decodificar o id de usuários:
 const SECRET = 'roundrobin1234';
 
+
 function gerarApiKey(user_id) {
 	return JWT.sign(user_id, SECRET);
 }

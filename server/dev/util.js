@@ -1,5 +1,5 @@
 const Usuario = require('../models/usuario.modelo');
-const Chamado = require('../models/chamado.modelo');
+const Aviso = require('../models/aviso.modelo');
 const faker = require('faker');
 
 faker.locale = 'pt_BR';
@@ -20,7 +20,7 @@ function gerarUsuario(tipo) {
 	};
 }
 
-function gerarChamado() {
+function gerarAviso() {
 	let tipos = ['Tornado', 'Terremoto', 'Invasão alienígena'];
 	return {
 		tipo: tipos[Math.floor(Math.random() * tipos.length)],
@@ -34,5 +34,5 @@ function gerarChamado() {
 
 module.exports = {
 	gerarUsuario: gerarUsuario,
-	gerarChamado: gerarChamado,
+	gerarAviso: gerarAviso,
 };

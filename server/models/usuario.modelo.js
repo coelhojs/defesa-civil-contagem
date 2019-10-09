@@ -1,4 +1,4 @@
-const Chamado = require('./chamado.modelo');
+const Aviso = require('./aviso.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -14,7 +14,15 @@ const schema = new Schema({
 	cpf: { type: String },
 	email: { type: String },
 	nascimento: { type: Date },
-	endereco: { type: String },
+	endereco: {
+		uf: { type: String, required: true },
+		cep: { type: String, required: true },
+		numero: { type: Number, required: true },
+		bairro: { type: String, required: true },
+		cidade: { type: String, required: true },
+		logradouro: { type: String, required: true },
+		complemento: { type: String },
+	},
 
 }, { strict: false });
 
@@ -39,9 +47,9 @@ schema.pre('save', function (next) {
 });
 
 schema.pre('remove', function (next) {
-	Chamado.find({ user_id: this._id })
-		.then(async chamados => {
-			chamados.forEach(async c => c.remove());
+	Aviso.find({ user_id: this._id })
+		.then(async avisos => {
+			avisos.forEach(async c => c.remove());
 		});
 	fs.removeSync(`./files/${this._id}`);
 	next();
