@@ -28,11 +28,14 @@ router.get('/', (req, res, next) => {
 // Cadastra um novo usuário
 router.post('/', async (req, res, next) => {
     try {
+        // Obtem o usuário a partir do corpo da requisição e salva no banco:
         let user = new Usuario(req.body);
         await user.save();
+        // Adiciona o id e a api_key ao usuário:
         let obj = user.toJSON();
         obj.id = user.id;
         obj.api_key = auth.gerarApiKey(user.id);
+        // Retorna a resposta:
         res.status(200).json(obj);
     } catch (ex) {
         next(new AppError({

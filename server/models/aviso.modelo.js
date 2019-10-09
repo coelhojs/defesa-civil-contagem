@@ -45,9 +45,11 @@ schema.methods.toJSON = function () {
 }
 
 // Cria o diretório de fotos:
-schema.post('save', function (next) {
-	fs.mkdirpSync(`./files/${this.user_id}/${this._id}`);
-	this.url = '/acesso/avisos/' + this._id;
+schema.pre('save', function (next) {
+	let usid = this.user_id;
+	let id = this._id.toString();
+	fs.mkdirpSync(`./files/${usid}/${id}`);
+	this.url = '/acesso/avisos/' + id; // URL do aviso
 	next();
 });
 
