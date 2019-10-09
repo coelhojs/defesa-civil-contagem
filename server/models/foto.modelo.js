@@ -20,6 +20,7 @@ schema.plugin(muv);
 // Retorna apenas os atributos visíveis do modelo:
 schema.methods.toJSON = function () {
 	return {
+		id: this.id,
 		filename: this.filename,
 		url: this.url,
 		horario: moment().unix(this.horario),

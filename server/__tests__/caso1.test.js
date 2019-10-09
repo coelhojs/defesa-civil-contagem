@@ -27,16 +27,19 @@ require('dotenv').config({ path: '.env' });
 process.env.NODE_ENV = 'development';
 process.env.DB_HOST = 'Local';
 
+const HOST = 'http://localhost:3001';
+
 const app = require('../app');
 const fs = require('fs-extra');
 const db = require('../database');
 const server = require('../server');
-const request = require('supertest');
+const axios = require('axios').default;
 
 const Util = require('../dev/util');
 
 // Objetos dos modelos
-var api_key, usuario, aviso, foto;
+var usuario, aviso, fotos;
+var reqConfig; // Configuração da request (com o header e authorization)
 
 beforeAll(async done => {
 	await db.init();
@@ -52,30 +55,51 @@ afterAll(async done => {
 });
 
 
-describe('Cadastro e login de usuário', () => {
 
-	it('deve cadastrar um usuário', async done => {
-		let user = Util.gerarUsuario('Cidadão');
-		let res = await request(app)
-			.post('/dev/usuarios')
-			.send(user);
-		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty('api_key');
-		api_key = res.body.api_key;
-		done();
-	});
+// Via rota /dev
+describe('Cadastro e login de usuário [DEV]', () => {
 
-	it('deve fazer login do usuário e obter a api_key', async done => {
+	it('deve cadastrar um usuário e obter a api_key', async done => {
+		let user = {
+			tipo: 'Cidadão',
+			nome: 'Cebolinha',
+			telefone: '(31) 9 9478-4103',
+			cpf: '112.314.551-56',
+			email: 'cebolinha@gmail.com',
+			nascimento: '15/03/1981',
+			endereco: {
+				uf: 'MG',
+				cep: '3019481938',
+				numero: '123',
+				bairro: 'Savassi',
+				cidade: 'Belo Horizonte',
+				logradouro: 'Rua Claudio Manoel',
+				complemento: 'Sala 1003',
+			},
+		}
+		let res = await axios.post(HOST + '/dev/usuarios', user);
+		expect(res.status).toBe(200);
+		// Atributos required:
+		expect(res.data).toBeDefined();
+		expect(res.data).toHaveProperty('nome');
+		expect(res.data).toHaveProperty('telefone');
+		expect(res.data).toHaveProperty('cpf');
+		expect(res.data).toHaveProperty('endereco');
+		expect(res.data).toHaveProperty('api_key');
+		usuario = res.data;
+		reqConfig = { headers: { authorization: 'Bearer ' + usuario.api_key } };
 		done();
 	});
 
 	it('deve buscar o usuário no banco', async done => {
-		let res = await request(app)
-			.get('/acesso/usuarios/account')
-			.auth(api_key, { type: 'bearer' });
-		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty('nome');
-		usuario = res.body;
+		let res = await axios.get(HOST + '/acesso/usuarios/account', reqConfig);
+		expect(res.status).toBe(200);
+		// Atributos required:
+		expect(res.data).toBeDefined();
+		expect(res.data).toHaveProperty('nome');
+		expect(res.data).toHaveProperty('telefone');
+		expect(res.data).toHaveProperty('cpf');
+		expect(res.data).toHaveProperty('endereco');
 		done();
 	});
 
@@ -86,24 +110,50 @@ describe('Cadastro e login de usuário', () => {
 describe('Criação de um aviso', () => {
 
 	it('deve criar um aviso', async done => {
-		let res = await request(app)
-			.post('/acesso/avisos/')
-			.auth(api_key, { type: 'bearer' })
-			.send(Util.gerarAviso());
-		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty('fotos');
-		aviso = res.body;
+		let av = {
+			tipo: 'Desabamento',
+			descricao: 'Desabamento grave',
+			coordenadas: { // Coordenada do cidadão
+				latitude: '128319283712',
+				longitude: '91827319641',
+			},
+			endereco: {
+				rua: 'R. do amendoim',
+				numero: '351',
+				bairro: 'America'
+			},
+		};
+		let res = await axios.post(HOST + '/acesso/avisos', av, reqConfig);
+		expect(res.status).toBe(200);
+		expect(res.data).toBeDefined();
+		expect(res.data).toHaveProperty('tipo');
+		expect(res.data).toHaveProperty('coordenadas');
+		expect(res.data).toHaveProperty('dataHora');
+		expect(res.data).toHaveProperty('url');
+		aviso = res.data;
 		done();
 	});
 
-	it('deve enviar uma foto para o último aviso criado', async done => {
-		let res = await request(app)
-			.post('/acesso/avisos/' + aviso.id + '/fotos')
-			.attach('foto', './__tests__/teste.jpg')
-			.auth(api_key, { type: 'bearer' });
-		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty('horario');
-		foto = res.body;
+	it('deve enviar 3 fotos para o último aviso criado', async done => {
+		for (let i = 0; i < 3; i++) {
+			let newFile = await fs.createReadStream('./__tests__/teste.jpg');
+			let form_data = new FormData();
+			form_data.append("file", newFile);
+			let request_config = {
+				method: "post",
+				url: HOST + aviso.url + '/fotos',
+				headers: {
+					"authorization": "Bearer " + usuario.api_key,
+					"Content-Type": "multipart/form-data"
+				},
+				data: form_data
+			};
+			let res = await axios(request_config);
+			expect(res.status).toEqual(200);
+			expect(res.data).toBeDefined();
+			expect(res.data).toHaveProperty('id');
+			fotos.push(res.data);
+		}
 		done();
 	});
 
@@ -114,22 +164,21 @@ describe('Criação de um aviso', () => {
 describe('Visualização de avisos e fotos de avisos', () => {
 
 	it('deve recuperar o último aviso do usuário', async done => {
-		let res = await request(app)
-			.get('/acesso/avisos')
-			.auth(api_key, { type: 'bearer' });
-		expect(res.statusCode).toEqual(200);
-		expect(res.body[0]).toHaveProperty('descricao');
-		aviso = res.body[0];
-		expect(aviso).toBeDefined();
+		let res = await axios.get(HOST + aviso.url, reqConfig);
+		expect(res.status).toBe(200);
+		// Atributos required:
+		expect(res.data).toBeDefined();
+		expect(res.data).toHaveProperty('tipo');
+		expect(res.data).toHaveProperty('coordenadas');
+		expect(res.data).toHaveProperty('url');
 		done();
 	});
 
-	it('deve visualizar a foto do último aviso criado', async done => {
-		let res = await request(app)
-			.get(foto.url)
-			.auth(api_key, { type: 'bearer' });
-		expect(res.statusCode).toEqual(200);
-		expect(res.body).toBeDefined();
+	it('deve visualizar as fotos do último aviso criado', async done => {
+		let res = await axios.get(HOST + aviso.url + '/fotos', reqConfig);
+		expect(res.status).toBe(200);
+		expect(res.data).toBeDefined();
+		expect(res.data).toHaveLength(3);
 		done();
 	});
 
@@ -137,15 +186,12 @@ describe('Visualização de avisos e fotos de avisos', () => {
 
 // ========================================================================
 
-describe('Exclusão de avisos e fotos de avisos', () => {
+describe('Exclusão de usuário', () => {
 
-	it('deve deletar o último aviso do usuário', async done => {
-		let res = await request(app)
-			.delete('/acesso/avisos/' + aviso.id)
-			.auth(api_key, { type: 'bearer' });
-		expect(res.statusCode).toEqual(200);
-		expect(res.body).toBeDefined();
-		expect(fs.existsSync(`./files/${usuario.id}/${aviso.id}`)).toBeFalsy();
+	it('deve deletar o usuário, seus avisos e as fotos', async done => {
+		let res = await axios.delete(HOST + '/acesso/usuarios/delete', reqConfig);
+		expect(res.data).toBeDefined();
+		expect(fs.pathExistsSync('./files/' + usuario.id)).toBeFalsy();
 		done();
 	});
 

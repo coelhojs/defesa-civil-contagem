@@ -21,7 +21,7 @@ exports.criar_aviso = async (req, res, next) => {
 		next(new AppError({
 			http_cod: 500,
 			mensagem: ex.message,
-			mensagem_amigavel: ''
+			mensagem_amigavel: 'Erro ao criar aviso'
 		}));
 	}
 }

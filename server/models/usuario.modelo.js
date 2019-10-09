@@ -13,7 +13,7 @@ const schema = new Schema({
 	telefone: { type: String, required: true },
 	cpf: { type: String, required: true },
 	email: { type: String },
-	nascimento: { type: Date },
+	nascimento: { type: String },
 	endereco: {
 		uf: { type: String, required: true },
 		cep: { type: String, required: true },
@@ -31,13 +31,13 @@ schema.plugin(muv);
 // Retorna apenas os atributos visíveis do modelo:
 schema.methods.toJSON = function () {
 	return {
-		cpf: this.cpf,
 		tipo: this.tipo,
 		nome: this.nome,
-		email: this.email,
-		endereco: this.endereco,
 		telefone: this.telefone,
+		cpf: this.cpf,
+		email: this.email,
 		nascimento: this.nascimento,
+		endereco: this.endereco,
 	}
 }
 

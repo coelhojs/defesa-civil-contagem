@@ -32,15 +32,14 @@ schema.plugin(muv);
 schema.methods.toJSON = function () {
 	return {
 		id: this.id,
-		tipo: this.tipo,
-		dataHora: this.dataHora,
-		descricao: this.descricao,
-		foto: this.foto,
-		vistoriador: this.vistoriador,
-		cidadao: this.cidadao,
-		local: this.local,
 		url: this.url,
+		tipo: this.tipo,
 		fotos: this.fotos,
+		user_id: this.user_id,
+		dataHora: this.dataHora,
+		endereco: this.endereco,
+		descricao: this.descricao,
+		coordenadas: this.coordenadas,
 	}
 }
 
@@ -48,7 +47,7 @@ schema.methods.toJSON = function () {
 schema.pre('save', function (next) {
 	let usid = this.user_id;
 	let id = this._id.toString();
-	fs.mkdirpSync(`./files/${usid}/${id}`);
+	fs.createFileSync(`./files/${usid}/${id}/.gitkeep`);
 	this.url = '/acesso/avisos/' + id; // URL do aviso
 	next();
 });
