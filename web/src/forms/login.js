@@ -77,7 +77,7 @@ export default function Login(props) {
                         <ColorButton variant="contained"
                             type="submit" className={classes.button}
                             onClick={() => setMakeRequest(true)}>
-                            Entrar
+                            Acessar
                             </ColorButton>
                     </Grid>
                 </Grid>

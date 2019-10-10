@@ -11,22 +11,23 @@ import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
 import { ProvideAuth } from "./customHooks/useAuth";
 import Cadastro from "./forms/cadastro";
-import fundo from "./img/fundo.jpg";
+import fundo from "./img/background.png";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    //backgroundImage: {fundo},
-    backgroundImage: 'url("https://www.hojeemdia.com.br/polopoly_fs/1.722380!/image/image.png_gen/derivatives/landscape_653/image.png")',
-    //backgroundRepeat: 'repeat-y',
+    height: '100vh',
+    backgroundImage: `url(${fundo})`,
     backgroundSize: 'cover',
+    overflowY: 'auto',
+
   },
   main: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    marginBottom: '5rem'
   },
   toolbar: theme.mixins.toolbar
-
 }));
 
 function App(props) {
