@@ -11,6 +11,9 @@ router.use('/:id/*', (req, res, next) => {
 router.use('/:id/fotos', require('./foto.rotas'));
 
 // Pesquisar aviso(s) do usuário atual:
+router.get('/:id', controller.obter_aviso);
+
+// Pesquisar aviso(s) do usuário atual:
 router.get('/', controller.obter_avisos);
 
 // Adiciona um aviso para o usuário atual (sem a foto):

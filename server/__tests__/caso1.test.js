@@ -14,6 +14,9 @@
  * Criação de um aviso
  * 		- deve criar um aviso
  *		- deve enviar uma foto para o último aviso criado
+ * 
+ * Modificação dos dados do usuário:
+ * 		- deve mudar o telefone do usuario
  * 		
  * Visualização de avisos e fotos de avisos
  * 		- deve recuperar o último aviso do usuário
@@ -29,13 +32,51 @@ process.env.DB_HOST = 'Local';
 
 const HOST = 'http://localhost:3001';
 
-const app = require('../app');
+const faker = require('faker');
 const fs = require('fs-extra');
 const db = require('../database');
 const server = require('../server');
+const FormData = require('form-data');
 const axios = require('axios').default;
+const randexp = require('randexp').randexp;
 
-const Util = require('../dev/util');
+faker.locale = 'pt_BR';
+
+function gerarUsuario() {
+	let fname = faker.name.firstName(), lname = faker.name.lastName();
+	return {
+		"nome": faker.name.findName(),
+		"telefone": randexp(/^\(([1-9][0-9])\)\s(9\d|[2-9])\d{3}\-\d{4}$/),
+		"cpf": randexp(/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$/),
+		"email": faker.internet.email(fname, lname),
+		"nascimento": randexp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)19[0-9][0-9]$/),
+		"endereco": {
+			"uf": randexp(/(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)/),
+			"cep": randexp(/^[0-9]{5}\-[0-9]{3}$/),
+			"numero": randexp(/[0-9]{2,5}/),
+			"bairro": randexp(/\w{25}/),
+			"cidade": randexp(/\w{30}/),
+			"logradouro": randexp(/\w{3,25}/),
+			"complemento": randexp(/\w{20}/)
+		}
+	}
+}
+
+function gerarAviso() {
+	return {
+		"tipo": "Desabamento",
+		"descricao": "Desabamento grave",
+		"coordenadas": { // Coordenada do cidadão
+			"latitude": faker.address.latitude(),
+			"longitude": faker.address.longitude(),
+		},
+		"endereco": {
+			"rua": "R. do amendoim",
+			"numero": "351",
+			"bairro": "America"
+		},
+	}
+}
 
 // Objetos dos modelos
 var usuario, aviso, fotos;
@@ -51,48 +92,36 @@ beforeAll(async done => {
 afterAll(async done => {
 	await server.close();
 	await db.mongoose.disconnect();
+	fs.removeSync('./files');
 	done();
 });
-
-
 
 // Via rota /dev
 describe('Cadastro e login de usuário [DEV]', () => {
 
 	it('deve cadastrar um usuário e obter a api_key', async done => {
-		let user = {
-			tipo: 'Cidadão',
-			nome: 'Cebolinha',
-			telefone: '(31) 9 9478-4103',
-			cpf: '112.314.551-56',
-			email: 'cebolinha@gmail.com',
-			nascimento: '15/03/1981',
-			endereco: {
-				uf: 'MG',
-				cep: '3019481938',
-				numero: '123',
-				bairro: 'Savassi',
-				cidade: 'Belo Horizonte',
-				logradouro: 'Rua Claudio Manoel',
-				complemento: 'Sala 1003',
-			},
-		}
-		let res = await axios.post(HOST + '/dev/usuarios', user);
-		expect(res.status).toBe(200);
-		// Atributos required:
-		expect(res.data).toBeDefined();
-		expect(res.data).toHaveProperty('nome');
-		expect(res.data).toHaveProperty('telefone');
-		expect(res.data).toHaveProperty('cpf');
-		expect(res.data).toHaveProperty('endereco');
-		expect(res.data).toHaveProperty('api_key');
-		usuario = res.data;
-		reqConfig = { headers: { authorization: 'Bearer ' + usuario.api_key } };
-		done();
+		let user = gerarUsuario();
+		axios.post(HOST + '/dev/usuarios', user)
+			.then(res => {
+				expect(res.status).toBe(200);
+				// Atributos required:
+				expect(res.data).toBeDefined();
+				expect(res.data).toHaveProperty('nome');
+				expect(res.data).toHaveProperty('telefone');
+				expect(res.data).toHaveProperty('cpf');
+				expect(res.data).toHaveProperty('endereco');
+				expect(res.data).toHaveProperty('api_key');
+				usuario = res.data;
+				reqConfig = { headers: { authorization: 'Bearer ' + usuario.api_key } };
+				done();
+			}).catch(error => {
+				console.log(error);
+				done(error);
+			});
 	});
 
 	it('deve buscar o usuário no banco', async done => {
-		let res = await axios.get(HOST + '/acesso/usuarios/account', reqConfig);
+		let res = await axios.get(HOST + '/acesso/account', reqConfig);
 		expect(res.status).toBe(200);
 		// Atributos required:
 		expect(res.data).toBeDefined();
@@ -110,25 +139,12 @@ describe('Cadastro e login de usuário [DEV]', () => {
 describe('Criação de um aviso', () => {
 
 	it('deve criar um aviso', async done => {
-		let av = {
-			tipo: 'Desabamento',
-			descricao: 'Desabamento grave',
-			coordenadas: { // Coordenada do cidadão
-				latitude: '128319283712',
-				longitude: '91827319641',
-			},
-			endereco: {
-				rua: 'R. do amendoim',
-				numero: '351',
-				bairro: 'America'
-			},
-		};
+		let av = gerarAviso();
 		let res = await axios.post(HOST + '/acesso/avisos', av, reqConfig);
 		expect(res.status).toBe(200);
 		expect(res.data).toBeDefined();
 		expect(res.data).toHaveProperty('tipo');
 		expect(res.data).toHaveProperty('coordenadas');
-		expect(res.data).toHaveProperty('dataHora');
 		expect(res.data).toHaveProperty('url');
 		aviso = res.data;
 		done();
@@ -136,24 +152,35 @@ describe('Criação de um aviso', () => {
 
 	it('deve enviar 3 fotos para o último aviso criado', async done => {
 		for (let i = 0; i < 3; i++) {
-			let newFile = await fs.createReadStream('./__tests__/teste.jpg');
-			let form_data = new FormData();
-			form_data.append("file", newFile);
-			let request_config = {
-				method: "post",
-				url: HOST + aviso.url + '/fotos',
-				headers: {
-					"authorization": "Bearer " + usuario.api_key,
-					"Content-Type": "multipart/form-data"
-				},
-				data: form_data
-			};
-			let res = await axios(request_config);
-			expect(res.status).toEqual(200);
-			expect(res.data).toBeDefined();
+			const filePath = __dirname + '/teste.jpg';
+			let imageData = fs.readFileSync(filePath);
+			expect(imageData).toBeDefined();
+			const form = new FormData();
+			form.append('foto', imageData, {
+				filepath: filePath,
+				contentType: 'image/jpeg',
+			});
+			let headers = form.getHeaders();
+			headers.authorization = reqConfig.headers.authorization;
+			let res = await axios.post(HOST + aviso.url + '/fotos', form, { headers: headers });
+			expect(res.status).toBe(200);
 			expect(res.data).toHaveProperty('id');
-			fotos.push(res.data);
+			expect(res.data).toHaveProperty('filename');
+			expect(res.data).toHaveProperty('url');
+			expect(res.data).toHaveProperty('horario');
+			expect(res.data).toHaveProperty('aviso_id');
+			expect(fs.existsSync('./files/' + usuario.id + '/' + aviso.id + '/' + res.data.filename)).toBeTruthy();
 		}
+		done();
+	});
+
+});
+
+describe('Modificação dos dados do usuario', () => {
+
+	it('deve mudar o telefone do usuario', (done) => {
+		
+
 		done();
 	});
 
@@ -189,7 +216,7 @@ describe('Visualização de avisos e fotos de avisos', () => {
 describe('Exclusão de usuário', () => {
 
 	it('deve deletar o usuário, seus avisos e as fotos', async done => {
-		let res = await axios.delete(HOST + '/acesso/usuarios/delete', reqConfig);
+		let res = await axios.delete(HOST + '/acesso/delete', reqConfig);
 		expect(res.data).toBeDefined();
 		expect(fs.pathExistsSync('./files/' + usuario.id)).toBeFalsy();
 		done();

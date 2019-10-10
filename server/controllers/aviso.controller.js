@@ -14,7 +14,6 @@ exports.criar_aviso = async (req, res, next) => {
 		aviso.user_id = user_id;
 		// Salva o aviso
 		await aviso.save();
-		console.log(aviso);
 		res.status(200).json(aviso);
 
 	} catch (ex) {
@@ -34,6 +33,22 @@ exports.obter_avisos = async (req, res, next) => {
 		let avisos = await Aviso.find(req.query).populate('fotos');
 		avisos = avisos.map(c => c.toJSON());
 		res.status(200).json(avisos);
+
+	} catch (ex) {
+		next(new AppError({
+			http_cod: 500,
+			mensagem: ex.message,
+			mensagem_amigavel: 'Erro ao recuperar informações do aviso'
+		}));
+	}
+}
+
+// Pesquisar aviso do usuário atual:
+exports.obter_aviso = async (req, res, next) => {
+	try {
+		let id = req.params.id;
+		let aviso = await Aviso.findById(id).populate('fotos');
+		res.status(200).json(aviso);
 
 	} catch (ex) {
 		next(new AppError({

@@ -1,4 +1,3 @@
-const Foto = require('./foto.modelo');
 const muv = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 const moment = require('moment');
@@ -54,6 +53,7 @@ schema.pre('save', function (next) {
 
 // Remove o diretório de fotos:
 schema.pre('remove', function (next) {
+	const Foto = require('./foto.modelo');
 	Foto.find({ aviso_id: this._id }).then(async fotos => {
 		fotos.forEach(async f => await f.remove());
 	});

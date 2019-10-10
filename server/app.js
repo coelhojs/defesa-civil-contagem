@@ -30,7 +30,7 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 }
 
 // Rotas de acesso:
-app.use('/acesso/usuarios', require('./routes/usuario.rotas'));
+app.use('/acesso/', require('./routes/usuario.rotas'));
 app.use('/acesso/avisos', require('./routes/aviso.rotas'));
 
 // Tratamento de rotas inválidas:
