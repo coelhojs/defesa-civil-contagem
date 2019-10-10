@@ -25,6 +25,5 @@ exports.remover_usuario = async (req, res, next) => {
 // Obtém informações do usuário atual:
 exports.get_account_info = async (req, res, next) => {
 	let user = await Usuario.findOne({ _id: req.user.id });
-	await user.remove();
 	res.status(200).json(user);
 }
