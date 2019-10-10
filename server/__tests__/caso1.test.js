@@ -29,15 +29,49 @@ process.env.DB_HOST = 'Local';
 
 const HOST = 'http://localhost:3001';
 
-const app = require('../app');
+const faker = require('faker');
 const fs = require('fs-extra');
 const db = require('../database');
 const server = require('../server');
 const FormData = require('form-data');
 const axios = require('axios').default;
 
+function gerarUsuario() {
+	let fname = faker.name.firstName(), lname = faker.name.lastName();
+	return {
+		"tipo": "Cidadão",
+		"nome": faker.name.findName(),
+		"telefone": faker.phone.phoneNumber('(##) #####-####'),
+		"cpf": "112.314.551-56",
+		"email": `${fname}.${lname}@gmail.com`,
+		"nascimento": "15/03/1981",
+		"endereco": {
+			"uf": "MG",
+			"cep": "3019481938",
+			"numero": "123",
+			"bairro": "Savassi",
+			"cidade": "Belo Horizonte",
+			"logradouro": "Rua Claudio Manoel",
+			"complemento": "Sala 1003"
+		}
+	}
+}
 
-const Util = require('../dev/util');
+function gerarAviso() {
+	return {
+		"tipo": "Desabamento",
+		"descricao": "Desabamento grave",
+		"coordenadas": { // Coordenada do cidadão
+			"latitude": faker.address.latitude(),
+			"longitude": faker.address.longitude(),
+		},
+		"endereco": {
+			"rua": "R. do amendoim",
+			"numero": "351",
+			"bairro": "America"
+		},
+	}
+}
 
 // Objetos dos modelos
 var usuario, aviso, fotos;
@@ -63,23 +97,7 @@ afterAll(async done => {
 describe('Cadastro e login de usuário [DEV]', () => {
 
 	it('deve cadastrar um usuário e obter a api_key', async done => {
-		let user = {
-			tipo: 'Cidadão',
-			nome: 'Cebolinha',
-			telefone: '(31) 9 9478-4103',
-			cpf: '112.314.551-56',
-			email: 'cebolinha@gmail.com',
-			nascimento: '15/03/1981',
-			endereco: {
-				uf: 'MG',
-				cep: '3019481938',
-				numero: '123',
-				bairro: 'Savassi',
-				cidade: 'Belo Horizonte',
-				logradouro: 'Rua Claudio Manoel',
-				complemento: 'Sala 1003',
-			},
-		}
+		let user = gerarUsuario();
 		let res = await axios.post(HOST + '/dev/usuarios', user);
 		expect(res.status).toBe(200);
 		// Atributos required:
@@ -95,7 +113,7 @@ describe('Cadastro e login de usuário [DEV]', () => {
 	});
 
 	it('deve buscar o usuário no banco', async done => {
-		let res = await axios.get(HOST + '/acesso/usuarios/account', reqConfig);
+		let res = await axios.get(HOST + '/acesso/account', reqConfig);
 		expect(res.status).toBe(200);
 		// Atributos required:
 		expect(res.data).toBeDefined();
@@ -113,19 +131,7 @@ describe('Cadastro e login de usuário [DEV]', () => {
 describe('Criação de um aviso', () => {
 
 	it('deve criar um aviso', async done => {
-		let av = {
-			tipo: 'Desabamento',
-			descricao: 'Desabamento grave',
-			coordenadas: { // Coordenada do cidadão
-				latitude: '128319283712',
-				longitude: '91827319641',
-			},
-			endereco: {
-				rua: 'R. do amendoim',
-				numero: '351',
-				bairro: 'America'
-			},
-		};
+		let av = gerarAviso();
 		let res = await axios.post(HOST + '/acesso/avisos', av, reqConfig);
 		expect(res.status).toBe(200);
 		expect(res.data).toBeDefined();
@@ -192,7 +198,7 @@ describe('Visualização de avisos e fotos de avisos', () => {
 describe('Exclusão de usuário', () => {
 
 	it('deve deletar o usuário, seus avisos e as fotos', async done => {
-		let res = await axios.delete(HOST + '/acesso/usuarios/delete', reqConfig);
+		let res = await axios.delete(HOST + '/acesso/delete', reqConfig);
 		expect(res.data).toBeDefined();
 		expect(fs.pathExistsSync('./files/' + usuario.id)).toBeFalsy();
 		done();

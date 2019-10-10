@@ -11,7 +11,7 @@ const schema = new Schema({
 	tipo: { type: String },
 	nome: { type: String, required: true },
 	telefone: { type: String, required: true },
-	cpf: { type: String, required: true },
+	cpf: { type: String, required: true, unique: true },
 	email: { type: String },
 	nascimento: { type: String },
 	endereco: {
@@ -24,7 +24,7 @@ const schema = new Schema({
 		complemento: { type: String },
 	},
 
-}, { strict: false });
+}, { strict: true });
 
 schema.plugin(muv);
 
