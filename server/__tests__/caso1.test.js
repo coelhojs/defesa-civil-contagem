@@ -33,7 +33,9 @@ const app = require('../app');
 const fs = require('fs-extra');
 const db = require('../database');
 const server = require('../server');
+const FormData = require('form-data');
 const axios = require('axios').default;
+
 
 const Util = require('../dev/util');
 
@@ -51,6 +53,7 @@ beforeAll(async done => {
 afterAll(async done => {
 	await server.close();
 	await db.mongoose.disconnect();
+	fs.removeSync('./files');
 	done();
 });
 
@@ -128,7 +131,6 @@ describe('Criação de um aviso', () => {
 		expect(res.data).toBeDefined();
 		expect(res.data).toHaveProperty('tipo');
 		expect(res.data).toHaveProperty('coordenadas');
-		expect(res.data).toHaveProperty('dataHora');
 		expect(res.data).toHaveProperty('url');
 		aviso = res.data;
 		done();
@@ -136,23 +138,24 @@ describe('Criação de um aviso', () => {
 
 	it('deve enviar 3 fotos para o último aviso criado', async done => {
 		for (let i = 0; i < 3; i++) {
-			let newFile = await fs.createReadStream('./__tests__/teste.jpg');
-			let form_data = new FormData();
-			form_data.append("file", newFile);
-			let request_config = {
-				method: "post",
-				url: HOST + aviso.url + '/fotos',
-				headers: {
-					"authorization": "Bearer " + usuario.api_key,
-					"Content-Type": "multipart/form-data"
-				},
-				data: form_data
-			};
-			let res = await axios(request_config);
-			expect(res.status).toEqual(200);
-			expect(res.data).toBeDefined();
+			const filePath = __dirname + '/teste.jpg';
+			let imageData = fs.readFileSync(filePath);
+			expect(imageData).toBeDefined();
+			const form = new FormData();
+			form.append('foto', imageData, {
+				filepath: filePath,
+				contentType: 'image/jpeg',
+			});
+			let headers = form.getHeaders();
+			headers.authorization = reqConfig.headers.authorization;
+			let res = await axios.post(HOST + aviso.url + '/fotos', form, { headers: headers });
+			expect(res.status).toBe(200);
 			expect(res.data).toHaveProperty('id');
-			fotos.push(res.data);
+			expect(res.data).toHaveProperty('filename');
+			expect(res.data).toHaveProperty('url');
+			expect(res.data).toHaveProperty('horario');
+			expect(res.data).toHaveProperty('aviso_id');
+			expect(fs.existsSync('./files/' + usuario.id + '/' + aviso.id + '/' + res.data.filename)).toBeTruthy();
 		}
 		done();
 	});
