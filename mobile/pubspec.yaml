@@ -35,6 +35,8 @@ dependencies:
   flutter_masked_text: ^0.8.0
   image_picker: ^0.6.1+4
   dio: ^3.0.3
+  geolocator: ^5.1.4+1
+  flutter_image_compress: ^0.6.3
 
 
 dev_dependencies:

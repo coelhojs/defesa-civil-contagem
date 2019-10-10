@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:defesa_civil/helpers/cepvalidator.dart';
 import 'package:defesa_civil/helpers/constants.dart';
+import 'package:defesa_civil/helpers/usuario.dart';
 import 'package:defesa_civil/ui/logged/homelogged.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,15 +30,30 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
   SharedPreferences userData;
+  TabController _tabController;
+
+  Usuario novoUsuario;
+  Endereco enderecoUsuario = Endereco();
+  Map<String, dynamic> detalhesEndereco = {};
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var cepController = new MaskedTextController(mask: '00000-000');
-  var cpfController = new MaskedTextController(mask: '000.000.000-00');
-  var telController = new MaskedTextController(mask: '(00)00000-0000');
+
+  MaskedTextController cepController = MaskedTextController(mask: '00000-000');
+  MaskedTextController cpfController =
+      MaskedTextController(mask: '000.000.000-00');
+  MaskedTextController telController =
+      MaskedTextController(mask: '(00)00000-0000');
+  TextEditingController numController = TextEditingController();
+  TextEditingController complementoController = TextEditingController();
+
   GlobalKey<FormState> _keyValidaForm1 = GlobalKey<FormState>();
   GlobalKey<FormState> _keyValidaForm2 = GlobalKey<FormState>();
+
   FocusNode focusTel = FocusNode();
+  FocusNode focusNum = FocusNode();
+  FocusNode focusComplemento = FocusNode();
+
   String next = "Proximo";
   String name;
   String email;
@@ -51,6 +68,7 @@ class _RegisterPageState extends State<RegisterPage>
   void initState() {
     super.initState();
     _tabController = new TabController(vsync: this, length: 2);
+    //_tabController.animateTo(1);
     getCredentials();
   }
 
@@ -58,6 +76,23 @@ class _RegisterPageState extends State<RegisterPage>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<Map<String, dynamic>> _registrarUsuario(Map dados) async {
+    var response;
+    var url = '$REQ/auth/google/cadastro';
+    Dio dio = new Dio();
+    response = await dio
+        .post(url,
+            data: jsonEncode(dados),
+            options: Options(headers: {"authorization": "Bearer $token"}))
+        .then((sucess) {
+      return sucess.data;
+    }).catchError((e) {
+      return e.response.data;
+    });
+
+    return response;
   }
 
   @override
@@ -75,28 +110,94 @@ class _RegisterPageState extends State<RegisterPage>
                 setState(() => next = "Cadastrar");
               }
             } else if (_tabController.index == 1) {
-              if (_keyValidaForm2.currentState.validate()) {
-                var url = '$REQ/auth/google/cadastro';
-                var response = await http.post(url, headers: {
-                  "authorization": "Bearer $token"
-                }, body: {
-                  "tipo": "Usuário",
+              if (_keyValidaForm2.currentState.validate() &&
+                  detalhesEndereco['logradouro'] != 'CEP não encontrado') {
+                detalhesEndereco['numero'] = int.parse(numController.text);
+                detalhesEndereco['complemento'] = complementoController.text;
+                novoUsuario = Usuario.fromJson({
                   "nome": name,
-                  "telefone": telController.text,
-                  "cpf": cpfController.text,
                   "email": email,
-                  "endereco": endereco
+                  "imagem": image,
+                  "cpf": cpfController.text,
+                  "endereco": detalhesEndereco,
+                  "telefone": telController.text,
+                  "tipo": "Usuário",
                 });
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return FutureBuilder(
+                        future: _registrarUsuario(novoUsuario.toJson()),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState != ConnectionState.done)
+                            return AlertDialog(
+                              title: Text("Registrando"),
+                              content: Row(
+                                children: <Widget>[
+                                  CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Color.fromRGBO(246, 129, 33, 1)),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                  ),
+                                  Text("Registrando novo usuário")
+                                ],
+                              ),
+                            );
+                          if (snapshot.hasError) {
+                            return AlertDialog(
+                              title: Text("Erro"),
+                              content: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                    size: 40,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                  ),
+                                  Text("Houve um erro ao registrar")
+                                ],
+                              ),
+                            );
+                          } else {
+                            if (snapshot.data['api_key'] != null) {
+                              setCredentials(snapshot.data['api_key']);
+                              print(userData.getString('api_key'));
+                              print(snapshot.data['api_key']);
+                            }
+                            return snapshot.data['api_key'] != null
+                                ? _sucessFail(true)
+                                : _sucessFail(false);
+                          }
+                        },
+                      );
+                    });
+
+                /*var url = '$REQ/auth/google/cadastro';
+                var response = await http.post(url,
+                    headers: {"authorization": "Bearer $token"},
+                    body: jsonEncode(novoUsuario.toJson()));
                 var responseDecoded = json.decode(response.body);
 
-                if(response.statusCode==200) {
+                if (response.statusCode == 200) {
                   setCredentials(responseDecoded['api_key']);
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => HomeLogged()),
-                          (Route<dynamic> route) => false);
-                }else if(responseDecoded['mensagem']=='Usuário já cadastrado'){
-                  _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Usuário já está cadastrado"),duration: Duration(seconds: 3),backgroundColor: Colors.red,));
-                }
+                      (Route<dynamic> route) => false);
+                } else if (responseDecoded['mensagem'] ==
+                    'Usuário já cadastrado') {
+                  _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                    content: new Text("Usuário já está cadastrado"),
+                    duration: Duration(seconds: 3),
+                    backgroundColor: Colors.red,
+                  ));
+                }*/
               }
             }
           },
@@ -207,6 +308,8 @@ class _RegisterPageState extends State<RegisterPage>
                             setState(() {
                               _enderecoState = 1;
                             });
+                            detalhesEndereco['logradouro'] =
+                                "CEP não encontrado";
                             var url =
                                 'https://viacep.com.br/ws/${value.replaceAll('-', '')}/json/';
                             var response = await http.get(url);
@@ -214,11 +317,16 @@ class _RegisterPageState extends State<RegisterPage>
                             var responseDecoded = json.decode(response.body);
                             print('Response body: ${response.body}');
                             if (responseDecoded['logradouro'] != null) {
-                              endereco =
-                              "${responseDecoded['logradouro']}, ${responseDecoded['bairro']} - ${responseDecoded['localidade']} / ${responseDecoded['uf']}";
-                            }
-                            else
-                              endereco = "CEP não encontrado";
+                              detalhesEndereco = {
+                                "cep": responseDecoded['cep'],
+                                "logradouro": responseDecoded['logradouro'],
+                                "bairro": responseDecoded['bairro'],
+                                "cidade": responseDecoded['localidade'],
+                                "uf": responseDecoded['uf'],
+                              };
+                            } else if (responseDecoded['erro'])
+                              detalhesEndereco['logradouro'] =
+                                  "CEP não encontrado";
                             setState(() {
                               _enderecoState = 2;
                             });
@@ -238,9 +346,49 @@ class _RegisterPageState extends State<RegisterPage>
                             return "Insira o CEP";
                           else if (value.length != 9)
                             return "O tamanho do CEP são 8 dígitos";
-                          else if(endereco == "CEP não encontrado")
+                          else if (endereco == "CEP não encontrado")
                             return "CEP não encontrado";
                         },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                              width: SizeConfig.blockSizeHorizontal * 65,
+                              child: TextFormField(
+                                focusNode: focusComplemento,
+                                controller: complementoController,
+                                maxLength: 6,
+                                keyboardType: TextInputType.text,
+                                decoration: const InputDecoration(
+                                  counterText: '',
+                                  border: OutlineInputBorder(),
+                                  prefixIcon: Icon(Icons.chevron_right),
+                                  labelText: 'Complemento:',
+                                ),
+                              )),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              focusNode: focusNum,
+                              controller: numController,
+                              maxLength: 6,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                counterText: '',
+                                border: OutlineInputBorder(),
+                                labelText: 'Nº:',
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) return "Insira o número";
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: EdgeInsets.all(10),
@@ -272,17 +420,64 @@ class _RegisterPageState extends State<RegisterPage>
     else if (_enderecoState == 1) {
       return CircularProgressIndicator();
     } else if (_enderecoState == 2) {
-      return Text(endereco);
+      return Text(detalhesEndereco['logradouro']);
     }
   }
 
+  Widget _sucessFail(bool sucess) {
+    return sucess
+        ? AlertDialog(
+            title: Text("Sucesso"),
+            content: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.check,
+                  color: Colors.green,
+                  size: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+                Text("Usuário registrado")
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => HomeLogged()),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: Text('Continuar')),
+            ],
+          )
+        : AlertDialog(
+            title: Text("Erro"),
+            content: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.close,
+                  color: Colors.red,
+                  size: 40,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                ),
+                Text("Usuário já está registrado")
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  },
+                  child: Text('Fechar')),
+            ],
+          );
+  }
+
   setCredentials(String api_key) async {
-    userData.setString("name", name);
-    userData.setString("email", email);
-    userData.setString("image", image);
-    userData.setString("endereco", endereco);
-    userData.setString("telefone", telController.text);
-    userData.setString("cpf", cpfController.text);
+    userData.setString("usuario", novoUsuario.toString());
     userData.setString("api_key", api_key);
   }
 
