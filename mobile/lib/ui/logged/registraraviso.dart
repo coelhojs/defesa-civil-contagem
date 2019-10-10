@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/helpers/size_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/feather.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:async/async.dart';
-import 'package:path/path.dart';
 
 class RegistroAviso extends StatefulWidget {
   String api_key;
@@ -44,6 +44,8 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     "Queda de Muro"
   ];
 
+  Position position;
+
   @override
   void initState() {
     _tiposIncidentes.sort();
@@ -52,37 +54,54 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     super.initState();
   }
 
-  Future uploadChamado(List<File> imageFile) async {
-    var url = '$REQ/acesso/chamados';
-    var responseChamado = await http.post(url, headers: {
-      "authorization": "Bearer $api_key"
-    }, body: {
-      "tipo": "$_incidenteAtual",
-      "descricao": "${descController.text}",
-    });
-    var responseChamadoDecoded = json.decode(responseChamado.body);
-    print(responseChamadoDecoded);
+  Future uploadAviso(List<File> imageFile) async {
+    position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    uploadFoto(imageFile, responseChamadoDecoded['id']);
+    var response;
+    var url = '$REQ/acesso/avisos';
+    Dio dio = new Dio();
+    response = await dio
+        .post(url,
+        data: jsonEncode({
+          "tipo": "$_incidenteAtual",
+          "descricao": "${descController.text}",
+          "coordenadas": {
+            "latitude": position.latitude,
+            "longitude": position.longitude
+          },
+          "local":
+          "${endController.text}, ${numController.text} - ${bairroController.text}"
+        }),
+        options: Options(headers: {"authorization": "Bearer $api_key"}))
+        .then((sucess) async {
+          print(sucess.data);
+          await uploadFoto(imageFile, sucess.data['id']);
+      return sucess.data;
+    }).catchError((e) {
+      print(e.response.data);
+      return e.response.data;
+    });
+
+    //await uploadFoto(imageFile, responseAvisoDecoded['id']);
+    //print(responseAvisoDecoded);
   }
 
   Future uploadFoto(List<File> imageFile, String id) async {
     Dio dio = new Dio();
-    List<String> error = List<String>();
 
-    for(int i=0; i<3;i++){
-      if(imageFile[i] != null){
+    for (int i = 0; i < 3; i++) {
+      if (imageFile[i] != null) {
         FormData formData = new FormData.fromMap(
             {"foto": await MultipartFile.fromFile(imageFile[i].path)});
         await dio
-            .post("$REQ/acesso/chamados/foto/$id",
-            data: formData,
-            options: Options(headers: {"authorization": "Bearer $api_key"}))
+            .post("$REQ/acesso/avisos/$id/fotos",
+                data: formData,
+                options: Options(headers: {"authorization": "Bearer $api_key"}))
             .then((sucesso) {
           print(sucesso);
-        })
-            .catchError((error) {
-          print(error);
+        }).catchError((error) {
+          print(error.response.data);
         });
       }
     }
@@ -95,9 +114,8 @@ class _RegistroAvisoState extends State<RegistroAviso> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () async {
-          uploadChamado(_image);
           print(_image[0]);
-          /*if (_image[0] == null) {
+          if (_image[0] == null) {
             setState(() {
               imageUpld = 1;
             });
@@ -111,17 +129,16 @@ class _RegistroAvisoState extends State<RegistroAviso> {
           }
 
           if (_keyValidaForm.currentState.validate() && imageUpld == 0) {
-            print(descController.text);
-
             showDialog(
+                barrierDismissible: false,
                 context: context,
                 builder: (BuildContext context) {
                   return FutureBuilder(
-                    future: inserir(),
+                    future: uploadAviso(_image),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.done)
                         return AlertDialog(
-                          title: Text("Enviante"),
+                          title: Text("Enviando", style: _textoNegrito(),),
                           content: Row(
                             children: <Widget>[
                               CircularProgressIndicator(
@@ -131,34 +148,59 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                               ),
-                              Text("Enviante")
+                              Text("Enviando aviso", style: _texto(),)
                             ],
                           ),
                         );
                       if (snapshot.hasError) {
-                        return Text("Houve um erro ao carregar.");
-                      } else {
                         return AlertDialog(
-                          title: Text("Deu bom"),
+                          title: Text("Erro", style: _textoNegrito(),),
                           content: Row(
                             children: <Widget>[
                               Icon(
-                                Feather.getIconData("check-circle"),
-                                color: Color.fromRGBO(246, 129, 33, 1),
+                                Feather.getIconData("x"),
+                                color: Colors.red,
                                 size: 40,
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                               ),
-                              Text("Deu bom")
+                              Text("Houve um erro ao carregar", style: _texto(),)
                             ],
                           ),
+                        );
+                      } else {
+                        return AlertDialog(
+                          title: Text("Sucesso", style: _textoNegrito()),
+                          content: Row(
+                            children: <Widget>[
+                              Icon(
+                                Feather.getIconData("check"),
+                                color: Colors.green,
+                                size: 40,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              Flexible(
+                                child: Text("Aviso enviado com sucesso", style: _texto()),
+                              )
+                            ],
+                          ),
+                          actions: <Widget>[
+                            FlatButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .popUntil((route) => route.isFirst);
+                                },
+                                child: Text('Fechar')),
+                          ],
                         );
                       }
                     },
                   );
                 });
-          }*/
+          }
         },
         child: Icon(Feather.getIconData("send")),
       ),
@@ -233,8 +275,10 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                     Expanded(
                       child: TextFormField(
                           controller: numController,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
+                          inputFormatters: <TextInputFormatter>[
+                            WhitelistingTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(), labelText: "Nº"),
                           validator: (value) {
@@ -285,20 +329,20 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                 Wrap(
                   children: <Widget>[
                     _image[0] == null
-                        ? _circuloSemImagem(0)
-                        : _circuloComImagem(0, context),
+                        ? _imagemVaziaQuadrada(0)
+                        : _imagemQuadrada(0, context),
                     Padding(
                       padding: EdgeInsets.only(right: 5),
                     ),
                     _image[1] == null
-                        ? _circuloSemImagem(1)
-                        : _circuloComImagem(1, context),
+                        ? _imagemVaziaQuadrada(1)
+                        : _imagemQuadrada(1, context),
                     Padding(
                       padding: EdgeInsets.only(right: 5),
                     ),
                     _image[2] == null
-                        ? _circuloSemImagem(2)
-                        : _circuloComImagem(2, context),
+                        ? _imagemVaziaQuadrada(2)
+                        : _imagemQuadrada(2, context),
                   ],
                 ),
               ],
@@ -309,42 +353,51 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     );
   }
 
-  Widget _circuloComImagem(int imageNumber, BuildContext context) {
+  _textoNegrito(){
+    return TextStyle(fontWeight: FontWeight.bold, fontSize: SizeConfig.blockSizeHorizontal * 6);
+  }
+
+  _texto(){
+    return TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: SizeConfig.blockSizeHorizontal * 4.5);
+  }
+
+  Widget _imagemQuadrada(int imageNumber, BuildContext context) {
     return GestureDetector(
-      child: Hero(
-        tag: 'image$imageNumber',
-        child: Container(
-          height: SizeConfig.blockSizeHorizontal * 30,
-          width: SizeConfig.blockSizeHorizontal * 30,
-          decoration: new BoxDecoration(
-            border: Border.all(color: Colors.orange, width: SizeConfig.blockSizeHorizontal* 0.6),
-            image: DecorationImage(
-              image: FileImage(_image[imageNumber]),
-              fit: BoxFit.fill,
+        child: Hero(
+          tag: 'image$imageNumber',
+          child: Container(
+            height: SizeConfig.blockSizeHorizontal * 30,
+            width: SizeConfig.blockSizeHorizontal * 30,
+            decoration: new BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                  color: Colors.orange,
+                  width: SizeConfig.blockSizeHorizontal * 0.6),
+              image: DecorationImage(
+                image: FileImage(_image[imageNumber]),
+                fit: BoxFit.fill,
+              ),
             ),
-            shape: BoxShape.circle,
           ),
         ),
-      ),
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
             return DetailScreen(_image, imageNumber);
           }));
-        }
-    );
+        });
   }
 
-  Widget _circuloSemImagem(int imageNumber) {
+  Widget _imagemVaziaQuadrada(int imageNumber) {
     return GestureDetector(
       onTap: () => getImage(imageNumber),
       child: Container(
         height: SizeConfig.blockSizeHorizontal * 30,
         width: SizeConfig.blockSizeHorizontal * 30,
         decoration: new BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
           border: Border.all(
               width: SizeConfig.blockSizeHorizontal * 0.6,
               color: Colors.orange),
-          shape: BoxShape.circle,
         ),
         child: Center(
           child: Column(
@@ -373,16 +426,17 @@ class _RegistroAvisoState extends State<RegistroAviso> {
   }
 
   Future getImage(int imageNumber) async {
-    var image = await ImagePicker.pickImage(
-        source: ImageSource.camera, imageQuality: 80);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
 
+    print(image.path);
+    image = await testCompressAndGetFile(image, image.path);
     setState(() {
-      if(_image[0]==null)
+      if (_image[0] == null)
         _image[0] = image;
-      else if(_image[1]==null)
+      else if (_image[1] == null)
         _image[1] = image;
       else
-        _image[imageNumber]=image;
+        _image[imageNumber] = image;
     });
   }
 
@@ -398,56 +452,66 @@ class _RegistroAvisoState extends State<RegistroAviso> {
   }
 }
 
+Future<File> testCompressAndGetFile(File file, String targetPath) async {
+  print(file.lengthSync());
+  var result = await FlutterImageCompress.compressAndGetFile(
+    file.absolute.path,
+    targetPath,
+    quality: 40,
+  );
+
+  print(result.lengthSync());
+  return result;
+}
+
 class DetailScreen extends StatefulWidget {
   List<File> image;
   int imageNumber;
+
   DetailScreen(this.image, this.imageNumber);
 
   @override
-  _DetailScreenState createState() => _DetailScreenState(image,imageNumber);
+  _DetailScreenState createState() => _DetailScreenState(image, imageNumber);
 }
 
-class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderStateMixin{
+class _DetailScreenState extends State<DetailScreen>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
   List<File> image;
   int imageNumber;
-  int total=0;
+  int total = 0;
   List<Widget> list = List<Widget>();
-  
-  buildWidgets(BuildContext context){
+
+  buildWidgets(BuildContext context) {
     print(total);
     print(imageNumber);
-    for(int i = 0; i < total ; i++){
-
-        list.add(GestureDetector(
-          child: Center(
-            child: Hero(
-              tag: 'image$imageNumber',
-              child: Image.file(
-                image[i],
-              ),
+    for (int i = 0; i < total; i++) {
+      list.add(GestureDetector(
+        child: Center(
+          child: Hero(
+            tag: 'image$imageNumber',
+            child: Image.file(
+              image[i],
             ),
           ),
-          onTap: () {
-
-            Navigator.pop(context);
-          },
-        ));
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ));
     }
     return list;
   }
 
-  _DetailScreenState(this.image,this.imageNumber);
+  _DetailScreenState(this.image, this.imageNumber);
+
   @override
   void initState() {
     super.initState();
-    for(int i=0; i<image.length;i++)
-      if(image[i]!=null)
-        total++;
+    for (int i = 0; i < image.length; i++) if (image[i] != null) total++;
 
     _tabController = new TabController(vsync: this, length: total);
-    if(total!=1)
-    _tabController.animateTo(imageNumber);
+    if (total != 1) _tabController.animateTo(imageNumber);
   }
 
   @override
@@ -469,5 +533,3 @@ class _DetailScreenState extends State<DetailScreen> with SingleTickerProviderSt
     );
   }
 }
-
-

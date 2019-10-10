@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/helpers/sign_in.dart';
+import 'package:defesa_civil/helpers/usuario.dart';
 import 'package:defesa_civil/ui/logged/homelogged.dart';
 import 'package:defesa_civil/ui/unregistered/registerpage.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   SharedPreferences userData;
+  Usuario novoUsuario;
 
   @override
   void initState() {
@@ -75,9 +77,9 @@ class _LoginPageState extends State<LoginPage> {
                     var response = await http
                         .post(url, headers: {"authorization": "Bearer $token"});
                     var responseDecoded = json.decode(response.body);
-                    print(token);
-                    print(responseDecoded['api_key']);
+                    //print(token + " TOKEN AAQUIIIIIIII");
                     if (response.statusCode == 200) {
+                      novoUsuario = Usuario.fromJson(responseDecoded['usuario']);
                       setCredentials(responseDecoded['api_key']);
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => HomeLogged()),
@@ -103,11 +105,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   setCredentials(String api_key) async {
-    userData.setString("name", name);
-    userData.setString("email", email);
-    userData.setString("image", image);
+    userData.setString("usuario", novoUsuario.toString());
     userData.setString("api_key", api_key);
-
   }
 
   getCredentials() async {

@@ -14,6 +14,7 @@ const schema = new Schema({
 	cpf: { type: String, required: true },
 	email: { type: String },
 	nascimento: { type: String },
+	imagem: {type: String},
 	endereco: {
 		uf: { type: String, required: true },
 		cep: { type: String, required: true },
@@ -38,6 +39,7 @@ schema.methods.toJSON = function () {
 		email: this.email,
 		nascimento: this.nascimento,
 		endereco: this.endereco,
+		imagem: this.imagem
 	}
 }
 
