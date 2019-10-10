@@ -11,8 +11,12 @@ exports.criar_usuario = async (req, res, next) => {
 
 // Modificar as informações do usuário atual:
 exports.modificar_usuario = async (req, res, next) => {
-	let novoUsuario = await Usuario.find({ _id: req.user.id }).update(req.body);
-	res.status(200).json(novoUsuario);
+	let antigo = await Usuario.findByIdAndUpdate(req.user.id, req.body);
+	let novo = await Usuario.findById(req.user.id);
+	res.status(200).json({
+		antigo: antigo,
+		novo: novo
+	});
 }
 
 // Remover o usuário atual:

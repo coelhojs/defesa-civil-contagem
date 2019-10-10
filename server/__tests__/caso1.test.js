@@ -14,6 +14,9 @@
  * Criação de um aviso
  * 		- deve criar um aviso
  *		- deve enviar uma foto para o último aviso criado
+ * 
+ * Modificação dos dados do usuário:
+ * 		- deve mudar o telefone do usuario
  * 		
  * Visualização de avisos e fotos de avisos
  * 		- deve recuperar o último aviso do usuário
@@ -35,24 +38,26 @@ const db = require('../database');
 const server = require('../server');
 const FormData = require('form-data');
 const axios = require('axios').default;
+const randexp = require('randexp').randexp;
+
+faker.locale = 'pt_BR';
 
 function gerarUsuario() {
 	let fname = faker.name.firstName(), lname = faker.name.lastName();
 	return {
-		"tipo": "Cidadão",
 		"nome": faker.name.findName(),
-		"telefone": faker.phone.phoneNumber('(##) #####-####'),
-		"cpf": "112.314.551-56",
-		"email": `${fname}.${lname}@gmail.com`,
-		"nascimento": "15/03/1981",
+		"telefone": randexp(/^\(([1-9][0-9])\)\s(9\d|[2-9])\d{3}\-\d{4}$/),
+		"cpf": randexp(/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$/),
+		"email": faker.internet.email(fname, lname),
+		"nascimento": randexp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)19[0-9][0-9]$/),
 		"endereco": {
-			"uf": "MG",
-			"cep": "3019481938",
-			"numero": "123",
-			"bairro": "Savassi",
-			"cidade": "Belo Horizonte",
-			"logradouro": "Rua Claudio Manoel",
-			"complemento": "Sala 1003"
+			"uf": randexp(/(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)/),
+			"cep": randexp(/^[0-9]{5}\-[0-9]{3}$/),
+			"numero": randexp(/[0-9]{2,5}/),
+			"bairro": randexp(/\w{25}/),
+			"cidade": randexp(/\w{30}/),
+			"logradouro": randexp(/\w{3,25}/),
+			"complemento": randexp(/\w{20}/)
 		}
 	}
 }
@@ -91,25 +96,28 @@ afterAll(async done => {
 	done();
 });
 
-
-
 // Via rota /dev
 describe('Cadastro e login de usuário [DEV]', () => {
 
 	it('deve cadastrar um usuário e obter a api_key', async done => {
 		let user = gerarUsuario();
-		let res = await axios.post(HOST + '/dev/usuarios', user);
-		expect(res.status).toBe(200);
-		// Atributos required:
-		expect(res.data).toBeDefined();
-		expect(res.data).toHaveProperty('nome');
-		expect(res.data).toHaveProperty('telefone');
-		expect(res.data).toHaveProperty('cpf');
-		expect(res.data).toHaveProperty('endereco');
-		expect(res.data).toHaveProperty('api_key');
-		usuario = res.data;
-		reqConfig = { headers: { authorization: 'Bearer ' + usuario.api_key } };
-		done();
+		axios.post(HOST + '/dev/usuarios', user)
+			.then(res => {
+				expect(res.status).toBe(200);
+				// Atributos required:
+				expect(res.data).toBeDefined();
+				expect(res.data).toHaveProperty('nome');
+				expect(res.data).toHaveProperty('telefone');
+				expect(res.data).toHaveProperty('cpf');
+				expect(res.data).toHaveProperty('endereco');
+				expect(res.data).toHaveProperty('api_key');
+				usuario = res.data;
+				reqConfig = { headers: { authorization: 'Bearer ' + usuario.api_key } };
+				done();
+			}).catch(error => {
+				console.log(error);
+				done(error);
+			});
 	});
 
 	it('deve buscar o usuário no banco', async done => {
@@ -163,6 +171,16 @@ describe('Criação de um aviso', () => {
 			expect(res.data).toHaveProperty('aviso_id');
 			expect(fs.existsSync('./files/' + usuario.id + '/' + aviso.id + '/' + res.data.filename)).toBeTruthy();
 		}
+		done();
+	});
+
+});
+
+describe('Modificação dos dados do usuario', () => {
+
+	it('deve mudar o telefone do usuario', (done) => {
+		
+
 		done();
 	});
 
