@@ -8,7 +8,6 @@ const NOME_MODELO = 'Usuario';
 
 const schema = new Schema({
 	google_id: { type: String },
-<<<<<<< HEAD
 	tipo: { type: String },
 	nome: { type: String, required: true },
 	telefone: { type: String, required: true },
@@ -16,7 +15,6 @@ const schema = new Schema({
 	email: { type: String },
 	nascimento: { type: String },
 	imagem: {type: String},
-=======
 	nome: {
 		type: String,
 		required: true,
@@ -42,7 +40,6 @@ const schema = new Schema({
 		type: String,
 		match: /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)19[0-9][0-9]$/,
 	},
->>>>>>> 6c4cad3185cdaf93142ea976a4ebade93fa70c04
 	endereco: {
 		uf: {
 			type: String,
