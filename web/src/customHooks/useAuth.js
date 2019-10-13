@@ -5,6 +5,12 @@ import * as React from 'react';
 import { createContext, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { api } from "../controllers/index";
+import createPersistedState from 'use-persisted-state';
+
+//Estados que devem ser persistidos entre tabs e refreshes
+const useUserState = createPersistedState('user');
+const useUsuarioState = createPersistedState('usuario');
+const useApiKeyState = createPersistedState('apiKey');
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -44,11 +50,11 @@ function useProvideAuth() {
   let history = useHistory();
 
   //user = autenticacao Google
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useUserState(null);
   //usuario = autenticacao Aplicação  
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useUsuarioState(null);
   const [idToken, setIdToken] = useState(null);
-  const [apiKey, setApiKey] = useState(null);
+  const [apiKey, setApiKey] = useApiKeyState(null);
   const [showWarning, setShowWarning] = useState(false);
 
   const loginUsuario = async () => {
@@ -62,7 +68,7 @@ function useProvideAuth() {
             }
           })
           .then(function (response) {
-            if (response.data.mensagem == "Usuário não cadastrado") {
+            if (response.data.mensagem === "Usuário não cadastrado") {
               history.push('/Cadastro');
             } else {
               setApiKey(response.data.api_key);
@@ -80,6 +86,7 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
+        setUser(response.user)
         return response.credential.idToken;
       });
   };
