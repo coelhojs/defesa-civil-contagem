@@ -25,13 +25,17 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(5),
         margin: "auto",
         maxWidth: 600,
-        minWidth: 265
+        minWidth: 265,
+        display: 'flex',
+        flexWrap: 'wrap',
+
     },
     button: {
         margin: theme.spacing(1)
     },
     erro: {
         color: "#ff0000",
+        marginTop: '3px',
         marginBottom: '1rem',
     },
     rightIcon: {
@@ -120,7 +124,7 @@ export default function CadastroForm() {
                             {errors.email && (errors.email)}
                         </FormHelperText>
                     </Grid>
-                    <Grid item md={6} className={classes.item}>
+                    <Grid item md={4} className={classes.item}>
                         <TextField
                             label="Telefone"
                             name="telefone"
@@ -135,7 +139,7 @@ export default function CadastroForm() {
                         {/* TODO: Incluir mascaras */}
                         {/* inputComponent={TelefoneMask} */}
                     </Grid>
-                    <Grid item md={6} className={classes.item}>
+                    <Grid item md={4} className={classes.item}>
                         <TextField
                             label="CPF"
                             name="cpf"
@@ -149,7 +153,7 @@ export default function CadastroForm() {
                         </FormHelperText>
                         {/* inputComponent={CPFMask}  */}
                     </Grid>
-                    <Grid item md={6} className={classes.item}>
+                    <Grid item md={4} className={classes.item}>
                         <TextField
                             label="Data de nascimento"
                             name="dataNasc"
@@ -178,7 +182,7 @@ export default function CadastroForm() {
                             {errors.cep && (errors.cep)}
                         </FormHelperText>
                     </Grid>
-                    <Grid item md={5} className={classes.item}>
+                    <Grid item md={7} className={classes.item}>
                         <TextField
                             className={classes.formInput}
                             label="Logradouro"
@@ -192,7 +196,7 @@ export default function CadastroForm() {
                             {errors.logradouro && (errors.logradouro)}
                         </FormHelperText>
                     </Grid>
-                    <Grid item md={3} className={classes.item}>
+                    <Grid item md={2} className={classes.item}>
                         <TextField
                             className={classes.formInput}
                             label="Número"
@@ -205,7 +209,7 @@ export default function CadastroForm() {
                             {errors.numero && (errors.numero)}
                         </FormHelperText>
                     </Grid>
-                    <Grid item md={4} className={classes.item}>
+                    <Grid item md={3} className={classes.item}>
                         <TextField
                             className={classes.formInput}
                             label="Complemento"
@@ -245,41 +249,46 @@ export default function CadastroForm() {
                         </FormHelperText>
                     </Grid>
                     <Grid item md={3} className={classes.item}>
-                        <InputLabel htmlFor="estado">Estado</InputLabel>
-                        <Select readOnly value={values.estado} onChange={handleChange}
-                            inputProps={{
-                                name: "estado",
-                                id: "estado"
-                            }}
-                        >
-                            <MenuItem value={"AC"}>Acre</MenuItem>
-                            <MenuItem value={"AL"}>Alagoas</MenuItem>
-                            <MenuItem value={"AP"}>Amapá</MenuItem>
-                            <MenuItem value={"AM"}>Amazonas</MenuItem>
-                            <MenuItem value={"BA"}>Bahia</MenuItem>
-                            <MenuItem value={"CE"}>Ceará</MenuItem>
-                            <MenuItem value={"DF"}>Distrito Federal</MenuItem>
-                            <MenuItem value={"ES"}>Espírito Santo</MenuItem>
-                            <MenuItem value={"GO"}>Goiás</MenuItem>
-                            <MenuItem value={"MA"}>Maranhão</MenuItem>
-                            <MenuItem value={"MT"}>Mato Grosso</MenuItem>
-                            <MenuItem value={"MS"}>Mato Grosso do Sul</MenuItem>
-                            <MenuItem value={"MG"}>Minas Gerais</MenuItem>
-                            <MenuItem value={"PA"}>Pará</MenuItem>
-                            <MenuItem value={"PB"}>Paraíba</MenuItem>
-                            <MenuItem value={"PR"}>Paraná</MenuItem>
-                            <MenuItem value={"PE"}>Pernambuco</MenuItem>
-                            <MenuItem value={"PI"}>Piauí</MenuItem>
-                            <MenuItem value={"RJ"}>Rio de Janeiro</MenuItem>
-                            <MenuItem value={"RN"}>Rio Grande do Norte</MenuItem>
-                            <MenuItem value={"RS"}>Rio Grande do Sul</MenuItem>
-                            <MenuItem value={"RO"}>Rondônia</MenuItem>
-                            <MenuItem value={"RR"}>Roraima</MenuItem>
-                            <MenuItem value={"SC"}>Santa Catarina</MenuItem>
-                            <MenuItem value={"SP"}>São Paulo</MenuItem>
-                            <MenuItem value={"SE"}>Sergipe</MenuItem>
-                            <MenuItem value={"TO"}>Tocantins</MenuItem>
-                        </Select>
+                        <FormControl className={classes.formInput}>
+                            <InputLabel shrink htmlFor="estado">Estado</InputLabel>
+                            <Select readOnly value={values.estado} onChange={handleChange}
+                                inputProps={{
+                                    name: "estado",
+                                    id: "estado"
+                                }}
+                            >
+                                <MenuItem value={"AC"}>Acre</MenuItem>
+                                <MenuItem value={"AL"}>Alagoas</MenuItem>
+                                <MenuItem value={"AP"}>Amapá</MenuItem>
+                                <MenuItem value={"AM"}>Amazonas</MenuItem>
+                                <MenuItem value={"BA"}>Bahia</MenuItem>
+                                <MenuItem value={"CE"}>Ceará</MenuItem>
+                                <MenuItem value={"DF"}>Distrito Federal</MenuItem>
+                                <MenuItem value={"ES"}>Espírito Santo</MenuItem>
+                                <MenuItem value={"GO"}>Goiás</MenuItem>
+                                <MenuItem value={"MA"}>Maranhão</MenuItem>
+                                <MenuItem value={"MT"}>Mato Grosso</MenuItem>
+                                <MenuItem value={"MS"}>Mato Grosso do Sul</MenuItem>
+                                <MenuItem value={"MG"}>Minas Gerais</MenuItem>
+                                <MenuItem value={"PA"}>Pará</MenuItem>
+                                <MenuItem value={"PB"}>Paraíba</MenuItem>
+                                <MenuItem value={"PR"}>Paraná</MenuItem>
+                                <MenuItem value={"PE"}>Pernambuco</MenuItem>
+                                <MenuItem value={"PI"}>Piauí</MenuItem>
+                                <MenuItem value={"RJ"}>Rio de Janeiro</MenuItem>
+                                <MenuItem value={"RN"}>Rio Grande do Norte</MenuItem>
+                                <MenuItem value={"RS"}>Rio Grande do Sul</MenuItem>
+                                <MenuItem value={"RO"}>Rondônia</MenuItem>
+                                <MenuItem value={"RR"}>Roraima</MenuItem>
+                                <MenuItem value={"SC"}>Santa Catarina</MenuItem>
+                                <MenuItem value={"SP"}>São Paulo</MenuItem>
+                                <MenuItem value={"SE"}>Sergipe</MenuItem>
+                                <MenuItem value={"TO"}>Tocantins</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormHelperText className={classes.erro}>
+                            {errors.estado && (errors.estado)}
+                        </FormHelperText>
                     </Grid>
                 </Grid>
                 <Grid container direction="row-reverse" justify="space-around" alignItems="flex-end" spacing={1} >
