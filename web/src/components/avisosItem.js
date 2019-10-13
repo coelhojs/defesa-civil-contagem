@@ -14,7 +14,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ShareIcon from '@material-ui/icons/Share';
 import clsx from 'clsx';
 import moment from 'moment';
-import React, { useState } from "react";
+import * as React from 'react';
+import { useState } from "react";
 
 const useStyles = makeStyles(theme => ({
     card: {

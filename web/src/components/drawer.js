@@ -10,7 +10,8 @@ import FeedbackIcon from '@material-ui/icons/Feedback';
 import MapIcon from '@material-ui/icons/Map';
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import SettingsIcon from '@material-ui/icons/Settings';
-import React from 'react';
+import React, { Component } from 'react'
+
 import { Link as RouterLink } from 'react-router-dom';
 import Avisos from '../containers/Avisos';
 import { useAuth } from "../customHooks/useAuth";

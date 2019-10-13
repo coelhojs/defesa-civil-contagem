@@ -11,6 +11,7 @@
         "firebase": "^6.6.1",
         "fs": "0.0.1-security",
         "google-map-react": "^1.1.4",
+        "history": "^4.10.1",
         "leaflet": "^1.5.1",
         "lodash": "^4.17.15",
         "moment": "^2.24.0",

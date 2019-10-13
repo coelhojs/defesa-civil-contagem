@@ -3,9 +3,11 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from "react";
-import { useFetchAllAvisos } from '../controllers/Avisos';
+import * as React from 'react';
+import { useEffect, useState } from "react";
+import { fetchAllAvisos } from '../controllers/Avisos';
 import AvisosItem from './avisosItem';
+import { useAuth } from '../customHooks/useAuth';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,11 +20,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AvisosList() {
+    const auth = useAuth();
     const classes = useStyles();
-    const avisos = useFetchAllAvisos();
+    const [avisos, setAvisos] = useState([]);
     const [hasError, setErrors] = useState(false);
 
-    if (avisos) {
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetchAllAvisos(auth.apiKey);
+            setAvisos(response.data);
+        };
+        fetchData();
+    }, [avisos]);
+
+    if (avisos && avisos.length > 0) {
         return (
             <GridList cellHeight={180} className={classes.gridList}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>

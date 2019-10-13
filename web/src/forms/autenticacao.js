@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
+import * as React from 'react';
+import { createContext, useState } from "react";
 import Login from '../components/login';
 import Cadastro from './cadastro';
 
 const useStyles = makeStyles(theme => ({
-
 }));
-
 
 function AutenticacaoForm() {
     const classes = useStyles();

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react'
+
 import MaskedInput from 'react-text-mask';
 import PropTypes from 'prop-types';
 

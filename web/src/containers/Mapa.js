@@ -1,8 +1,8 @@
 //https://cherniavskii.com/using-leaflet-in-react-apps-with-react-hooks/
-import React, { useState, useEffect, useRef } from "react";
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import * as React from 'react';
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 
 const useStyles = makeStyles(theme => ({
     leafletContainer: {
