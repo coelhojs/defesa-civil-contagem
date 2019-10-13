@@ -5,18 +5,26 @@ import * as React from 'react';
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 
 const useStyles = makeStyles(theme => ({
-    leafletContainer: {
-        height: '400px',
+    container: {
+        height: '100%',
+        maxWidth: '100%',
+        paddingLeft: '0',
+        paddingRight: '0',
+    },
+    leafletMap: {
+        height: '100%',
         width: '100%'
     }
 }));
 
 export default function Mapa() {
     const classes = useStyles();
-    const center = [51.505, -0.09];
+    const center = [-19.9192192, -44.0927953];
+    //TODO: Usar as layers do google Maps
+    //TODO: Resolver problema do height do container
     return (
-        <Container maxWidth="lg" fixed>
-            <Map center={center} zoom={13} className={classes.leafletContainer}>
+        <Container maxWidth={false} fixed className={classes.container}>
+            <Map center={center} zoom={13} className={classes.leafletMap}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

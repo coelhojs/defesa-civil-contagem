@@ -6,8 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { fetchAllAvisos } from '../controllers/Avisos';
-import AvisosItem from './avisosItem';
 import { useAuth } from '../customHooks/useAuth';
+import AvisosItem from './avisosItem';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,7 +23,7 @@ export default function AvisosList() {
     const auth = useAuth();
     const classes = useStyles();
     const [avisos, setAvisos] = useState([]);
-    const [hasError, setErrors] = useState(false);
+    //const [hasError, setErrors] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,7 +31,7 @@ export default function AvisosList() {
             setAvisos(response.data);
         };
         fetchData();
-    }, [avisos]);
+    }, [avisos, auth.apiKey]);
 
     if (avisos && avisos.length > 0) {
         return (

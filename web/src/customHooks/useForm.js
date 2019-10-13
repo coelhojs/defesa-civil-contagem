@@ -16,7 +16,7 @@ export const useForm = (callback, inputs) => {
         ["email"]: auth.user.email
       });
     }
-  }, [auth.user]);
+  }, [auth.user, values]);
 
   const handleSubmit = event => {
     if (event) event.preventDefault();
@@ -26,8 +26,8 @@ export const useForm = (callback, inputs) => {
   const handleChange = event => {
     event.persist();
     if (
-      event.target.name == "nome" &&
-      !(/[a-zA-ZÀ-ÿ]/.test(event.target.value) || event.target.value == "")
+      event.target.name ===  "nome" &&
+      !(/[a-zA-ZÀ-ÿ]/.test(event.target.value) || event.target.value ===  "")
     )
       return;
     setValues(values => ({

@@ -6,13 +6,13 @@ import { Route, Switch } from "react-router-dom";
 import AppDrawer from './components/drawer';
 import Header from './components/header';
 import Avisos from "./containers/Avisos";
+import Cadastro from "./containers/Cadastro";
 import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
 import Mapa from "./containers/Mapa";
 import NotFound from "./containers/NotFound";
 import PrivateRoute from './containers/PrivateRoute';
 import { ProvideAuth } from "./customHooks/useAuth";
-import Cadastro from "./forms/cadastro";
 import fundo from "./img/background.png";
 
 const useStyles = makeStyles(theme => ({
@@ -26,8 +26,6 @@ const useStyles = makeStyles(theme => ({
   },
   main: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    marginBottom: '5rem'
   },
   toolbar: theme.mixins.toolbar
 }));

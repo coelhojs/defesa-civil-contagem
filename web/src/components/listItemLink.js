@@ -3,8 +3,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react'
-
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 export default function ListItemLink(props) {

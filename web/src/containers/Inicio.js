@@ -48,6 +48,11 @@ export default function Inicio() {
         login();
     }, [makeRequest]);
 
+    //TODO: Verificar se esse método é suficiente
+    if (auth.usuario) {
+        history.push('/Dashboard')
+    }
+
     return (
         <div className={classes.content}>
             <Card className={classes.card}>
