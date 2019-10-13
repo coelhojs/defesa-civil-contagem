@@ -63,6 +63,8 @@ export default function CadastroForm() {
     }
 
     return (
+        //TODO: Incluir máscaras nos inputs
+        //TODO: Refatorar validações se necessário
         <Paper className={classes.root}>
             <form onSubmit={handleSubmit}>
                 <Typography variant="h4" component="h2" className={classes.formHeader}>
