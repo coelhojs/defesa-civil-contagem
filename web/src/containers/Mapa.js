@@ -26,20 +26,33 @@ export default function Mapa() {
         return mapaContagem
     }
 
+    function onEachFeature(feature, layer) {
+        // does this feature have a property named popupContent?
+        if (feature.properties && feature.properties.popupContent) {
+            layer.bindPopup(feature.properties.popupContent);
+        }
+    }
+
+    function setStyles(feature) {
+        if (feature.properties.RO) {
+            return { fillColor: "#FF0000" }
+        }
+        return { fillColor: "#FF0000" }
+    }
     //TODO: Usar as layers do google Maps
     //TODO: Resolver problema do height do container
     return (
         <Container maxWidth={false} fixed className={classes.container}>
             <Map center={center} zoom={13} className={classes.leafletMap}>
-                {/* <TileLayer
+                <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                /> */}
-                <TileLayer url='http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+                />
+                {/* <TileLayer url='http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
                     maxZoom={20}
                     subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-                />
-                <GeoJSON data={getGeoJson()} />
+                /> */}
+                <GeoJSON data={getGeoJson()} style={setStyles} onEachFeature={onEachFeature} />
             </Map>
         </Container>
     )
