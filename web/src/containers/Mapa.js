@@ -2,7 +2,8 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { GeoJSON, Map, Marker, Popup, TileLayer, } from "react-leaflet";
+import { mapaContagem } from "../map"
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -20,18 +21,25 @@ const useStyles = makeStyles(theme => ({
 export default function Mapa() {
     const classes = useStyles();
     const center = [-19.9192192, -44.0927953];
+
+    function getGeoJson() {
+        return mapaContagem
+    }
+
     //TODO: Usar as layers do google Maps
     //TODO: Resolver problema do height do container
     return (
         <Container maxWidth={false} fixed className={classes.container}>
             <Map center={center} zoom={13} className={classes.leafletMap}>
-                <TileLayer
+                {/* <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                /> */}
+                <TileLayer url='http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+                    maxZoom={20}
+                    subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
                 />
-                <Marker position={center}>
-                    <Popup>A simple popup</Popup>
-                </Marker>
+                <GeoJSON data={getGeoJson()} />
             </Map>
         </Container>
     )
