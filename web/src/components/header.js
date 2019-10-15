@@ -13,9 +13,12 @@ const useStyles = makeStyles(theme => ({
         zIndex: theme.zIndex.drawer + 1,
         backgroundColor: "#f46524",
     },
+    toolBar: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
     link: {
         color: 'white',
-        // fontFamily: 'Lucida Bright',
     }
 }));
 
@@ -26,7 +29,7 @@ export default function Header(props) {
     if (auth.user) {
         return (
             <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
+                <Toolbar className={classes.toolBar}>
                     <Typography variant="h6" noWrap>
                         <Link component={RouterLink} to="/" className={classes.link}>
                             Defesa Civil de Contagem

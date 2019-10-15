@@ -10,7 +10,8 @@ import Select from '@material-ui/core/Select';
 import Send from '@material-ui/icons/Send';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
-import React from 'react';
+import React, { Component } from 'react'
+
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from "../customHooks/useForm";
 import ListaImagem from "./listaImagem";

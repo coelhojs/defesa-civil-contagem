@@ -7,7 +7,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import "firebase/auth";
-import React from 'react';
+import React, { Component } from 'react'
+
 import { useAuth } from "../customHooks/useAuth";
 import { useForm } from "../customHooks/useForm";
 

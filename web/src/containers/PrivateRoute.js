@@ -1,8 +1,9 @@
+import "firebase/auth";
 import React from 'react';
 import { Route, useHistory } from "react-router-dom";
-import { useAuth } from '../customHooks/useAuth';
+import { useAuth } from "../customHooks/useAuth";
 
-export default function Cadastro({ children, ...rest }) {
+export default function PrivateRoute({ children, ...rest }) {
     const auth = useAuth();
     const history = useHistory();
 
@@ -15,4 +16,4 @@ export default function Cadastro({ children, ...rest }) {
         history.push('/');
         return null
     };
-};
+}

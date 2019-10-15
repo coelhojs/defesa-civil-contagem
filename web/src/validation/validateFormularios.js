@@ -1,13 +1,11 @@
-import { cepApi } from "../controllers";
-
-const required = value => (value ? undefined : " Campo obrigatório");
+//const required = value => (value ? undefined : " Campo obrigatório");
 
 const defLength = (value, length) =>
-  value && value.length != length
+  value && value.length !==  length
     ? ` Este campo deve ter ${length} digitos ${value.length}`
     : undefined;
-const maxLength = (value, max) =>
-  value && value.length > max ? ` Máximo de ${max} digitos` : undefined;
+// const maxLength = (value, max) =>
+//   value && value.length > max ? ` Máximo de ${max} digitos` : undefined;
 const minLength = (value, min) =>
   value && value.length < min ? ` Mínimo de ${min} digitos` : undefined;
 
@@ -15,7 +13,7 @@ const Limite = (value, min, max) =>
   value && (value < min || value > max) ? ` Deve estar entre ${min} e ${max}` : undefined;
 
 const nameText = value =>
-  value && !/[a-zA-ZÀ-ÿ]+\ +[a-zA-ZÀ-ÿ]/.test(value)
+  value && !/[a-zA-ZÀ-ÿ] +[a-zA-ZÀ-ÿ]/.test(value)
     ? " Deve digitar o nome completo"
     : undefined;
 const email = value =>
@@ -33,8 +31,8 @@ const cpf = value => {
 
   Resto = (Soma * 10) % 11;
 
-  if (Resto == 10 || Resto == 11) Resto = 0;
-  if (Resto != parseInt(value.substring(9, 10))) return "CPF invalido";
+  if (Resto === 10 || Resto === 11) Resto = 0;
+  if (Resto !==  parseInt(value.substring(9, 10))) return "CPF invalido";
 
   Soma = 0;
   for (i = 1; i <= 10; i++)
@@ -42,8 +40,8 @@ const cpf = value => {
 
   Resto = (Soma * 10) % 11;
 
-  if (Resto == 10 || Resto == 11) Resto = 0;
-  if (Resto != parseInt(value.substring(10, 11))) return "CPF invalido";
+  if (Resto === 10 || Resto === 11) Resto = 0;
+  if (Resto !==  parseInt(value.substring(10, 11))) return "CPF invalido";
 
   return undefined;
 };
@@ -148,7 +146,7 @@ function VerificaCEP(value) {
   //let endereco = {logradouro:'', bairro: '', cidade: '', estado: ''};
   let cepValue = value.replace(/\D/g, "");
 
-  if (cepValue.length == 8) {
+  if (cepValue.length === 8) {
     const https = require("https");
 
     https

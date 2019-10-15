@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from 'react';
 import { geolocated } from "react-geolocated";
 
 class Geolocation extends React.Component {

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useAuth } from "../customHooks/useAuth";
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import history from '../history';
+import { makeStyles } from '@material-ui/core/styles';
+import * as React from 'react';
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../customHooks/useAuth";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignOutBtn(props) {
+    let history = useHistory();
     const classes = useStyles();
     const auth = useAuth();
 

@@ -1,9 +1,16 @@
 // Hook (use-auth.js)
-import history from '../history';
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import * as React from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { api } from "../controllers/index";
+import createPersistedState from 'use-persisted-state';
+
+//Estados que devem ser persistidos entre tabs e refreshes
+const useUserState = createPersistedState('user');
+const useUsuarioState = createPersistedState('usuario');
+const useApiKeyState = createPersistedState('apiKey');
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -40,12 +47,15 @@ export const useAuth = () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
+  let history = useHistory();
+
   //user = autenticacao Google
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useUserState(null);
   //usuario = autenticacao Aplicação  
-  const [usuario, setUsuario] = useState(null);
+  const [usuario, setUsuario] = useUsuarioState(null);
   const [idToken, setIdToken] = useState(null);
-  const [apiKey, setApiKey] = useState(null);
+  const [apiKey, setApiKey] = useApiKeyState(null);
+  const [showWarning, setShowWarning] = useState(false);
 
   const loginUsuario = async () => {
     return login()
@@ -58,8 +68,7 @@ function useProvideAuth() {
             }
           })
           .then(function (response) {
-            console.log(response)
-            if (response.data.mensagem == "Usuário não cadastrado") {
+            if (response.data.mensagem === "Usuário não cadastrado") {
               history.push('/Cadastro');
             } else {
               setApiKey(response.data.api_key);
@@ -77,6 +86,7 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
+        setUser(response.user)
         return response.credential.idToken;
       });
   };
@@ -160,6 +170,10 @@ function useProvideAuth() {
       });
   };
 
+  const toggleShowWarning = () => {
+    setShowWarning(!showWarning);
+  }
+
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
@@ -186,9 +200,11 @@ function useProvideAuth() {
     apiKey,
     login,
     loginUsuario,
+    showWarning,
     signup,
     signout,
     sendPasswordResetEmail,
+    toggleShowWarning,
     confirmPasswordReset
   };
 }
