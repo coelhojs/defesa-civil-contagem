@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:defesa_civil/helpers/constants.dart';
-import 'package:defesa_civil/helpers/size_config.dart';
-import 'package:defesa_civil/ui/logged/registraraviso.dart';
+import 'package:defesa_civil/models/size_config.dart';
+import 'package:defesa_civil/screens/registered/registraraviso.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,7 +21,7 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
   String api_key;
   Future<List> avisos;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   Future<List> _getAvisos() async {
     http.Response response;
@@ -53,9 +53,10 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
-        onPressed: () {
-          Navigator.of(context).push(
+        onPressed: () async {
+          var teste = await Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => RegistroAviso(api_key)));
+          print(teste);
         },
         child: Icon(Feather.getIconData("plus")),
       ),
@@ -73,12 +74,13 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
             FutureBuilder(
                 future: avisos,
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done)
+                  if (snapshot.connectionState != ConnectionState.done) {
                     return _carregandoIncidentes();
-                  else if (snapshot.hasError)
+                  } else if (snapshot.hasError) {
                     return _textoCentralizado("Houve um erro ao carregar :(");
-                  else
+                  } else {
                     return _createListaIncidente(snapshot);
+                  }
                 })
           ],
         ),
@@ -114,29 +116,32 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
                                     snapshot.data[index]['fotos'][0]['url']),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState !=
-                                      ConnectionState.done)
+                                      ConnectionState.done) {
                                     return Container(
                                       width:
-                                      SizeConfig.blockSizeHorizontal * 20,
+                                          SizeConfig.blockSizeHorizontal * 20,
                                       height:
-                                      SizeConfig.blockSizeHorizontal * 20,
+                                          SizeConfig.blockSizeHorizontal * 20,
                                       child: Center(
                                         child: CircularProgressIndicator(),
                                       ),
                                     );
-                                  else {
+                                  } else {
                                     return Container(
-                                      width:
-                                      SizeConfig.blockSizeHorizontal * 20,
-                                      height:
-                                      SizeConfig.blockSizeHorizontal * 20,
-                                      child: ClipRRect(
-                                        borderRadius: new BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15), ),
-                                        child: Image.memory(snapshot.data,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      )
-                                    );
+                                        width:
+                                            SizeConfig.blockSizeHorizontal * 20,
+                                        height:
+                                            SizeConfig.blockSizeHorizontal * 20,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(15),
+                                            bottomLeft: Radius.circular(15),
+                                          ),
+                                          child: Image.memory(
+                                            snapshot.data,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ));
                                   }
                                 },
                               ),
@@ -167,30 +172,36 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
 
   Widget _textoCentralizado(String text) {
     return Expanded(
-      child: RefreshIndicator(
+      child: Container(
+        alignment: Alignment.center,
+        child: RefreshIndicator(
           onRefresh: _refresh,
           child: ListView(
-            //physics: AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeHorizontal * 50,
-                    horizontal: SizeConfig.blockSizeHorizontal * 20),
+              Container(
+                //width: 200,
+                height: SizeConfig.blockSizeVertical > 6
+                    ? SizeConfig.blockSizeVertical * 70
+                    : SizeConfig.blockSizeVertical * 60,
+                alignment: Alignment.center,
                 child: Text(
                   text,
-                  style:
-                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 5),
+                  style: TextStyle(
+                      fontSize: SizeConfig.safeBlockHorizontal * 5,
+                      color: Colors.black87),
                 ),
               )
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 
   Widget _carregandoIncidentes() {
     return Expanded(
         child: Stack(
-      //mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Positioned.fill(
           child: Align(
@@ -218,7 +229,7 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
     return avisos;
   }
 
-  getCredentials() async {
+  void getCredentials() async {
     userData = await SharedPreferences.getInstance();
     setState(() {
       api_key = userData.getString('api_key');

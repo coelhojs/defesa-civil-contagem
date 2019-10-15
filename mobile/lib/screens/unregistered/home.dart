@@ -1,4 +1,4 @@
-import 'package:defesa_civil/ui/mappage.dart';
+import 'package:defesa_civil/screens/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
 
@@ -24,19 +24,25 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Color.fromRGBO(246, 129, 33, 1),
         currentIndex: _currentIndex, //
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
-        },// this will be set when a new tab is tapped
+        }, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: new Icon(Feather.getIconData("map")),
-            title: new Text('Areas', style: TextStyle(fontWeight: FontWeight.w500),),
+            icon: Icon(Feather.getIconData("map")),
+            title: Text(
+              'Areas',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Feather.getIconData("user")),
-            title: new Text('Login', style: TextStyle(fontWeight: FontWeight.w500),),
+            icon: Icon(Feather.getIconData("user")),
+            title: Text(
+              'Login',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
           ),
         ],
       ),

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:defesa_civil/helpers/constants.dart';
-import 'package:defesa_civil/helpers/size_config.dart';
+import 'package:defesa_civil/models/size_config.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,20 +63,20 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     Dio dio = new Dio();
     response = await dio
         .post(url,
-        data: jsonEncode({
-          "tipo": "$_incidenteAtual",
-          "descricao": "${descController.text}",
-          "coordenadas": {
-            "latitude": position.latitude,
-            "longitude": position.longitude
-          },
-          "local":
-          "${endController.text}, ${numController.text} - ${bairroController.text}"
-        }),
-        options: Options(headers: {"authorization": "Bearer $api_key"}))
+            data: jsonEncode({
+              "tipo": "$_incidenteAtual",
+              "descricao": "${descController.text}",
+              "coordenadas": {
+                "latitude": position.latitude,
+                "longitude": position.longitude
+              },
+              "local":
+                  "${endController.text}, ${numController.text} - ${bairroController.text}"
+            }),
+            options: Options(headers: {"authorization": "Bearer $api_key"}))
         .then((sucess) async {
-          print(sucess.data);
-          await uploadFoto(imageFile, sucess.data['id']);
+      print(sucess.data);
+      await uploadFoto(imageFile, sucess.data['id']);
       return sucess.data;
     }).catchError((e) {
       print(e.response.data);
@@ -138,7 +138,10 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.done)
                         return AlertDialog(
-                          title: Text("Enviando", style: _textoNegrito(),),
+                          title: Text(
+                            "Enviando",
+                            style: _textoNegrito(),
+                          ),
                           content: Row(
                             children: <Widget>[
                               CircularProgressIndicator(
@@ -148,13 +151,19 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                               ),
-                              Text("Enviando aviso", style: _texto(),)
+                              Text(
+                                "Enviando aviso",
+                                style: _texto(),
+                              )
                             ],
                           ),
                         );
                       if (snapshot.hasError) {
                         return AlertDialog(
-                          title: Text("Erro", style: _textoNegrito(),),
+                          title: Text(
+                            "Erro",
+                            style: _textoNegrito(),
+                          ),
                           content: Row(
                             children: <Widget>[
                               Icon(
@@ -165,7 +174,10 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                               ),
-                              Text("Houve um erro ao carregar", style: _texto(),)
+                              Text(
+                                "Houve um erro ao carregar",
+                                style: _texto(),
+                              )
                             ],
                           ),
                         );
@@ -183,7 +195,8 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                               ),
                               Flexible(
-                                child: Text("Aviso enviado com sucesso", style: _texto()),
+                                child: Text("Aviso enviado com sucesso",
+                                    style: _texto()),
                               )
                             ],
                           ),
@@ -353,12 +366,17 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     );
   }
 
-  _textoNegrito(){
-    return TextStyle(fontWeight: FontWeight.bold, fontSize: SizeConfig.blockSizeHorizontal * 6);
+  _textoNegrito() {
+    return TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: SizeConfig.blockSizeHorizontal * 6);
   }
 
-  _texto(){
-    return TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: SizeConfig.blockSizeHorizontal * 4.5);
+  _texto() {
+    return TextStyle(
+        color: Colors.black54,
+        fontWeight: FontWeight.w500,
+        fontSize: SizeConfig.blockSizeHorizontal * 4.5);
   }
 
   Widget _imagemQuadrada(int imageNumber, BuildContext context) {

@@ -9,9 +9,10 @@ class Usuario {
   Endereco endereco;
   String tipo;
 
-  Usuario(){
-    nome="Nome";
-    imagem= "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png";
+  Usuario() {
+    nome = "Nome";
+    imagem =
+        "https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png";
     email = "Email";
     cpf = "CPF";
     telefone = "Telefone";
@@ -54,7 +55,7 @@ class Endereco {
   int numero;
   String complemento;
 
-  Endereco(){
+  Endereco() {
     cep = "CEP";
     logradouro = "Logradouro";
     bairro = "Bairro";

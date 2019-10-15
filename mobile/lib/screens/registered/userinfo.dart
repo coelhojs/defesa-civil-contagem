@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:defesa_civil/helpers/size_config.dart';
-import 'package:defesa_civil/helpers/usuario.dart';
+import 'package:defesa_civil/models/size_config.dart';
+import 'package:defesa_civil/models/usuario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
@@ -43,59 +43,60 @@ class _UserInfoState extends State<UserInfo> {
             children: <Widget>[
               Center(
                   child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 3,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                          ),
-                          FutureBuilder(
-                            future: _loadImage(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done)
-                                return Container(
-                                  width: SizeConfig.blockSizeHorizontal * 20,
-                                  height: SizeConfig.blockSizeHorizontal * 20,
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              else {
-                                return Container(
-                                  width: SizeConfig.blockSizeHorizontal * 20,
-                                  height: SizeConfig.blockSizeHorizontal * 20,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: MemoryImage(snapshot.data),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 10),
-                          ),
-                          Text(
-                            usuario.nome,
-                            style: TextStyle(
-                                fontSize: SizeConfig.blockSizeHorizontal * 6,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(usuario.email)
-                        ],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                elevation: 3,
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
                       ),
-                    ),
-                  )),
-              Padding(padding: EdgeInsets.symmetric(vertical: 10),),
+                      FutureBuilder(
+                        future: _loadImage(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState != ConnectionState.done)
+                            return Container(
+                              width: SizeConfig.blockSizeHorizontal * 20,
+                              height: SizeConfig.blockSizeHorizontal * 20,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          else {
+                            return Container(
+                              width: SizeConfig.blockSizeHorizontal * 20,
+                              height: SizeConfig.blockSizeHorizontal * 20,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: MemoryImage(snapshot.data),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                      ),
+                      Text(
+                        usuario.nome,
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 6,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(usuario.email)
+                    ],
+                  ),
+                ),
+              )),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+              ),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -114,12 +115,13 @@ class _UserInfoState extends State<UserInfo> {
                       ),
                       _texto("CPF: ", usuario.cpf),
                       _texto("Telefone: ", usuario.telefone)
-
                     ],
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.symmetric(vertical: 10),),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+              ),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -146,7 +148,7 @@ class _UserInfoState extends State<UserInfo> {
                       _texto("Estado: ", usuario.endereco.uf),
                       usuario.endereco.complemento.isNotEmpty
                           ? _texto(
-                          "Complemento: ", usuario.endereco.complemento)
+                              "Complemento: ", usuario.endereco.complemento)
                           : Container()
                     ],
                   ),
@@ -176,7 +178,6 @@ class _UserInfoState extends State<UserInfo> {
         },
         icon: Icon(Feather.getIconData("edit")),
         label: Text(
-          
           "Editar",
           style: TextStyle(color: Colors.white),
         ),
@@ -188,25 +189,28 @@ class _UserInfoState extends State<UserInfo> {
   Widget _texto(String texto1, String texto2) {
     return RichText(
       text: TextSpan(
-        style: DefaultTextStyle
-            .of(context)
-            .style,
+        style: DefaultTextStyle.of(context).style,
         children: <TextSpan>[
           TextSpan(text: texto1, style: _estiloTextoNegrito()),
-          TextSpan(text: texto2, style: _estiloTexto(),),
+          TextSpan(
+            text: texto2,
+            style: _estiloTexto(),
+          ),
         ],
       ),
     );
   }
 
   _estiloTexto() {
-    return TextStyle(color: Colors.black54,
+    return TextStyle(
+        color: Colors.black54,
         fontSize: SizeConfig.blockSizeHorizontal * 4,
         fontWeight: FontWeight.w500);
   }
 
   _estiloTextoNegrito() {
-    return TextStyle(fontWeight: FontWeight.bold,
+    return TextStyle(
+        fontWeight: FontWeight.bold,
         fontSize: SizeConfig.blockSizeHorizontal * 4);
   }
 

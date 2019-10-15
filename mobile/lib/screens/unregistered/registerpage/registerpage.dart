@@ -1,21 +1,19 @@
-import 'dart:convert';
-
-import 'package:defesa_civil/helpers/cepvalidator.dart';
-import 'package:defesa_civil/helpers/constants.dart';
-import 'package:defesa_civil/helpers/usuario.dart';
-import 'package:defesa_civil/ui/logged/homelogged.dart';
-import 'package:dio/dio.dart';
+import 'package:defesa_civil/components/dialog.dart';
+import 'package:defesa_civil/services/cepvalidator.dart';
+import 'package:defesa_civil/models/usuario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import '../../../services/registrarUsrApi.dart';
 
-import '../../helpers/size_config.dart';
+import '../../../models/size_config.dart';
+import 'components/dialog.dart';
 
 class RegisterPage extends StatefulWidget {
+  RegisterPage(this.name, this.email, this.image, this.token);
+
   String name;
   String email;
   String image;
@@ -24,12 +22,12 @@ class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() =>
       _RegisterPageState(name, email, image, token);
-
-  RegisterPage(this.name, this.email, this.image, this.token);
 }
 
 class _RegisterPageState extends State<RegisterPage>
     with SingleTickerProviderStateMixin {
+  _RegisterPageState(this.name, this.email, this.image, this.token);
+
   SharedPreferences userData;
   TabController _tabController;
 
@@ -37,7 +35,8 @@ class _RegisterPageState extends State<RegisterPage>
   Endereco enderecoUsuario = Endereco();
   Map<String, dynamic> detalhesEndereco = {};
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   MaskedTextController cepController = MaskedTextController(mask: '00000-000');
   MaskedTextController cpfController =
@@ -62,37 +61,18 @@ class _RegisterPageState extends State<RegisterPage>
   int _enderecoState = 0;
   String endereco = "CEP Inválido";
 
-  _RegisterPageState(this.name, this.email, this.image, this.token);
+
 
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(vsync: this, length: 2);
-    //_tabController.animateTo(1);
-    getCredentials();
+    _tabController = TabController(vsync: this, length: 2);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
-  }
-
-  Future<Map<String, dynamic>> _registrarUsuario(Map dados) async {
-    var response;
-    var url = '$REQ/auth/google/cadastro';
-    Dio dio = new Dio();
-    response = await dio
-        .post(url,
-            data: jsonEncode(dados),
-            options: Options(headers: {"authorization": "Bearer $token"}))
-        .then((sucess) {
-      return sucess.data;
-    }).catchError((e) {
-      return e.response.data;
-    });
-
-    return response;
   }
 
   @override
@@ -103,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage>
       child: Scaffold(
         key: _scaffoldKey,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
+          onPressed: () {
             if (_tabController.index == 0) {
               if (_keyValidaForm1.currentState.validate()) {
                 _tabController.animateTo(_tabController.index + 1);
@@ -128,76 +108,32 @@ class _RegisterPageState extends State<RegisterPage>
                     context: context,
                     builder: (context) {
                       return FutureBuilder(
-                        future: _registrarUsuario(novoUsuario.toJson()),
+                        future: registrarUsuario(novoUsuario.toJson(), token),
                         builder: (context, snapshot) {
-                          if (snapshot.connectionState != ConnectionState.done)
-                            return AlertDialog(
-                              title: Text("Registrando"),
-                              content: Row(
-                                children: <Widget>[
-                                  CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Color.fromRGBO(246, 129, 33, 1)),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                  ),
-                                  Text("Registrando novo usuário")
-                                ],
-                              ),
-                            );
+                          if (snapshot.connectionState !=
+                              ConnectionState.done) {
+                            return dialog(
+                                "Registrando", "Registrando novo usuário",
+                                carregando: true);
+                          }
                           if (snapshot.hasError) {
-                            return AlertDialog(
-                              title: Text("Erro"),
-                              content: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.close,
-                                    color: Colors.red,
-                                    size: 40,
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                  ),
-                                  Text("Houve um erro ao registrar")
-                                ],
-                              ),
-                            );
+                            return dialog("Erro", "Houve um erro ao registrar",
+                                icone: Icons.close, cor: Colors.red);
                           } else {
                             if (snapshot.data['api_key'] != null) {
                               setCredentials(snapshot.data['api_key']);
-                              print(userData.getString('api_key'));
-                              print(snapshot.data['api_key']);
                             }
                             return snapshot.data['api_key'] != null
-                                ? _sucessFail(true)
-                                : _sucessFail(false);
+                                ? sucessFail(
+                                    true, "Usuário registrado", context)
+                                : sucessFail(
+                                    false,
+                                    snapshot.data['mensagem_amigavel'],
+                                    context);
                           }
                         },
                       );
                     });
-
-                /*var url = '$REQ/auth/google/cadastro';
-                var response = await http.post(url,
-                    headers: {"authorization": "Bearer $token"},
-                    body: jsonEncode(novoUsuario.toJson()));
-                var responseDecoded = json.decode(response.body);
-
-                if (response.statusCode == 200) {
-                  setCredentials(responseDecoded['api_key']);
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => HomeLogged()),
-                      (Route<dynamic> route) => false);
-                } else if (responseDecoded['mensagem'] ==
-                    'Usuário já cadastrado') {
-                  _scaffoldKey.currentState.showSnackBar(new SnackBar(
-                    content: new Text("Usuário já está cadastrado"),
-                    duration: Duration(seconds: 3),
-                    backgroundColor: Colors.red,
-                  ));
-                }*/
               }
             }
           },
@@ -234,8 +170,9 @@ class _RegisterPageState extends State<RegisterPage>
                       ),
                       TextFormField(
                         onChanged: (value) {
-                          if (value.length == 14)
+                          if (value.length == 14) {
                             FocusScope.of(context).requestFocus(focusTel);
+                          }
                         },
                         autofocus: true,
                         controller: cpfController,
@@ -248,13 +185,15 @@ class _RegisterPageState extends State<RegisterPage>
                           labelText: 'CPF:',
                         ),
                         validator: (value) {
-                          if (value.isEmpty)
+                          if (value.isEmpty) {
                             return "Insira o CPF";
-                          else if (value.length != 14)
+                          } else if (value.length != 14) {
                             return "O tamanho do CPF são 11 dígitos";
-                          else if (!validarCPF(
-                              value.replaceAll('.', '').replaceAll('-', '')))
+                          } else if (!validarCPF(
+                              value.replaceAll('.', '').replaceAll('-', ''))) {
                             return "CPF Inválido";
+                          }
+                          return "Erro";
                         },
                       ),
                       Padding(
@@ -272,10 +211,12 @@ class _RegisterPageState extends State<RegisterPage>
                           labelText: 'Telefone:',
                         ),
                         validator: (value) {
-                          if (value.isEmpty)
+                          if (value.isEmpty) {
                             return "Insira o Telefone";
-                          else if (value.length != 14)
+                          } else if (value.length != 14) {
                             return "O tamanho do telefone são 11 dígitos";
+                          }
+                          return "Erro";
                         },
                       ),
                     ],
@@ -310,12 +251,7 @@ class _RegisterPageState extends State<RegisterPage>
                             });
                             detalhesEndereco['logradouro'] =
                                 "CEP não encontrado";
-                            var url =
-                                'https://viacep.com.br/ws/${value.replaceAll('-', '')}/json/';
-                            var response = await http.get(url);
-                            print('Response status: ${response.statusCode}');
-                            var responseDecoded = json.decode(response.body);
-                            print('Response body: ${response.body}');
+                            Map responseDecoded = await getCep(value);
                             if (responseDecoded['logradouro'] != null) {
                               detalhesEndereco = {
                                 "cep": responseDecoded['cep'],
@@ -324,9 +260,10 @@ class _RegisterPageState extends State<RegisterPage>
                                 "cidade": responseDecoded['localidade'],
                                 "uf": responseDecoded['uf'],
                               };
-                            } else if (responseDecoded['erro'])
+                            } else if (responseDecoded['erro']) {
                               detalhesEndereco['logradouro'] =
                                   "CEP não encontrado";
+                            }
                             setState(() {
                               _enderecoState = 2;
                             });
@@ -342,12 +279,14 @@ class _RegisterPageState extends State<RegisterPage>
                           labelText: 'CEP:',
                         ),
                         validator: (value) {
-                          if (value.isEmpty)
+                          if (value.isEmpty) {
                             return "Insira o CEP";
-                          else if (value.length != 9)
+                          } else if (value.length != 9) {
                             return "O tamanho do CEP são 8 dígitos";
-                          else if (endereco == "CEP não encontrado")
+                          } else if (endereco == "CEP não encontrado") {
                             return "CEP não encontrado";
+                          }
+                          return "Erro";
                         },
                       ),
                       Padding(
@@ -384,7 +323,10 @@ class _RegisterPageState extends State<RegisterPage>
                                 labelText: 'Nº:',
                               ),
                               validator: (value) {
-                                if (value.isEmpty) return "Insira o número";
+                                if (value.isEmpty) {
+                                  return "Insira o número";
+                                }
+                                return "Erro";
                               },
                             ),
                           ),
@@ -406,7 +348,7 @@ class _RegisterPageState extends State<RegisterPage>
   }
 
   Widget _createEndereco() {
-    if (_enderecoState == 0)
+    if (_enderecoState == 0) {
       return Container(
         child: Column(
           children: <Widget>[
@@ -417,71 +359,24 @@ class _RegisterPageState extends State<RegisterPage>
           ],
         ),
       );
-    else if (_enderecoState == 1) {
+    } else if (_enderecoState == 1) {
       return CircularProgressIndicator();
     } else if (_enderecoState == 2) {
-      return Text(detalhesEndereco['logradouro']);
+      print(detalhesEndereco);
+      return Column(
+        children: <Widget>[
+          Text(detalhesEndereco["logradouro"]),
+          Text(detalhesEndereco["bairro"]),
+          Text(detalhesEndereco["cidade"]),
+          Text(detalhesEndereco["uf"])
+        ],
+      );
     }
   }
 
-  Widget _sucessFail(bool sucess) {
-    return sucess
-        ? AlertDialog(
-            title: Text("Sucesso"),
-            content: Row(
-              children: <Widget>[
-                Icon(
-                  Icons.check,
-                  color: Colors.green,
-                  size: 40,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                ),
-                Text("Usuário registrado")
-              ],
-            ),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => HomeLogged()),
-                        (Route<dynamic> route) => false);
-                  },
-                  child: Text('Continuar')),
-            ],
-          )
-        : AlertDialog(
-            title: Text("Erro"),
-            content: Row(
-              children: <Widget>[
-                Icon(
-                  Icons.close,
-                  color: Colors.red,
-                  size: 40,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                ),
-                Text("Usuário já está registrado")
-              ],
-            ),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                  },
-                  child: Text('Fechar')),
-            ],
-          );
-  }
-
-  setCredentials(String api_key) async {
+  void setCredentials(String api_key) async {
+    userData = await SharedPreferences.getInstance();
     userData.setString("usuario", novoUsuario.toString());
     userData.setString("api_key", api_key);
-  }
-
-  getCredentials() async {
-    userData = await SharedPreferences.getInstance();
   }
 }

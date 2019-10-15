@@ -1,6 +1,6 @@
-import 'package:defesa_civil/ui/logged/relatarincidente.dart';
-import 'package:defesa_civil/ui/logged/userinfo.dart';
-import 'package:defesa_civil/ui/mappage.dart';
+import 'package:defesa_civil/screens/registered/relatarincidente.dart';
+import 'package:defesa_civil/screens/registered/userinfo.dart';
+import 'package:defesa_civil/screens/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,14 +11,13 @@ class HomeLogged extends StatefulWidget {
 }
 
 class _HomeLoggedState extends State<HomeLogged> {
-
   @override
   void initState() {
     getCredentials();
   }
 
   int _currentIndex = 0;
-  final List<Widget> _children = [MapPage(), RelatarIncidente(),UserInfo()];
+  final List<Widget> _children = [MapPage(), RelatarIncidente(), UserInfo()];
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +37,26 @@ class _HomeLoggedState extends State<HomeLogged> {
         }, // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            activeIcon: Icon(Feather.getIconData("map"), color: Color.fromRGBO(246, 129, 33, 1),),
-            icon: new Icon(Feather.getIconData("map"),),
-
+            activeIcon: Icon(
+              Feather.getIconData("map"),
+              color: Color.fromRGBO(246, 129, 33, 1),
+            ),
+            icon: new Icon(
+              Feather.getIconData("map"),
+            ),
             title: new Text(
               'Areas',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
           BottomNavigationBarItem(
-            activeIcon: Icon(Feather.getIconData("message-square"), color: Color.fromRGBO(246, 129, 33, 1),),
-            icon: new Icon(Feather.getIconData("message-square"),),
-
+            activeIcon: Icon(
+              Feather.getIconData("message-square"),
+              color: Color.fromRGBO(246, 129, 33, 1),
+            ),
+            icon: new Icon(
+              Feather.getIconData("message-square"),
+            ),
             title: new Text(
               'Relatar',
               style: TextStyle(fontWeight: FontWeight.w500),
@@ -67,7 +74,7 @@ class _HomeLoggedState extends State<HomeLogged> {
     );
   }
 
-  getCredentials()async {
+  getCredentials() async {
     SharedPreferences userData = await SharedPreferences.getInstance();
   }
 }
