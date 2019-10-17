@@ -30,7 +30,7 @@ require('dotenv').config({ path: '.env' });
 process.env.NODE_ENV = 'development';
 process.env.DB_HOST = 'Local';
 
-const HOST = 'http://localhost:3001';
+const HOST = 'http://localhost:'+process.env.PORT;
 
 const faker = require('faker');
 const fs = require('fs-extra');
@@ -86,7 +86,7 @@ beforeAll(async done => {
 	await db.init();
 	await db.mongoose.connection.dropDatabase();
 	fs.removeSync('./files');
-	server.listen(process.env.PORTA || 3001, done);
+	server.listen(process.env.PORT || 3001, done);
 });
 
 afterAll(async done => {

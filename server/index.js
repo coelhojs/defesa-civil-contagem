@@ -4,7 +4,7 @@ const server = require('./server');
 const moment = require('moment');
 const db = require('./database');
 
-const PORTA = process.env.PORTA || 3001;
+const PORTA = process.env.PORT || 3001;
 
 function now() {
     return moment().format();
