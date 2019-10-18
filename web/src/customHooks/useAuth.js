@@ -147,8 +147,11 @@ function useProvideAuth() {
       .auth()
       .signOut()
       .then(() => {
-        setUser(false);
-        setUsuario(false);
+        setIdToken(null);
+        setApiKey(null);
+        setUsuario(null);
+        // setUser(false);
+        // setUsuario(false);
       });
   };
 

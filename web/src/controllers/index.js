@@ -11,3 +11,6 @@ export const api = create({
      //baseURL: "http://192.168.43.196:3001"
     // baseURL: "http://192.168.137.94:3001"
 })
+export const localdb = create({
+    baseURL: "http://localhost:3004"
+})
