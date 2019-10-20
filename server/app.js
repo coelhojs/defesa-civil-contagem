@@ -19,6 +19,9 @@ app.use(bodyparser.urlencoded({ extended: false }));
 // Login e Cadastro:
 app.use('/auth/google', require('./auth/google'));
 
+// Notícias:
+app.use('/noticias', require('./routes/noticias.rotas.js'));
+
 // Controle de todas as rotas de acesso:
 app.use('/acesso/*', auth.acesso);
 

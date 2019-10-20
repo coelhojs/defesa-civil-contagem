@@ -26,8 +26,17 @@ exports.obter_foto = async (req, res, next) => {
 		let user_dir = path.join(__dirname, `../files/${req.user.id}`);
 		// Diretório do aviso:
 		let files_dir = `${user_dir}/${req.aviso.id}`;
+
+		let foto = await Foto.findById(req.params.id);
+		if (!foto) throw new AppError({
+			http_cod: 401,
+			mensagem: 'Foto Inexistente',
+			mensagem_amigavel: this.mensagem,
+		});
+
 		// Caminho do arquivo de imagem:
-		let img = `${files_dir}/${req.params.arquivo}.jpg`;
+		let img = `${files_dir}/${foto.filename}`;
+
 		res.status(200).sendFile(img);
 	} catch (ex) {
 		next(new AppError({

@@ -79,7 +79,7 @@ function gerarAviso() {
 }
 
 // Objetos dos modelos
-var usuario, aviso, fotos;
+var usuario, aviso, fotos = [];
 var reqConfig; // Configuração da request (com o header e authorization)
 
 beforeAll(async done => {
@@ -90,10 +90,10 @@ beforeAll(async done => {
 });
 
 afterAll(async done => {
-	await server.close();
-	await db.mongoose.disconnect();
-	fs.removeSync('./files');
-	done();
+	//await server.close();
+	//await db.mongoose.disconnect();
+	//fs.removeSync('./files');
+	//done();
 });
 
 // Via rota /dev
@@ -170,6 +170,7 @@ describe('Criação de um aviso', () => {
 			expect(res.data).toHaveProperty('horario');
 			expect(res.data).toHaveProperty('aviso_id');
 			expect(fs.existsSync('./files/' + usuario.id + '/' + aviso.id + '/' + res.data.filename)).toBeTruthy();
+			fotos.push(res.data);
 		}
 		done();
 	});
@@ -206,6 +207,13 @@ describe('Visualização de avisos e fotos de avisos', () => {
 		expect(res.status).toBe(200);
 		expect(res.data).toBeDefined();
 		expect(res.data).toHaveLength(3);
+		done();
+	});
+
+	it('deve visualizar a última foto do último aviso criado', async done => {
+		let ultimaFoto = fotos[fotos.length-1];
+		let res = await axios.get(HOST + ultimaFoto.url, reqConfig);
+		expect(res.status).toBe(200);
 		done();
 	});
 

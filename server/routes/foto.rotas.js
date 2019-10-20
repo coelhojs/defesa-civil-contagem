@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', controller.buscar_fotos);
 
 // Obtem a foto de um aviso a partir do nome do arquivo
-router.get('/:arquivo', controller.obter_foto);
+router.get('/:id', controller.obter_foto);
 
 // Envia a foto de um aviso
 router.post('/', fileupload({
