@@ -20,10 +20,13 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use('/auth/google', require('./auth/google'));
 
 // Notícias:
-app.use('/noticias', require('./routes/noticias.rotas.js'));
+app.use('/noticias', require('./routes/noticias.rotas'));
 
 // Controle de todas as rotas de acesso:
 app.use('/acesso/*', auth.acesso);
+
+// Mapa:
+app.use('/acesso/mapa', require('./routes/mapa.rotas'));
 
 // Rotas de DESENVOLVIMENTO (Apenas no modo development)
 if (process.env.NODE_ENV.toLowerCase() === 'development') {
