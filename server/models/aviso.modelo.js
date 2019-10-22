@@ -8,6 +8,7 @@ const NOME_MODELO = 'Aviso';
 
 const schema = new Schema({
 	user_id: { type: String },
+	status: ['Pendente', 'Atendido', 'Cancelado'],
 	tipo: { type: String, required: true },
 	dataHora: { type: Date },
 	descricao: { type: String },
@@ -47,7 +48,9 @@ schema.pre('save', function (next) {
 	let usid = this.user_id;
 	let id = this._id.toString();
 	fs.createFileSync(`./files/${usid}/${id}/.gitkeep`);
-	this.url = '/acesso/avisos/' + id; // URL do aviso
+	this.url = '/app/avisos/' + id; // URL do aviso
+	this.status = 'Pendente';
+	this.dataHora = new Date();
 	next();
 });
 

@@ -121,7 +121,7 @@ describe('Cadastro e login de usuário [DEV]', () => {
 	});
 
 	it('deve buscar o usuário no banco', async done => {
-		let res = await axios.get(HOST + '/acesso/account', reqConfig);
+		let res = await axios.get(HOST + '/app/account', reqConfig);
 		expect(res.status).toBe(200);
 		// Atributos required:
 		expect(res.data).toBeDefined();
@@ -140,7 +140,7 @@ describe('Criação de um aviso', () => {
 
 	it('deve criar um aviso', async done => {
 		let av = gerarAviso();
-		let res = await axios.post(HOST + '/acesso/avisos', av, reqConfig);
+		let res = await axios.post(HOST + '/app/avisos', av, reqConfig);
 		expect(res.status).toBe(200);
 		expect(res.data).toBeDefined();
 		expect(res.data).toHaveProperty('tipo');
@@ -224,7 +224,7 @@ describe('Visualização de avisos e fotos de avisos', () => {
 describe('Exclusão de usuário', () => {
 
 	it('deve deletar o usuário, seus avisos e as fotos', async done => {
-		let res = await axios.delete(HOST + '/acesso/delete', reqConfig);
+		let res = await axios.delete(HOST + '/app/delete', reqConfig);
 		expect(res.data).toBeDefined();
 		expect(fs.pathExistsSync('./files/' + usuario.id)).toBeFalsy();
 		done();
