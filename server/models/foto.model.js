@@ -29,7 +29,7 @@ schema.methods.toJSON = function () {
 }
 
 schema.pre('save', function (next) {
-	const Aviso = require('./aviso.modelo');
+	const Aviso = require('./aviso.model');
 	this.horario = moment().valueOf();
 	this.url = `/app/avisos/${this.aviso_id}/fotos/${this.id}`;
 	Aviso.findById(this.aviso_id)

@@ -7,5 +7,4 @@ const router = express.Router();
 // Obtem o mapa
 router.get('/', controller.get_mapa);
 
-
 module.exports = router;

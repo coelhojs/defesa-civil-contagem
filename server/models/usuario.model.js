@@ -82,7 +82,7 @@ schema.post('save', function (doc) {
 });
 
 schema.pre('remove', function (next) {
-	const Aviso = require('./aviso.modelo');
+	const Aviso = require('./aviso.model');
 	Aviso.find({ user_id: this._id })
 		.then(async avisos => {
 			avisos.forEach(async c => c.remove());

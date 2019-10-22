@@ -1,6 +1,6 @@
 const { OAuth2Client } = require('google-auth-library');
-const { AppError } = require('../models/error');
-const Usuario = require('../models/usuario.modelo');
+const { AppError } = require('../models/error.model');
+const Usuario = require('../models/usuario.model');
 const auth = require('./authorization');
 const express = require('express');
 const axios = require('axios').default;

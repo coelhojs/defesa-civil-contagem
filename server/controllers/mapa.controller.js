@@ -1,7 +1,7 @@
 const path = require('path');
 const axios = require('axios').default;
 const cheerio = require('cheerio');
-const { AppError } = require('../models/error');
+const { AppError } = require('../models/error.model');
 
 // Obtem o mapa
 exports.get_mapa = async (req, res, next) => {

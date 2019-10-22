@@ -1,5 +1,5 @@
-const Aviso = require('../models/aviso.modelo');
-const { AppError } = require('../models/error');
+const Aviso = require('../models/aviso.model');
+const { AppError } = require('../models/error.model');
 const express = require('express');
 const fs = require('fs');
 

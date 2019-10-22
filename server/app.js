@@ -1,9 +1,10 @@
-const { AppError } = require('./models/error');
+const { AppError } = require('./models/error.model');
 const fileupload = require('express-fileupload');
 const auth = require('./auth/authorization');
 const bodyparser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
+const rotasMapa = require('./routes/mapa.routes.js');
 
 const cors = require('cors');
 
@@ -16,14 +17,17 @@ app.use(morgan('dev'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
+// Notícias:
+app.use('/noticias', require('./routes/noticias.routes'));
+
+// Rotas de acesso de ADMIN
+app.use('/admin/', require('./routes/admin.routes'));
+
 // Login e Cadastro:
 app.use('/auth/google', require('./auth/google'));
 
-// Notícias:
-app.use('/noticias', require('./routes/noticias.rotas'));
-
 // Controle de todas as rotas de acesso do app:
-app.use('/app/*', auth.acesso);
+app.use('/app/*', auth.app);
 
 // Rotas de DESENVOLVIMENTO (Apenas no modo development)
 if (process.env.NODE_ENV.toLowerCase() === 'development') {
@@ -32,9 +36,11 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 	app.use('/dev/avisos', require('./dev/avisos.dev'));
 }
 
-// Rotas de acesso:
-app.use('/app/', require('./routes/usuario.rotas'));
-app.use('/app/avisos', require('./routes/aviso.rotas'));
+// Rotas de acesso do APP:
+app.use('/app/', require('./routes/usuario.routes'));
+app.use('/app/avisos', require('./routes/aviso.routes'));
+app.use('/app/mapa', rotasMapa);
+
 
 // Tratamento de rotas inválidas:
 app.use((req, res, next) => {
@@ -46,6 +52,6 @@ app.use((req, res, next) => {
 });
 
 // Tratamento de erros:
-app.use(require('./models/error').error_route);
+app.use(require('./models/error.model').error_route);
 
 module.exports = app;

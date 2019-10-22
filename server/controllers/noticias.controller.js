@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 const cheerio = require('cheerio');
-const { AppError } = require('../models/error');
+const { AppError } = require('../models/error.model');
 
 // Obtem as ultimas noticias
 exports.get_noticias = async (req, res, next) => {

@@ -8,7 +8,7 @@ router.use('/:id/*', (req, res, next) => {
 	req.aviso = { id: req.params.id }
 	next()
 });
-router.use('/:id/fotos', require('./foto.rotas'));
+router.use('/:id/fotos', require('./foto.routes'));
 
 // Pesquisar aviso(s) do usuário atual:
 router.get('/:id', controller.obter_aviso);

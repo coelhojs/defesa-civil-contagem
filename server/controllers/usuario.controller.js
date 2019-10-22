@@ -1,5 +1,5 @@
-const Usuario = require('../models/usuario.modelo');
-const { AppError } = require('../models/error');
+const Usuario = require('../models/usuario.model');
+const { AppError } = require('../models/error.model');
 
 // Cria um novo usuário:
 exports.criar_usuario = async (req, res, next) => {

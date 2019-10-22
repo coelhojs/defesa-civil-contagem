@@ -1,7 +1,7 @@
-const Aviso = require('../models/aviso.modelo');
-const Foto = require('../models/foto.modelo');
+const Aviso = require('../models/aviso.model');
+const Foto = require('../models/foto.model');
 
-const { AppError } = require('../models/error');
+const { AppError } = require('../models/error.model');
 const fs = require('fs-extra');
 
 exports.criar_aviso = async (req, res, next) => {
@@ -80,6 +80,19 @@ exports.deletar_avisos = async (req, res, next) => {
 exports.modificar_avisos = async (req, res, next) => {
 	try {
 		res.status(500).send('Not yet implemented');
+	} catch (ex) {
+		next(new AppError({
+			http_cod: 500,
+			mensagem: ex.message,
+			mensagem_amigavel: ''
+		}));
+	}
+}
+
+exports.obter_todos_os_avisos = async (req, res, next) => {
+	try {
+		let avisos = await Aviso.find({}).populate();
+		res.status(200).json(avisos);
 	} catch (ex) {
 		next(new AppError({
 			http_cod: 500,

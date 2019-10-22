@@ -56,7 +56,7 @@ schema.pre('save', function (next) {
 
 // Remove o diretório de fotos:
 schema.pre('remove', function (next) {
-	const Foto = require('./foto.modelo');
+	const Foto = require('./foto.model');
 	Foto.find({ aviso_id: this._id }).then(async fotos => {
 		fotos.forEach(async f => await f.remove());
 	});
