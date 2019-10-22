@@ -30,7 +30,7 @@ require('dotenv').config({ path: '.env' });
 process.env.NODE_ENV = 'development';
 process.env.DB_HOST = 'Local';
 
-const HOST = 'http://localhost:'+process.env.PORT;
+const HOST = 'http://localhost:' + process.env.PORTA;
 
 const faker = require('faker');
 const fs = require('fs-extra');
@@ -86,7 +86,7 @@ beforeAll(async done => {
 	await db.init();
 	await db.mongoose.connection.dropDatabase();
 	fs.removeSync('./files');
-	server.listen(process.env.PORT || 3001, done);
+	server.listen(process.env.PORTA, done);
 });
 
 afterAll(async done => {
@@ -180,7 +180,7 @@ describe('Criação de um aviso', () => {
 describe('Modificação dos dados do usuario', () => {
 
 	it('deve mudar o telefone do usuario', (done) => {
-		
+
 
 		done();
 	});
@@ -211,7 +211,7 @@ describe('Visualização de avisos e fotos de avisos', () => {
 	});
 
 	it('deve visualizar a última foto do último aviso criado', async done => {
-		let ultimaFoto = fotos[fotos.length-1];
+		let ultimaFoto = fotos[fotos.length - 1];
 		let res = await axios.get(HOST + ultimaFoto.url, reqConfig);
 		expect(res.status).toBe(200);
 		done();

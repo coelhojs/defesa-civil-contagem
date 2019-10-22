@@ -22,11 +22,8 @@ app.use('/auth/google', require('./auth/google'));
 // Notícias:
 app.use('/noticias', require('./routes/noticias.rotas'));
 
-// Controle de todas as rotas de acesso:
-app.use('/acesso/*', auth.acesso);
-
-// Mapa:
-app.use('/acesso/mapa', require('./routes/mapa.rotas'));
+// Controle de todas as rotas de acesso do app:
+app.use('/app/*', auth.acesso);
 
 // Rotas de DESENVOLVIMENTO (Apenas no modo development)
 if (process.env.NODE_ENV.toLowerCase() === 'development') {
@@ -36,8 +33,8 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 }
 
 // Rotas de acesso:
-app.use('/acesso/', require('./routes/usuario.rotas'));
-app.use('/acesso/avisos', require('./routes/aviso.rotas'));
+app.use('/app/', require('./routes/usuario.rotas'));
+app.use('/app/avisos', require('./routes/aviso.rotas'));
 
 // Tratamento de rotas inválidas:
 app.use((req, res, next) => {
