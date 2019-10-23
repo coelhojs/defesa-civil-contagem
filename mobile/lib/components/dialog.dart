@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttie/fluttie.dart';
 
 Widget dialog(String titulo, String descricao,
     {IconData icone, Color cor, bool carregando = false}) {

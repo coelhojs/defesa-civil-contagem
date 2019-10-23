@@ -10,11 +10,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class UserInfo extends StatefulWidget {
+
   @override
   _UserInfoState createState() => _UserInfoState();
 }
 
-class _UserInfoState extends State<UserInfo> {
+class _UserInfoState extends State<UserInfo>
+    with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
+
   Usuario usuario = Usuario();
   Future imagem;
   String api_key;
@@ -184,6 +190,14 @@ class _UserInfoState extends State<UserInfo> {
         backgroundColor: Colors.black54,
       ),
     );
+  }
+
+  bool showFab = true;
+
+  void showFoatingActionButton(bool value) {
+    setState(() {
+      showFab = value;
+    });
   }
 
   Widget _texto(String texto1, String texto2) {

@@ -39,7 +39,7 @@ dependencies:
   dio: ^3.0.3
   geolocator: ^5.1.4+1
   flutter_image_compress: ^0.6.3
-  pedantic: ^1.8.0+1
+  fluttie: ^0.3.0
 
 
 dev_dependencies:
@@ -67,6 +67,10 @@ flutter:
   assets:
     - assets/images/
     - assets/coordinates/
+    - assets/animation/
+    - assets/done.json
+    - assets/teste.json
+    - assets/erro.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

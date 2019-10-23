@@ -1,14 +1,20 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttie/fluttie.dart';
 import 'package:defesa_civil/components/dialog.dart';
 import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/screens/registered/homelogged.dart';
+import 'package:defesa_civil/screens/teste.dart';
 import 'package:defesa_civil/screens/unregistered/registerpage/registerpage.dart';
 import 'package:defesa_civil/services/sign_in.dart';
 import 'package:defesa_civil/models/usuario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:fluttie/fluttie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:pedantic/pedantic.dart';
@@ -16,17 +22,32 @@ import 'package:pedantic/pedantic.dart';
 import '../../models/size_config.dart';
 
 class LoginPage extends StatefulWidget {
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage>
+    with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   Usuario novoUsuario;
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text("Pagina Testes"),
+        onPressed: (){
+          Navigator.push(
+            context,
+            CupertinoPageRoute(fullscreenDialog: true,builder: (context) => SignupPage()),
+          );
+        },
+      ),
       body: Stack(
         children: <Widget>[
           Image(
@@ -90,13 +111,13 @@ class _LoginPageState extends State<LoginPage> {
                                 Usuario.fromJson(responseDecoded['usuario']);
                             setCredentials(responseDecoded['api_key']);
                             unawaited(Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                     builder: (context) => HomeLogged()),
                                 (Route<dynamic> route) => false));
                           } else if (responseDecoded['mensagem'] ==
                               "Usuário não cadastrado") {
                             unawaited(Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                     builder: (context) => RegisterPage(
                                         name, email, image, token)),
                                 (Route<dynamic> route) => false));
@@ -122,5 +143,83 @@ class _LoginPageState extends State<LoginPage> {
     userData = await SharedPreferences.getInstance();
     userData.setString("usuario", novoUsuario.toString());
     userData.setString("api_key", api_key);
+  }
+}
+
+
+class SignupPage extends StatefulWidget {
+  @override
+  SignupPageState createState() => SignupPageState();
+}
+
+class SignupPageState extends State<SignupPage> {
+  var busy = false;
+  var done = false;
+  FluttieAnimationController animationCtrl;
+
+  @override
+  initState() {
+    super.initState();
+    prepareAnimation();
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    animationCtrl?.dispose();
+  }
+
+  prepareAnimation() async {
+    var instance = Fluttie();
+
+    var checkAnimation =
+    await instance.loadAnimationFromAsset("assets/teste.json");
+
+    animationCtrl = await instance.prepareAnimation(
+      checkAnimation,
+      duration: const Duration(seconds: 2),
+      repeatCount: const RepeatCount.dontRepeat(),
+      repeatMode: RepeatMode.START_OVER,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(width: double.infinity,),
+          Container(
+            height: 300,
+            width: 300,
+            child: FluttieAnimation(animationCtrl),
+          ),
+          FlatButton(
+            onPressed: (){
+              setState(() {
+
+              });
+            animationCtrl.start();
+              Timer(Duration(seconds: 3), () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(fullscreenDialog: true,builder: (context) => LoginPage()),
+                );
+              });
+
+            },
+            child: Text("Teste"),
+          )
+
+        ],
+      ),
+    );
+  }
+
+  Future<Function> submit() async {
+    setState(() {});
+    animationCtrl.start();
   }
 }

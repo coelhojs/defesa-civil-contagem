@@ -3,7 +3,6 @@ import 'package:defesa_civil/screens/registered/userinfo.dart';
 import 'package:defesa_civil/screens/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeLogged extends StatefulWidget {
   @override
@@ -11,40 +10,24 @@ class HomeLogged extends StatefulWidget {
 }
 
 class _HomeLoggedState extends State<HomeLogged> {
-  @override
-  void initState() {
-    getCredentials();
-  }
+  final List<Widget> pages = [MapPage(), RelatarIncidente(), UserInfo()];
+  final pageController = PageController();
+  int _selectedIndex = 0;
 
-  int _currentIndex = 0;
-  final List<Widget> _children = [MapPage(), RelatarIncidente(), UserInfo()];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO(246, 129, 33, 1),
-        title: Text('Defesa Civil de Contagem'),
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
+  Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
+        onTap: (int index) => pageController.jumpToPage(index),
         selectedItemColor: Color.fromRGBO(246, 129, 33, 1),
-        currentIndex: _currentIndex, //
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        }, // this will be set when a new tab is tapped
-        items: [
+        currentIndex: selectedIndex,
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             activeIcon: Icon(
               Feather.getIconData("map"),
               color: Color.fromRGBO(246, 129, 33, 1),
             ),
-            icon: new Icon(
+            icon: Icon(
               Feather.getIconData("map"),
             ),
-            title: new Text(
+            title: Text(
               'Areas',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
@@ -54,27 +37,44 @@ class _HomeLoggedState extends State<HomeLogged> {
               Feather.getIconData("message-square"),
               color: Color.fromRGBO(246, 129, 33, 1),
             ),
-            icon: new Icon(
+            icon: Icon(
               Feather.getIconData("message-square"),
             ),
-            title: new Text(
+            title: Text(
               'Relatar',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
           BottomNavigationBarItem(
-            icon: new Icon(Feather.getIconData("user")),
-            title: new Text(
+            icon: Icon(Feather.getIconData("user")),
+            title: Text(
               'Info',
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
           ),
         ],
-      ),
-    );
+      );
+
+  void onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  getCredentials() async {
-    SharedPreferences userData = await SharedPreferences.getInstance();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(246, 129, 33, 1),
+          title: Text('Defesa Civil de Contagem'),
+        ),
+        body: PageView(
+          controller: pageController,
+          onPageChanged: onPageChanged,
+          children: pages,
+          physics: NeverScrollableScrollPhysics(), // No sliding
+        ),
+        bottomNavigationBar: _bottomNavigationBar(_selectedIndex));
   }
 }

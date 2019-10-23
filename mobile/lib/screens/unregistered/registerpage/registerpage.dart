@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:fluttie/fluttie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../services/registrarUsrApi.dart';
 
@@ -37,7 +38,6 @@ class _RegisterPageState extends State<RegisterPage>
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   MaskedTextController cepController = MaskedTextController(mask: '00000-000');
   MaskedTextController cpfController =
       MaskedTextController(mask: '000.000.000-00');
@@ -45,6 +45,9 @@ class _RegisterPageState extends State<RegisterPage>
       MaskedTextController(mask: '(00)00000-0000');
   TextEditingController numController = TextEditingController();
   TextEditingController complementoController = TextEditingController();
+
+  FluttieAnimationController animationCtrlDone;
+  FluttieAnimationController animationCtrlError;
 
   GlobalKey<FormState> _keyValidaForm1 = GlobalKey<FormState>();
   GlobalKey<FormState> _keyValidaForm2 = GlobalKey<FormState>();
@@ -61,18 +64,43 @@ class _RegisterPageState extends State<RegisterPage>
   int _enderecoState = 0;
   String endereco = "CEP Inválido";
 
-
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    prepareAnimation();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
+
+    animationCtrlDone?.dispose();
+    animationCtrlError?.dispose();
+    _tabController.dispose();
+  }
+
+  prepareAnimation() async {
+    var instance = Fluttie();
+
+    var checkAnimation =
+    await instance.loadAnimationFromAsset("assets/animation/done.json");
+
+    var erroAnimation =
+    await instance.loadAnimationFromAsset("assets/animation/erro.json");
+
+    animationCtrlDone = await instance.prepareAnimation(
+      checkAnimation,
+      duration: const Duration(seconds: 2),
+      repeatCount: const RepeatCount.dontRepeat(),
+      repeatMode: RepeatMode.START_OVER,
+    );
+    animationCtrlError = await instance.prepareAnimation(
+      erroAnimation,
+      duration: const Duration(seconds: 2),
+      repeatCount: const RepeatCount.dontRepeat(),
+      repeatMode: RepeatMode.START_OVER,
+    );
   }
 
   @override
@@ -103,6 +131,7 @@ class _RegisterPageState extends State<RegisterPage>
                   "telefone": telController.text,
                   "tipo": "Usuário",
                 });
+
                 showDialog(
                     barrierDismissible: false,
                     context: context,
@@ -123,13 +152,18 @@ class _RegisterPageState extends State<RegisterPage>
                             if (snapshot.data['api_key'] != null) {
                               setCredentials(snapshot.data['api_key']);
                             }
-                            return snapshot.data['api_key'] != null
-                                ? sucessFail(
-                                    true, "Usuário registrado", context)
-                                : sucessFail(
-                                    false,
-                                    snapshot.data['mensagem_amigavel'],
-                                    context);
+                            if(snapshot.data['api_key'] != null){
+                              animationCtrlDone.start();
+                              return sucessFail(true, "Usuário registrado",
+                                  context, animationCtrlDone);
+                            }else{
+                              animationCtrlError.start();
+                              return sucessFail(
+                                  false,
+                                  snapshot.data['mensagem_amigavel'],
+                                  context,
+                                  animationCtrlError);
+                            }
                           }
                         },
                       );
@@ -193,7 +227,7 @@ class _RegisterPageState extends State<RegisterPage>
                               value.replaceAll('.', '').replaceAll('-', ''))) {
                             return "CPF Inválido";
                           }
-                          return "Erro";
+                          //return "Erro";
                         },
                       ),
                       Padding(
@@ -216,7 +250,7 @@ class _RegisterPageState extends State<RegisterPage>
                           } else if (value.length != 14) {
                             return "O tamanho do telefone são 11 dígitos";
                           }
-                          return "Erro";
+                          //return "Erro";
                         },
                       ),
                     ],
@@ -286,7 +320,7 @@ class _RegisterPageState extends State<RegisterPage>
                           } else if (endereco == "CEP não encontrado") {
                             return "CEP não encontrado";
                           }
-                          return "Erro";
+                          //return "Erro";
                         },
                       ),
                       Padding(
@@ -326,7 +360,7 @@ class _RegisterPageState extends State<RegisterPage>
                                 if (value.isEmpty) {
                                   return "Insira o número";
                                 }
-                                return "Erro";
+                                //return "Erro";
                               },
                             ),
                           ),
@@ -335,7 +369,7 @@ class _RegisterPageState extends State<RegisterPage>
                       Padding(
                         padding: EdgeInsets.all(10),
                       ),
-                      _createEndereco()
+                      _createEndereco(),
                     ],
                   ),
                 ),

@@ -12,11 +12,17 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RelatarIncidente extends StatefulWidget {
+
   @override
   _RelatarIncidenteState createState() => _RelatarIncidenteState();
 }
 
-class _RelatarIncidenteState extends State<RelatarIncidente> {
+class _RelatarIncidenteState extends State<RelatarIncidente>
+    with AutomaticKeepAliveClientMixin{
+
+  @override
+  bool get wantKeepAlive => true;
+
   SharedPreferences userData;
   String api_key;
   Future<List> avisos;
@@ -53,10 +59,9 @@ class _RelatarIncidenteState extends State<RelatarIncidente> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
-        onPressed: () async {
-          var teste = await Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => RegistroAviso(api_key)));
-          print(teste);
+        onPressed: () {
+           Navigator.of(context).push(
+              CupertinoPageRoute(fullscreenDialog:true, builder: (context) => RegistroAviso(api_key)));
         },
         child: Icon(Feather.getIconData("plus")),
       ),

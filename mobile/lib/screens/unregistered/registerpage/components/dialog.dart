@@ -1,16 +1,18 @@
 import 'package:defesa_civil/screens/registered/homelogged.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttie/fluttie.dart';
 
-Widget sucessFail(bool sucess, String detalhes, BuildContext context) {
+Widget sucessFail(bool sucess, String detalhes, BuildContext context, FluttieAnimationController animationController) {
+
   return sucess
       ? AlertDialog(
     title: Text("Sucesso"),
     content: Row(
       children: <Widget>[
-        Icon(
-          Icons.check,
-          color: Colors.green,
-          size: 40,
+        Container(
+          width: 80,
+          height: 80,
+          child: FluttieAnimation(animationController),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -32,10 +34,10 @@ Widget sucessFail(bool sucess, String detalhes, BuildContext context) {
     title: Text("Erro"),
     content: Row(
       children: <Widget>[
-        Icon(
-          Icons.close,
-          color: Colors.red,
-          size: 40,
+        Container(
+          width: 40,
+          height: 40,
+          child: FluttieAnimation(animationController),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
