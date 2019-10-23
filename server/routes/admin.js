@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const adminController = require('../controllers/admin.controller');
-const mapaController = require('../controllers/mapa.controller');
-const avisoController = require('../controllers/aviso.controller');
-const roController = require('../controllers/mapa.controller');
+const adminController = require('../controllers/admin');
+const mapaController = require('../controllers/mapa');
+const avisoController = require('../controllers/aviso');
+const roController = require('../controllers/mapa');
 
 /* Obter Avisos */
 router.get('/avisos', avisoController.obter_todos_os_avisos);

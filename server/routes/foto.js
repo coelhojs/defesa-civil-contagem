@@ -1,4 +1,4 @@
-const controller = require('../controllers/foto.controller');
+const controller = require('../controllers/foto');
 const fileupload = require('express-fileupload');
 const express = require('express');
 

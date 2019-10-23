@@ -1,4 +1,4 @@
-const controller = require('../controllers/mapa.controller');
+const controller = require('../controllers/mapa');
 const fileupload = require('express-fileupload');
 const express = require('express');
 

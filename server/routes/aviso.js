@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/aviso.controller');
+const controller = require('../controllers/aviso');
 
 // Rota de fotos de avisos
 router.use('/:id/*', (req, res, next) => {
 	req.aviso = { id: req.params.id }
 	next()
 });
-router.use('/:id/fotos', require('./foto.routes'));
+router.use('/:id/fotos', require('./foto'));
 
 // Pesquisar aviso(s) do usuário atual:
 router.get('/:id', controller.obter_aviso);

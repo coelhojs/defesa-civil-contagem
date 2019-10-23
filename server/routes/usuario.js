@@ -1,4 +1,4 @@
-const controller = require('../controllers/usuario.controller');
+const controller = require('../controllers/usuario');
 const router = require('express').Router();
 
 // Obtém informações do usuário atual:

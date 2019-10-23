@@ -1,7 +1,7 @@
-const Aviso = require('../models/aviso.model');
+const Aviso = require('../models/aviso');
 const Foto = require('../models/foto.model');
 
-const { AppError } = require('../models/error.model');
+const { AppError } = require('../models/error');
 const fs = require('fs-extra');
 
 exports.criar_aviso = async (req, res, next) => {

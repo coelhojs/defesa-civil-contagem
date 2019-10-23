@@ -1,9 +1,9 @@
-const Foto = require('../models/foto.model');
-const { AppError } = require('../models/error.model');
+const Foto = require('../models/foto');
+const { AppError } = require('../models/error');
 const moment = require('moment');
 const path = require('path');
 
-const Aviso = require('../models/aviso.model');
+const Aviso = require('../models/aviso');
 
 // Buscar fotos (pode filtrar pela URL) do usuário atual
 exports.buscar_fotos = async (req, res, next) => {

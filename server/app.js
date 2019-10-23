@@ -4,7 +4,7 @@ const auth = require('./auth/authorization');
 const bodyparser = require('body-parser');
 const express = require('express');
 const morgan = require('morgan');
-const rotasMapa = require('./routes/mapa.routes.js');
+const rotasMapa = require('./routes/mapa.js/index.js');
 
 const cors = require('cors');
 
@@ -18,10 +18,10 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 // Notícias:
-app.use('/noticias', require('./routes/noticias.routes'));
+app.use('/noticias', require('./routes/noticias'));
 
 // Rotas de acesso de ADMIN
-app.use('/admin/', require('./routes/admin.routes'));
+app.use('/admin/', require('./routes/admin'));
 
 // Login e Cadastro:
 app.use('/auth/google', require('./auth/google'));
@@ -37,8 +37,8 @@ if (process.env.NODE_ENV.toLowerCase() === 'development') {
 }
 
 // Rotas de acesso do APP:
-app.use('/app/', require('./routes/usuario.routes'));
-app.use('/app/avisos', require('./routes/aviso.routes'));
+app.use('/app/', require('./routes/usuario'));
+app.use('/app/avisos', require('./routes/aviso'));
 app.use('/app/mapa', rotasMapa);
 
 

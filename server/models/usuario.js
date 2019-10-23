@@ -18,7 +18,7 @@ const schema = new Schema({
 	telefone: {
 		type: String,
 		required: true,
-		match: /^\(([1-9][0-9])\)\s(9\d|[2-9])\d{3}\-\d{4}$/,
+		match: /^\(([1-9][0-9])\)(9\d|[2-9])\d{3}\-\d{4}$/,
 	},
 	cpf: {
 		type: String,
@@ -82,7 +82,7 @@ schema.post('save', function (doc) {
 });
 
 schema.pre('remove', function (next) {
-	const Aviso = require('./aviso.model');
+	const Aviso = require('./aviso');
 	Aviso.find({ user_id: this._id })
 		.then(async avisos => {
 			avisos.forEach(async c => c.remove());

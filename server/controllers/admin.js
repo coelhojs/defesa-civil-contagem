@@ -1,5 +1,5 @@
-const Admin = require('../models/admin.model');
-const { AppError } = require('../models/error.model');
+const Admin = require('../models/admin');
+const { AppError } = require('../models/error');
 
 
 // Cria um novo admin:
