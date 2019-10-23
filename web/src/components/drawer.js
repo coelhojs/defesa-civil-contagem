@@ -40,7 +40,7 @@ export default function AppDrawer() {
                 <div className={classes.toolbar} />
                 <List>
                     <ListItemLink to="/Mapa" primary="Mapa" icon={<MapIcon />} />
-                    <ListItemLink to="/Avisos" primary="Avisos" icon={<FeedbackIcon />} />
+                    <ListItemLink to="/Avisos" primary="Avisos/Chamados" icon={<FeedbackIcon />} />
                     <ListItemLink to="/Usuários" primary="Usuários" icon={<PeopleAltIcon />} />
                 </List>
                 <Divider />

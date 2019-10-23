@@ -3,6 +3,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { fetchAllAvisos } from '../controllers/Avisos';
@@ -17,6 +18,10 @@ const useStyles = makeStyles(theme => ({
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
     },
+    gridList: {
+        paddingTop: '2rem',
+        paddingBottom: '2rem'
+    }
 }));
 
 export default function AvisosList() {
@@ -27,17 +32,38 @@ export default function AvisosList() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchAllAvisos(auth.apiKey);
+            const response = await fetchAllAvisos();
             setAvisos(response.data);
         };
         fetchData();
-    }, [avisos, auth.apiKey]);
+    }, [avisos]);
+
+
+    // const [state, setState] = React.useState({
+    //     columns: [
+    //         { title: '#', field: 'id' },
+    //         { title: 'Tipo', field: 'tipo', type: 'numeric' },
+    //         { title: 'Cidadão', field: 'cidadao' },
+    //         { title: 'Data/Hora', field: 'timestamp' },
+    //         { title: 'Cidadão', field: 'cidadao' },
+    //         { title: 'Logradouro', field: 'logradouro' },
+    //         { title: 'nº', field: 'numero' },
+    //         { title: 'Bairro', field: 'bairro' },
+    //     ],
+    //     data: [
+    //         { ...aviso },
+    //     ],
+    // });
 
     if (avisos && avisos.length > 0) {
         return (
             <GridList cellHeight={180} className={classes.gridList}>
                 <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">Lista de avisos</ListSubheader>
+                    <ListSubheader component="div">
+                        <Typography variant="h3" component="h2">
+                            Lista de avisos
+                        </Typography>
+                    </ListSubheader>
                 </GridListTile>
                 {avisos.map(avisos => (
                     <AvisosItem key={avisos.id} avisos={avisos} />
