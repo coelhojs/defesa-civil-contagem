@@ -25,9 +25,7 @@ const useStyles = makeStyles(theme => ({
         margin: 'auto',
         maxWidth: 345,
         minWidth: 275,
-
     },
-
 }));
 
 export default function Inicio() {
@@ -49,7 +47,8 @@ export default function Inicio() {
     }, [makeRequest]);
 
     //TODO: Verificar se esse método é suficiente
-    if (auth.usuario) {
+    if (auth && auth.user) {
+        console.log(auth)
         history.push('/Dashboard')
     }
 

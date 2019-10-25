@@ -35,6 +35,12 @@ export default function ProcessarAviso() {
             </div >
         )
     } else {
-        return "Carregando aviso";
+        return (
+            <div className={classes.root} >
+                <Typography variant="h5" component="h3">
+                    Carregando aviso...
+                </Typography>
+            </div >
+        )
     }
 }

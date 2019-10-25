@@ -13,3 +13,9 @@ export const usuarioModel = {
     cidade: "",
     estado: ""
 };
+
+// export const usuarioModel = {
+//     email: "",
+//     apiKey: "Chave da API",
+//     apiToken: "Chave do Firebase"
+// };

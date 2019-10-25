@@ -28,7 +28,7 @@ export default function AppDrawer() {
     const classes = useStyles();
     const auth = useAuth();
 
-    if (auth.usuario) {
+    if (auth.user) {
         return (
             <Drawer
                 className={classes.drawer}

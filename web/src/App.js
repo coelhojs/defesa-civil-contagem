@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import AppDrawer from './components/drawer';
 import Header from './components/header';
 import Avisos from "./containers/Avisos";
+import Chamados from "./containers/Chamados";
 import CadastroRoute from "./containers/CadastroRoute";
 import Dashboard from './containers/Dashboard';
 import Inicio from './containers/Inicio';
@@ -48,6 +49,7 @@ function App() {
             <Route path="/Cadastro" component={CadastroRoute} />
             {/* <PrivateRoute path="/Cadastro" component={Cadastro} /> */}
             <PrivateRoute path="/Avisos" component={Avisos} />
+            <PrivateRoute path="/Chamados" component={Chamados} />
             <PrivateRoute path="/Dashboard" component={Dashboard} />
             <PrivateRoute path="/Mapa" component={Mapa} />
             <PrivateRoute path="/ProcessarAviso/:id" component={ProcessarAviso} />
