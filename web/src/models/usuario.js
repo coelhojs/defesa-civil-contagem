@@ -1,20 +1,15 @@
-export const usuarioModel = {
+const endereco = require('./endereco');
+
+export const usuario = {
     nome: "",
     email: "",
     cpf: "",
-    userType: "",
     telefone: "",
     dataNasc: "",
-    cep: "",
-    logradouro: "",
-    numero: "",
-    complemento: "",
-    bairro: "",
-    cidade: "",
-    estado: ""
+    ...endereco
 };
 
-// export const usuarioModel = {
+// export const usuario = {
 //     email: "",
 //     apiKey: "Chave da API",
 //     apiToken: "Chave do Firebase"

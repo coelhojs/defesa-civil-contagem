@@ -9,15 +9,6 @@ export const useForm = (callback, inputs) => {
   const [values, setValues] = useState(inputs);
   const [errors, setErrors] = useState(inputs);
 
-  useEffect(() => {
-    if (auth.user) {
-      setValues({
-        ...values,
-        ["email"]: auth.user.email
-      });
-    }
-  }, [auth.user, values]);
-
   const handleSubmit = event => {
     if (event) event.preventDefault();
     callback();

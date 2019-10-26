@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
-
-import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+
 //import tileData from './tileData';
 
 const useStyles = makeStyles(theme => ({
@@ -56,7 +54,7 @@ export default function ListaImagem() {
             <GridList className={classes.gridList} cols={2.5}>
                 {tileData.map(tile => (
                     <GridListTile key={tile.img}>
-                        <img src={tile.img} alt={tile.id} class={classes.imagem} />
+                        <img src={tile.img} alt={tile.id} className={classes.imagem} />
                         <GridListTileBar
                             classes={{
                                 root: classes.titleBar,

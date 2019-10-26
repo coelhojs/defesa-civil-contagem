@@ -1,21 +1,18 @@
-
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Send from '@material-ui/icons/Send';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-
-import React, { Component } from 'react'
-
 import { makeStyles } from '@material-ui/core/styles';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Send from '@material-ui/icons/Send';
+import React from 'react';
 import { useForm } from "../customHooks/useForm";
 import ListaImagem from "./listaImagem";
-import { minHeight } from '@material-ui/system';
+import { chamado } from '../models/chamado';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -37,31 +34,15 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function CadastroForm() {
+export default function ChamadoForm({ aviso }) {
     const classes = useStyles();
-    const { errors, values, handleChange, handleSubmit } = useForm(submit);
-    /*const [values, setValues] = React.useState({
-        nome: '',
-        email: 'hai',
-        cpf: '',
-        userType: '',
-        telefone: '',
-        dataNasc: '',
-        cep: '',
-        logradouro: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        estado: ''
-    });*/
+    const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, chamado);
 
-    function submit() {
+    function callbackSubmit() {
         console.log(values);
     }
 
     return (
-
         <form onSubmit={handleSubmit}>
             <Grid
                 container
@@ -79,31 +60,31 @@ export default function CadastroForm() {
                         <Input
                             readOnly
                             id="Informant"
-                            value={values.Informant}
+                            value={values.informante = aviso.usuario.nome}
                             onChange={handleChange}
                         />
                     </FormControl>
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="type">Tipo</InputLabel>
+                        <InputLabel htmlFor="tipo">Tipo</InputLabel>
                         <Select
-                            value={values.type}
+                            value={values.tipo = aviso.tipo}
                             onChange={handleChange}
-                            inputProps={{
-                                name: 'type',
-                                id: 'type',
+                            inputprops={{
+                                name: 'tipo',
+                                id: 'tipo',
                             }}
                         >
                             <MenuItem value='Deslizamento'>Deslizamento</MenuItem>
                             <MenuItem value='Rachadura'>Rachadura</MenuItem>
                         </Select>
-                        <FormHelperText className={classes.erro}>{errors.type}</FormHelperText>
+                        <FormHelperText className={classes.erro}>{errors.tipo}</FormHelperText>
                     </FormControl>
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="status">Estatus</InputLabel>
+                        <InputLabel htmlFor="status">Status</InputLabel>
                         <Select
                             value={values.status}
                             onChange={handleChange}
-                            inputProps={{
+                            inputprops={{
                                 name: 'status',
                                 id: 'status',
                             }}
@@ -119,7 +100,7 @@ export default function CadastroForm() {
                             readOnly
                             id="dataRequisicao"
                             type="datetime-local"
-                            value={values.street}
+                            value={values.logradouro}
                             onChange={handleChange}
                         />
                     </FormControl>
@@ -235,7 +216,7 @@ export default function CadastroForm() {
                         <Select
                             value={values.interdicao}
                             onChange={handleChange}
-                            inputProps={{
+                            inputprops={{
                                 name: 'interdicao',
                                 id: 'interdicao',
                             }}
@@ -292,10 +273,10 @@ export default function CadastroForm() {
                         </FormControl>
                     </Grid>
                     <FormControl fullWidth className={classes.formControl}>
-                        <InputLabel htmlFor="bairro">Bairro</InputLabel>
+                        <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
                         <Input
                             id="bairro"
-                            value={values.bairro}
+                            value={values.bairro = aviso.bairro}
                             onChange={handleChange}
                         />
                     </FormControl>
@@ -325,7 +306,7 @@ export default function CadastroForm() {
                             onChange={handleChange}
                             rowsMax={4}
                             aria-label="maximum height"
-                            inputProps={{
+                            inputprops={{
                                 name: 'description',
                                 id: 'description',
                             }}
@@ -341,7 +322,7 @@ export default function CadastroForm() {
                             onChange={handleChange}
                             rowsMax={4}
                             aria-label="maximum height"
-                            inputProps={{
+                            inputprops={{
                                 name: 'retornoVistoria',
                                 id: 'retornoVistoria',
                             }}

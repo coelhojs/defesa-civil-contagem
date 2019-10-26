@@ -18,7 +18,7 @@ import * as React from 'react';
 import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../customHooks/useAuth";
 import { useForm } from "../customHooks/useForm";
-import { usuarioModel } from "../models/usuario";
+import { usuario } from "../models/usuario";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
 export default function CadastroForm() {
     const classes = useStyles();
     const auth = useAuth();
-    const { values, errors, handleChange, handleSubmit } = useForm(callbackSubmit, usuarioModel);
+    const { values, errors, handleChange, handleSubmit } = useForm(callbackSubmit, usuario);
 
     function callbackSubmit() {
         auth.signup(values);

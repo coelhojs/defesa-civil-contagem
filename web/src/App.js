@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme => ({
   },
   main: {
     flexGrow: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)'
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    overflowY: 'auto',
   },
   toolbar: theme.mixins.toolbar
 }));
@@ -48,11 +49,11 @@ function App() {
             <Route exact path='/' component={Inicio} />
             <Route path="/Cadastro" component={CadastroRoute} />
             {/* <PrivateRoute path="/Cadastro" component={Cadastro} /> */}
-            <PrivateRoute path="/Avisos" component={Avisos} />
-            <PrivateRoute path="/Chamados" component={Chamados} />
-            <PrivateRoute path="/Dashboard" component={Dashboard} />
-            <PrivateRoute path="/Mapa" component={Mapa} />
-            <PrivateRoute path="/ProcessarAviso/:id" component={ProcessarAviso} />
+            <PrivateRoute exact path="/Avisos" component={Avisos} />
+            <PrivateRoute exact path="/Chamados" component={Chamados} />
+            <PrivateRoute exact path="/Dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/Mapa" component={Mapa} />
+            <PrivateRoute exact path="/ProcessarAviso/:id" component={ProcessarAviso} />
             <Route path="*" component={NotFound} />
           </Switch>
         </main>

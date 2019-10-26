@@ -2,7 +2,23 @@
     "Avisos": [
         {
             "id": 1,
-            "idUsuario": 1,
+            "usuario": {
+                "id": 1,
+                "tipo": "cidadao",
+                "nome": "Cristiano Coelho de Jesus Souza",
+                "telefone": "(31) 98587-7928",
+                "cpf": "123.456.789-09",
+                "email": "ccoelho.me@gmail.com",
+                "dataNascimento": "15/03/1994",
+                "endereco": {
+                    "rua": "Cláudio Manoel",
+                    "numero": "1162",
+                    "complemento": "",
+                    "bairro": "Funcionários",
+                    "cidade": "Belo Horizonte",
+                    "cep": "00000-000"
+                }
+            },
             "timestamp": 1571174541,
             "tipo": "Desabamento",
             "logradouro": "Rua Jacuí",
@@ -16,7 +32,23 @@
         },
         {
             "id": 2,
-            "idUsuario": 1,
+            "usuario": {
+                "id": 1,
+                "tipo": "cidadao",
+                "nome": "Cristiano Coelho de Jesus Souza",
+                "telefone": "(31) 98587-7928",
+                "cpf": "123.456.789-09",
+                "email": "ccoelho.me@gmail.com",
+                "dataNascimento": "15/03/1994",
+                "endereco": {
+                    "rua": "Cláudio Manoel",
+                    "numero": "1162",
+                    "complemento": "",
+                    "bairro": "Funcionários",
+                    "cidade": "Belo Horizonte",
+                    "cep": "00000-000"
+                }
+            },
             "timestamp": 1571174541,
             "tipo": "Desabamento",
             "logradouro": "Rua Jacuí",
@@ -30,7 +62,23 @@
         },
         {
             "id": 3,
-            "idUsuario": 1,
+            "usuario": {
+                "id": 1,
+                "tipo": "cidadao",
+                "nome": "Cristiano Coelho de Jesus Souza",
+                "telefone": "(31) 98587-7928",
+                "cpf": "123.456.789-09",
+                "email": "ccoelho.me@gmail.com",
+                "dataNascimento": "15/03/1994",
+                "endereco": {
+                    "rua": "Cláudio Manoel",
+                    "numero": "1162",
+                    "complemento": "",
+                    "bairro": "Funcionários",
+                    "cidade": "Belo Horizonte",
+                    "cep": "00000-000"
+                }
+            },
             "timestamp": 1571174541,
             "tipo": "Desabamento",
             "logradouro": "Rua Jacuí",
