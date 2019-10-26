@@ -36,9 +36,10 @@ export default function Chamados() {
     };
 
     const columns = [
-        { id: 'idSequencia', label: 'ID', minWidth: 170 },
-        { id: 'tipo', label: 'Tipo', minWidth: 100 },
+        { id: 'idSequencia', label: 'ID', minWidth: 50 },
+        { id: 'tipo', label: 'Tipo', minWidth: 80 },
         { id: 'bairro', label: 'Bairro', minWidth: 100 },
+        { id: 'status', label: 'Status', minWidth: 100 },
     ];
 
     useEffect(() => {
@@ -51,7 +52,16 @@ export default function Chamados() {
 
     if (chamados) {
 
-        const rows = chamados;
+        let rows = [];
+        chamados.forEach((item) => {
+            rows.push({
+                id: item.id,
+                idSequencia: item.idSequencia,
+                tipo: item.tipo,
+                bairro: item.endereco.bairro,
+                status: item.status
+            })
+        })
 
         return (
             <Paper className={classes.root}>
@@ -95,10 +105,10 @@ export default function Chamados() {
                     rowsPerPage={rowsPerPage}
                     page={page}
                     backIconButtonProps={{
-                        'aria-label': 'previous page',
+                        'aria-label': 'página anterior',
                     }}
                     nextIconButtonProps={{
-                        'aria-label': 'next page',
+                        'aria-label': 'próxima página',
                     }}
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}

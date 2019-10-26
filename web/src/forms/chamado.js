@@ -16,6 +16,16 @@ import { useHistory } from "react-router-dom";
 import { chamado } from '../models/chamado';
 import ListaImagem from "./listaImagem";
 import { createChamado } from "../controllers/Chamados";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -49,6 +59,15 @@ export default function ChamadoForm(props) {
     const classes = useStyles();
     const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, chamado);
     const [aviso] = useState(props.aviso);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     function callbackSubmit() {
         createChamado(values);
@@ -56,170 +75,198 @@ export default function ChamadoForm(props) {
     }
 
     return (
-        <Paper className={classes.root}>
-            <Typography variant="h3" gutterBottom className={classes.title}>
-                Novo Chamado
+        <div>
+            <Paper className={classes.root}>
+                <Typography variant="h3" gutterBottom className={classes.title}>
+                    Novo Chamado
       </Typography>
-            <form onSubmit={handleSubmit}>
-                <Grid
-                    container
-                    direction="row"
-                    justify="space-between"
-                    alignItems="center"
-                    spacing={2}
-                >
-                    <Grid item xs={12} md={3} ></Grid>
-                    <Grid item xs={12} md={3} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="tipo">Tipo</InputLabel>
-                            <Input
-                                readOnly
-                                id="tipo"
-                                value={values.tipo = aviso.tipo}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={2} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="id">ID</InputLabel>
-                            <Input
-                                readOnly
-                                id="id"
-                                value={values.idSequencia = aviso.idSequencia}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={4} ></Grid>
+                <form onSubmit={handleSubmit}>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                        spacing={2}
+                    >
+                        <Grid item xs={12} md={3} ></Grid>
+                        <Grid item xs={12} md={3} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="tipo">Tipo</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="tipo"
+                                    value={values.tipo = aviso.tipo}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={2} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="id">ID</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="id"
+                                    value={values.idSequencia = aviso.idSequencia}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={4} ></Grid>
 
-                    <Grid item xs={12} md={8} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="Informant">Informante</InputLabel>
-                            <Input
-                                readOnly
-                                id="Informant"
-                                value={values.informante = aviso.usuario.nome}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={8} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="Informant">Informante</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="Informant"
+                                    value={values.informante = aviso.usuario.nome}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={4} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="data">Data/Hora</InputLabel>
-                            <Input
-                                readOnly
-                                id="data"
-                                value={values.dataAviso = moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={4} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="data">Data/Hora</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="data"
+                                    value={values.dataAviso = moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={8} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="email">Email</InputLabel>
-                            <Input
-                                readOnly
-                                id="email"
-                                value={values.usuario.email = aviso.usuario.email}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={8} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="email">Email</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="email"
+                                    value={values.usuario.email = aviso.usuario.email}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={4} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="telefone">Telefone</InputLabel>
-                            <Input
-                                readOnly
-                                id="telefone"
-                                value={values.usuario.telefone = aviso.usuario.telefone}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={4} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="telefone">Telefone</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="telefone"
+                                    value={values.usuario.telefone = aviso.usuario.telefone}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={6} >
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
-                            <Input
-                                id="logradouro"
-                                value={values.endereco.logradouro = aviso.endereco.logradouro}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={6} >
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
+                                <Input
+                                    id="logradouro"
+                                    value={values.endereco.logradouro = aviso.endereco.logradouro}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={2}>
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="numero" >Número</InputLabel>
-                            <Input
-                                id="numero"
-                                type="number"
-                                value={values.endereco.numero = aviso.endereco.numero}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="complemento">Complemento</InputLabel>
-                            <Input
-                                readOnly
-                                id="complemento"
-                                value={values.endereco.complemento = aviso.endereco.complemento}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
-                            <Input
-                                id="bairro"
-                                value={values.endereco.bairro = aviso.endereco.bairro}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={2}>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="numero" >Número</InputLabel>
+                                <Input
+                                    id="numero"
+                                    type="number"
+                                    value={values.endereco.numero = aviso.endereco.numero}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="complemento">Complemento</InputLabel>
+                                <Input
+                                    readOnly
+                                    id="complemento"
+                                    value={values.endereco.complemento = aviso.endereco.complemento}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
+                                <Input
+                                    id="bairro"
+                                    value={values.endereco.bairro = aviso.endereco.bairro}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={4}>
-                        <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="regional">Regional</InputLabel>
-                            <Input
-                                id="regional"
-                                value={values.endereco.regional}
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12} md={4}>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel htmlFor="regional">Regional</InputLabel>
+                                <Input
+                                    id="regional"
+                                    value={values.endereco.regional}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </Grid>
 
-                    <Grid item xs={12} md={12}>
-                        <FormControl fullWidth className={classes.formControl}>
-                            <TextareaAutosize rows={3}
-                                className={classes.textarea}
-                                onChange={handleChange}
-                                value={values.descricao}
-                                placeholder="Descrição"
-                            />
-                            <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <ListaImagem />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" color="secondary" className={classes.button}>Voltar
+                        <Grid item xs={12} md={12}>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <TextareaAutosize rows={3}
+                                    className={classes.textarea}
+                                    onChange={handleChange}
+                                    value={values.descricao}
+                                    placeholder="Descrição"
+                                />
+                                <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <ListaImagem />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button variant="contained" color="secondary" className={classes.button}>Voltar
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.button} type="submit">
-                            Criar Chamado
+                            <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.button}>
+                                Criar Chamado
                         <Send className={classes.rightIcon} />
-                        </Button>
+                            </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </form>
-        </Paper >
+                </form>
+            </Paper >
+            <Dialog
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title">
+                    Confirmar criação de chamado</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        Deseja criar esse chamado?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}
+                        color="primary" className={classes.button}>
+                        Cancelar
+                        </Button>
+                    <Button type="submit" onClick={handleClose, handleSubmit}
+                        color="primary" className={classes.button}>
+                        Confirmar
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </div>
     )
 }

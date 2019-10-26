@@ -71,9 +71,7 @@ export default function AvisosItem({ avisos }) {
                     onClick={() => {
                         history.push(`/ProcessarAviso/${aviso.id}`)
                     }}
-                >
-                    Processar
-      </Button>
+                >Processar</Button>
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded,
@@ -82,7 +80,7 @@ export default function AvisosItem({ avisos }) {
                     aria-expanded={expanded}
                     aria-label="show more"
                 >
-                    <ExpandMoreIcon />
+                    {/* <ExpandMoreIcon /> */}
                 </IconButton>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
