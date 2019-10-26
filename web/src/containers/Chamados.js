@@ -2,12 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
+import MaterialTable from 'material-table'
 import { fetchAllChamados } from "../controllers/Chamados";
 
 const useStyles = makeStyles({
@@ -36,10 +31,10 @@ export default function Chamados() {
     };
 
     const columns = [
-        { id: 'idSequencia', label: 'ID', minWidth: 50 },
-        { id: 'tipo', label: 'Tipo', minWidth: 80 },
-        { id: 'bairro', label: 'Bairro', minWidth: 100 },
-        { id: 'status', label: 'Status', minWidth: 100 },
+        { field: 'idSequencia', title: 'ID', minWidth: 50 },
+        { field: 'tipo', title: 'Tipo', minWidth: 80 },
+        { field: 'bairro', title: 'Bairro', minWidth: 100 },
+        { field: 'status', title: 'Status', minWidth: 100 },
     ];
 
     useEffect(() => {
@@ -48,7 +43,7 @@ export default function Chamados() {
             setChamados(response.data);
         };
         fetchData();
-    }, [chamados]);
+    }, []);
 
     if (chamados) {
 
@@ -65,53 +60,16 @@ export default function Chamados() {
 
         return (
             <Paper className={classes.root}>
-                <div className={classes.tableWrapper}>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map(column => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ minWidth: column.minWidth }}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                        {columns.map(column => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number' ? column.format(value) : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </div>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    backIconButtonProps={{
-                        'aria-label': 'página anterior',
+                <MaterialTable
+                    columns={columns}
+                    data={rows}
+                    title="Lista de chamados"
+                    detailPanel={rowData => {
+                        return (
+                            <h4>Insira aqui os demais campos do chamado</h4>
+                        )
                     }}
-                    nextIconButtonProps={{
-                        'aria-label': 'próxima página',
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                    onRowClick={(event, rowData, togglePanel) => togglePanel()}
                 />
             </Paper>
         )
