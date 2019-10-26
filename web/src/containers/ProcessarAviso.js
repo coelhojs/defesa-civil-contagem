@@ -13,9 +13,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function ProcessarAviso() {
     const classes = useStyles();
-    const [aviso, setAviso] = useState([]);
+    const [aviso, setAviso] = useState(null);
 
-    console.log(aviso)
     let location = useLocation();
     let pathname = location.pathname;
     let avisoId = location.pathname.split("/")

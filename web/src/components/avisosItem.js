@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AvisosItem({ avisos }) {
-    console.log(avisos)
     let history = useHistory();
     const classes = useStyles();
     const [aviso] = useState(avisos);

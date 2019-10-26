@@ -8,6 +8,7 @@ export const chamado = {
     numeroDiscriminacao: "",
     numeroOficioEncaminhado: "",
     orgaoDestinoOficio: "",
+    dataAviso: "",
     dataVistoria: "",
     equipeVistoria: "",
     dataMonitoramento: "",

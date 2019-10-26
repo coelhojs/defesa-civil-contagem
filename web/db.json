@@ -2,6 +2,7 @@
     "Avisos": [
         {
             "id": 1,
+            "idSequencia": "0001/2019",
             "usuario": {
                 "id": 1,
                 "tipo": "cidadao",
@@ -21,9 +22,11 @@
             },
             "timestamp": 1571174541,
             "tipo": "Desabamento",
-            "logradouro": "Rua Jacuí",
-            "numero": "17",
-            "bairro": "Santa Cruz",
+            "endereco": {
+                "logradouro": "Rua Jacuí",
+                "numero": "17",
+                "bairro": "Santa Cruz"
+            },
             "imagens": [
                 "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
             ],
@@ -32,6 +35,7 @@
         },
         {
             "id": 2,
+            "idSequencia": "0002/2019",
             "usuario": {
                 "id": 1,
                 "tipo": "cidadao",
@@ -62,6 +66,7 @@
         },
         {
             "id": 3,
+            "idSequencia": "0003/2019",
             "usuario": {
                 "id": 1,
                 "tipo": "cidadao",
@@ -117,7 +122,6 @@
             "dataMonitoramento": "1568331344",
             "situacaoAtual": "Terreno íngreme propenso a desabamento de terra.",
             "retornoVistoria": "VISA informou no dia 23/10/2018, OF. 008/2018, que não dispõe de recursos técnicos",
-
             "tipo": "desabamento",
             "dataRequisicao": "1568331344",
             "status": "[aberto, finalizado]",
@@ -149,6 +153,51 @@
                 "lat": "-19.9401644",
                 "lng": "-43.9341399,15z"
             }
+        },
+        {
+            "informante": "Cristiano Coelho de Jesus Souza",
+            "tipo": "Desabamento",
+            "status": "",
+            "numeroDiscriminacao": "",
+            "numeroOficioEncaminhado": "",
+            "orgaoDestinoOficio": "",
+            "dataAviso": "15/10/2019 06:22",
+            "dataVistoria": "",
+            "equipeVistoria": "",
+            "dataMonitoramento": "",
+            "morador": "",
+            "pessoasEnvolvidas": "",
+            "vitimaParcial": "",
+            "vitimaFatal": "",
+            "interdicao": "",
+            "doacao": "",
+            "description": "",
+            "retornoVistoria": "",
+            "usuario": {
+                "nome": "",
+                "email": "ccoelho.me@gmail.com",
+                "cpf": "",
+                "telefone": "(31) 98587-7928",
+                "dataNasc": "",
+                "endereco": {
+                    "logradouro": "Rua Jacuí",
+                    "numero": "17",
+                    "bairro": "Santa Cruz",
+                    "cidade": "",
+                    "estado": "",
+                    "cep": ""
+                }
+            },
+            "endereco": {
+                "logradouro": "Rua Jacuí",
+                "numero": "17",
+                "bairro": "Santa Cruz",
+                "cidade": "",
+                "estado": "",
+                "cep": ""
+            },
+            "idSequencia": "0001/2019",
+            "id": 3
         }
     ],
     "Usuarios": [
