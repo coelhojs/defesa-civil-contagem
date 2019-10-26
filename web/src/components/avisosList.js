@@ -36,7 +36,7 @@ export default function AvisosList() {
             setAvisos(response.data);
         };
         fetchData();
-    }, [avisos]);
+    }, []);
 
 
     // const [state, setState] = React.useState({

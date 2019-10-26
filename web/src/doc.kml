@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Risco geológico-geotécnico hidrológico</name>
+    <NetworkLink>
+      <name>Contagem Riscos</name>
+      <Link>
+        <href><![CDATA[http://www.google.com/maps/d/u/4/kml?mid=1hx2bkGrTtsN6E7ttxSFBe0N5fDRk8xKw&lid=mWjduN2aIeo]]></href>
+      </Link>
+    </NetworkLink>
+  </Document>
+</kml>

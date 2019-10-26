@@ -1,59 +1,48 @@
-//https://cherniavskii.com/using-leaflet-in-react-apps-with-react-hooks/
-import { Container } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import * as React from 'react';
-import { GeoJSON, Map, Marker, Popup, TileLayer, } from "react-leaflet";
-import { mapaContagem } from "../map"
+import * as React from 'react'
+import { useCallback } from "react";
+import { GoogleMap, KmlLayer, Marker, useLoadScript } from '@react-google-maps/api'
 
-const useStyles = makeStyles(theme => ({
-    container: {
-        height: '100%',
-        maxWidth: '100%',
-        paddingLeft: '0',
-        paddingRight: '0',
-    },
-    leafletMap: {
-        height: '100%',
-        width: '100%'
-    }
-}));
+const options = {
+
+}
 
 export default function Mapa() {
-    const classes = useStyles();
-    const center = [-19.9192192, -44.0927953];
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyAFCWhrDp1Unfxx5TKCqlkEYx2xB5Tj-HU" // ,
+        // ...otherOptions
+    })
 
-    function getGeoJson() {
-        return mapaContagem
+    const renderMap = () => {
+        // wrapping to a function is useful in case you want to access `window.google`
+        // to eg. setup options or create latLng object, it won't be available otherwise
+        // feel free to render directly if you don't need that
+        // const onLoad = useCallback(
+        //     function onLoad(mapInstance) {
+        //         // do something with map Instance
+        //     }
+        // )
+        return <GoogleMap
+            id="marker-example"
+            mapContainerStyle={{
+                height: "90%",
+                width: "100%"
+            }}
+            zoom={15}
+            center={{
+                lat: -19.919387,
+                lng: - 44.080628
+            }}
+        >
+            <KmlLayer
+                url={`http://www.google.com/maps/d/u/4/kml?mid=1hx2bkGrTtsN6E7ttxSFBe0N5fDRk8xKw&lid=mWjduN2aIeo&ver=${Math.random()}`}
+                options={{ preserveViewport: true }}
+            />
+        </GoogleMap>
     }
 
-    function onEachFeature(feature, layer) {
-        // does this feature have a property named popupContent?
-        if (feature.properties && feature.properties.popupContent) {
-            layer.bindPopup(feature.properties.popupContent);
-        }
+    if (loadError) {
+        return <div>Map cannot be loaded right now, sorry.</div>
     }
 
-    function setStyles(feature) {
-        if (feature.properties.RO) {
-            return { fillColor: "#FF0000" }
-        }
-        return { fillColor: "#FF0000" }
-    }
-    //TODO: Usar as layers do google Maps
-    //TODO: Resolver problema do height do container
-    return (
-        <Container maxWidth={false} fixed className={classes.container}>
-            <Map center={center} zoom={13} className={classes.leafletMap}>
-                <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {/* <TileLayer url='http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
-                    maxZoom={20}
-                    subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-                /> */}
-                <GeoJSON data={getGeoJson()} style={setStyles} onEachFeature={onEachFeature} />
-            </Map>
-        </Container>
-    )
+    return isLoaded ? renderMap() : "<Spinner />"
 }
