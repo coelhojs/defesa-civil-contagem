@@ -50,11 +50,14 @@ function useProvideAuth() {
   let history = useHistory();
 
   //user = autenticacao Google
-  const [user, setUser] = useUserState(null);
+  // const [user, setUser] = useUserState(null);
+  const [user, setUser] = useState(null);
   //usuario = autenticacao Aplicação  
-  const [usuario, setUsuario] = useUsuarioState(null);
+  // const [usuario, setUsuario] = useUsuarioState(null);
+  const [usuario, setUsuario] = useState(null);
   const [idToken, setIdToken] = useState(null);
-  const [apiKey, setApiKey] = useApiKeyState(null);
+  // const [apiKey, setApiKey] = useApiKeyState(null);
+  const [apiKey, setApiKey] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
 
   const loginUsuario = async () => {
