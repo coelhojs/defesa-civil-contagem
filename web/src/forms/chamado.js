@@ -70,8 +70,12 @@ export default function ChamadoForm(props) {
     };
 
     function callbackSubmit() {
+        values.endereco.coordenadas = {
+            lat: aviso.endereco.coordenadas.lat,
+            lng: aviso.endereco.coordenadas.lng
+        };
         createChamado(values);
-        history.push('/Dashboard');
+        history.push('/Chamados');
     }
 
     return (

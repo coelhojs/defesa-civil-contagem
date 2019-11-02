@@ -1,36 +1,38 @@
-import { GoogleMap, InfoWindow, KmlLayer, Marker, useLoadScript } from '@react-google-maps/api';
+//https://stackoverflow.com/questions/30057159/google-maps-api-v3-how-to-alert-marker-id-when-marker-is-clicked
+import { GoogleMap, KmlLayer, Marker, useLoadScript } from '@react-google-maps/api';
 import * as React from 'react';
-import { useEffect, useState } from "react";
-//import Markers from '../components/markers';
+import { useCallback, useEffect, useState } from "react";
 import Spinner from '../components/spinner';
 import { fetchAllChamados } from '../customHooks/useChamados';
 import { createMarkers } from '../customHooks/useMaps';
 
 export default function Mapa() {
-    const [markers, setMarkers] = useState([]);
+    const [markers, setMarkers] = useState(null);
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyAFCWhrDp1Unfxx5TKCqlkEYx2xB5Tj-HU" // ,
         // ...otherOptions
     })
 
+    const fetchData = async () => {
+        const response = await fetchAllChamados();
+        setMarkers(createMarkers(response.data));
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetchAllChamados();
-            setMarkers(createMarkers(response.data));
-        };
         fetchData();
     }, []);
 
+    //const onLoad = useCallback(fetchData());
+    //     async function onLoad(mapInstance) {
+    //         const response = await fetchAllChamados();
+    //         setMarkers(createMarkers(response.data));
+    // }
+    // )
+
     const renderMap = () => {
-        // wrapping to a function is useful in case you want to access `window.google`
-        // to eg. setup options or create latLng object, it won't be available otherwise
-        // feel free to render directly if you don't need that
-        // const onLoad = useCallback(
-        //     function onLoad(mapInstance) {
-        //         // do something with map Instance
-        //     }
-        // )
+
         return <GoogleMap
+            //onLoad={onLoad}
             mapContainerStyle={{
                 height: "90%",
                 width: "100%"
@@ -43,7 +45,7 @@ export default function Mapa() {
         >
             {/* <Markers /> */}
 
-            {markers.map(marker => (
+            {(markers) ? markers.map(marker => (
                 <Marker
                     key={marker.id}
                     title={marker.tipo}
@@ -52,7 +54,7 @@ export default function Mapa() {
                         lng: marker.lng
                     }}
                 />
-            ))}
+            )) : null}
 
             <KmlLayer
                 url={`http://www.google.com/maps/d/u/4/kml?mid=1hx2bkGrTtsN6E7ttxSFBe0N5fDRk8xKw&lid=mWjduN2aIeo&ver=${Math.random()}`}

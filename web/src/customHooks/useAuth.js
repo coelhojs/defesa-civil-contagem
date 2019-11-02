@@ -7,10 +7,11 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import createPersistedState from 'use-persisted-state';
 
-//Estados que devem ser persistidos entre tabs e refreshes
+//Estados que devem ser persistidos
 const useUserState = createPersistedState('user');
 const useUsuarioState = createPersistedState('usuario');
 const useApiKeyState = createPersistedState('apiKey');
+const useIdTokenState = createPersistedState('idToken');
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -50,14 +51,16 @@ function useProvideAuth() {
   let history = useHistory();
 
   //user = autenticacao Google
-  // const [user, setUser] = useUserState(null);
-  const [user, setUser] = useState(null);
   //usuario = autenticacao Aplicação  
-  // const [usuario, setUsuario] = useUsuarioState(null);
-  const [usuario, setUsuario] = useState(null);
-  const [idToken, setIdToken] = useState(null);
-  // const [apiKey, setApiKey] = useApiKeyState(null);
-  const [apiKey, setApiKey] = useState(null);
+
+  const [user, setUser] = useUserState(null);
+  const [usuario, setUsuario] = useUsuarioState(null);
+  const [idToken, setIdToken] = useIdTokenState(null);
+  const [apiKey, setApiKey] = useApiKeyState(null);
+  //const [user, setUser] = useState(null);
+  // const [usuario, setUsuario] = useState(null);
+  //const [idToken, setIdToken] = useState(null);
+  //const [apiKey, setApiKey] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
 
   const loginUsuario = async () => {

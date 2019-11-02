@@ -25,7 +25,7 @@ export default function ProcessarAviso() {
             setAviso(response.data);
         };
         fetchData();
-    }, [aviso]);
+    }, []);
 
     if (aviso) {
         return <ChamadoForm aviso={aviso} />

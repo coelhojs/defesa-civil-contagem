@@ -44,7 +44,7 @@ export default function Inicio() {
             };
         }
         login();
-    }, []);
+    }, [makeRequest]);
 
     //TODO: Verificar se esse método é suficiente
     if (auth && auth.user) {

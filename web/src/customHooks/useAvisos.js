@@ -2,9 +2,7 @@ import { api } from "./api";
 
 export const fetchAviso = async (id) => {
     try {
-        const response = await api.get(`/Avisos/${id}`, {},
-            {
-            });
+        const response = await api.get(`/Avisos/${id}`);
         return response;
 
     } catch (e) {
@@ -14,9 +12,7 @@ export const fetchAviso = async (id) => {
 
 export const fetchAllAvisos = async (apiKey) => {
     try {
-        const response = await api.get('/Avisos', {},
-            {
-            });
+        const response = await api.get('/Avisos');
         return response;
 
     } catch (e) {

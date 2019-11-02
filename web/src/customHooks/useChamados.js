@@ -14,8 +14,7 @@ export const createChamado = async (formValues) => {
 
 export const fetchAllChamados = async (apiKey) => {
     try {
-        const response = await api.get('/Chamados', {},
-            {});
+        const response = await api.get('/Chamados');
         return response;
 
     } catch (e) {
