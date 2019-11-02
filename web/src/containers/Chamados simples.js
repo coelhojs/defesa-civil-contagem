@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import { fetchAllChamados } from "../controllers/Chamados";
+import { fetchAllChamados } from "../customHooks/useChamados";
 
 const useStyles = makeStyles({
     root: {

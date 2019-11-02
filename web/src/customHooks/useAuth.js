@@ -1,10 +1,10 @@
 // Hook (use-auth.js)
+import { api } from "./api";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import * as React from 'react';
 import { createContext, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { api } from "../controllers/index";
 import createPersistedState from 'use-persisted-state';
 
 //Estados que devem ser persistidos entre tabs e refreshes
@@ -76,7 +76,7 @@ function useProvideAuth() {
             } else {
               setApiKey(response.data.api_key);
               setUsuario(response.data.usuario);
-              history.push('/Dashboard')
+              history.push('/Mapa')
             }
           })
       })

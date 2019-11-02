@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { fetchAllAvisos } from '../controllers/Avisos';
+import { fetchAllAvisos } from '../customHooks/useAvisos';
 import { useAuth } from '../customHooks/useAuth';
 import AvisosItem from './avisosItem';
 

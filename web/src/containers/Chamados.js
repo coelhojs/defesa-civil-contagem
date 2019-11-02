@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import MaterialTable from 'material-table'
-import { fetchAllChamados } from "../controllers/Chamados";
+import { fetchAllChamados } from "../customHooks/useChamados";
 
 const useStyles = makeStyles({
     root: {

@@ -15,7 +15,7 @@ import { useForm } from "../customHooks/useForm";
 import { useHistory } from "react-router-dom";
 import { chamado } from '../models/chamado';
 import ListaImagem from "./listaImagem";
-import { createChamado } from "../controllers/Chamados";
+import { createChamado } from "../customHooks/useChamados";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';

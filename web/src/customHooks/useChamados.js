@@ -1,9 +1,8 @@
-import { api } from "./index";
-import { localdb } from "./index";
+import { api } from "./api";
 
 export const createChamado = async (formValues) => {
     try {
-        const response = await localdb.post(`/Chamados`, { ...formValues },
+        const response = await api.post(`/Chamados`, { ...formValues },
             {});
 
         return response;
@@ -15,7 +14,7 @@ export const createChamado = async (formValues) => {
 
 export const fetchAllChamados = async (apiKey) => {
     try {
-        const response = await localdb.get('/Chamados', {},
+        const response = await api.get('/Chamados', {},
             {});
         return response;
 

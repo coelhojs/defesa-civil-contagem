@@ -1,9 +1,8 @@
-import { api } from "./index";
-import { localdb } from "./index";
+import { api } from "./api";
 
 export const fetchAviso = async (id) => {
     try {
-        const response = await localdb.get(`/Avisos/${id}`, {},
+        const response = await api.get(`/Avisos/${id}`, {},
             {
             });
         return response;
@@ -15,7 +14,7 @@ export const fetchAviso = async (id) => {
 
 export const fetchAllAvisos = async (apiKey) => {
     try {
-        const response = await localdb.get('/Avisos', {},
+        const response = await api.get('/Avisos', {},
             {
             });
         return response;

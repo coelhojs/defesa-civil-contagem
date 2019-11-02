@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ChamadoForm from '../forms/chamado';
-import { fetchAviso } from '../controllers/Avisos'
+import { fetchAviso } from '../customHooks/useAvisos'
 
 const useStyles = makeStyles(theme => ({
     root: {

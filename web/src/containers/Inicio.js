@@ -44,12 +44,11 @@ export default function Inicio() {
             };
         }
         login();
-    }, [makeRequest]);
+    }, []);
 
     //TODO: Verificar se esse método é suficiente
     if (auth && auth.user) {
-        console.log(auth)
-        history.push('/Dashboard')
+        history.push('/Mapa')
     }
 
     return (
