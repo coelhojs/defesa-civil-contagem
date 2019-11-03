@@ -5,13 +5,7 @@ import "firebase/auth";
 import * as React from 'react';
 import { createContext, useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import createPersistedState from 'use-persisted-state';
-
-//Estados que devem ser persistidos
-const useUserState = createPersistedState('user');
-const useUsuarioState = createPersistedState('usuario');
-const useApiKeyState = createPersistedState('apiKey');
-const useIdTokenState = createPersistedState('idToken');
+import useLocalStorage from "./useLocalStorage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzxKqnfjCJRVO6LsB8JYzcVXZVhbCUsmA",
@@ -51,59 +45,20 @@ function useProvideAuth() {
   let history = useHistory();
 
   //user = autenticacao Google
+  const [user, setUser] = useLocalStorage('user', null);
   //usuario = autenticacao Aplicação  
+  const [usuario, setUsuario] = useLocalStorage('usuario', null);
+  //idToken = token de auth do google
+  const [idToken, setIdToken] = useLocalStorage('idToken', null);
+  //apiKey = chave gerada pelo servidor
+  const [apiKey, setApiKey] = useLocalStorage('apiKey', null);
 
-  const useUser = initialState => {
-    const [user, setUser] = useUserState(initialState);
-
-    return {
-      user,
-      login: (userData) => setUser(userData),
-      logoff: () => setUser(null)
-    }
-  }
-
-
-  const useUsuario = initialState => {
-    const [usuario, setUsuario] = useUsuarioState(initialState);
-
-    return {
-      usuario,
-      login: (usuarioData) => setUsuario(usuarioData),
-      logoff: () => setUsuario(null)
-    }
-  }
-
-  const useIdToken = initialState => {
-    const [idToken, setIdToken] = useIdTokenState(initialState);
-
-    return {
-      idToken,
-      set: (data) => setIdToken(data),
-      remove: () => setIdToken(null)
-    }
-  }
-
-  const useApiKey = initialState => {
-    const [apiKey, setApiKey] = useApiKeyState(initialState);
-
-    return {
-      apiKey,
-      set: (data) => setApiKey(data),
-      remove: () => setApiKey(null)
-    }
-  }
-
-  //const [user, setUser] = useState(null);
-  // const [usuario, setUsuario] = useState(null);
-  //const [idToken, setIdToken] = useState(null);
-  //const [apiKey, setApiKey] = useState(null);
   const [showWarning, setShowWarning] = useState(false);
 
   const loginUsuario = async () => {
     return login()
       .then(token => {
-        useIdToken.set(token);
+        setIdToken(token);
         api.post(`/auth/google/login`, {},
           {
             headers: {
@@ -114,8 +69,8 @@ function useProvideAuth() {
             if (response.data.mensagem === "Usuário não cadastrado") {
               history.push('/Cadastro');
             } else {
-              useApiKey.set(response.data.api_key);
-              useUsuario.login(response.data.usuario);
+              setApiKey(response.data.api_key);
+              setUsuario(response.data.usuario);
               history.push('/Mapa')
             }
           })
@@ -129,7 +84,7 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
-        useUser().login(response.user)
+        setUser(response.user)
         return response.credential.idToken;
       });
   };
@@ -162,7 +117,7 @@ function useProvideAuth() {
         { ...formValues },
         {
           headers: {
-            'authorization': `Bearer ${useIdToken.idToken}`
+            'authorization': `Bearer ${idToken}`
           }
         })
       console.log(response);
@@ -190,9 +145,9 @@ function useProvideAuth() {
       .auth()
       .signOut()
       .then(() => {
-        useIdToken.remove();
-        useApiKey.remove();
-        useUsuario.logoff();
+        setIdToken(null);
+        setApiKey(null);
+        setUsuario(null);
         // setUser(false);
         // setUsuario(false);
       });
@@ -227,10 +182,10 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        useUser().login(user);
+        setUser(user);
       } else {
-        useUser().logoff();
-        useUsuario.logoff();
+        setUser(false);
+        setUsuario(false);
       }
     });
 
@@ -240,10 +195,10 @@ function useProvideAuth() {
 
   // Return the user object and auth methods
   return {
-    useUser,
-    useUsuario,
-    useIdToken,
-    useApiKey,
+    user,
+    usuario,
+    idToken,
+    apiKey,
     login,
     loginUsuario,
     showWarning,
