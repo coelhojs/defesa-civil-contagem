@@ -53,10 +53,47 @@ function useProvideAuth() {
   //user = autenticacao Google
   //usuario = autenticacao Aplicação  
 
-  const [user, setUser] = useUserState(null);
-  const [usuario, setUsuario] = useUsuarioState(null);
-  const [idToken, setIdToken] = useIdTokenState(null);
-  const [apiKey, setApiKey] = useApiKeyState(null);
+  const useUser = initialState => {
+    const [user, setUser] = useUserState(initialState);
+
+    return {
+      user,
+      login: (userData) => setUser(userData),
+      logoff: () => setUser(null)
+    }
+  }
+
+
+  const useUsuario = initialState => {
+    const [usuario, setUsuario] = useUsuarioState(initialState);
+
+    return {
+      usuario,
+      login: (usuarioData) => setUsuario(usuarioData),
+      logoff: () => setUsuario(null)
+    }
+  }
+
+  const useIdToken = initialState => {
+    const [idToken, setIdToken] = useIdTokenState(initialState);
+
+    return {
+      idToken,
+      set: (data) => setIdToken(data),
+      remove: () => setIdToken(null)
+    }
+  }
+
+  const useApiKey = initialState => {
+    const [apiKey, setApiKey] = useApiKeyState(initialState);
+
+    return {
+      apiKey,
+      set: (data) => setApiKey(data),
+      remove: () => setApiKey(null)
+    }
+  }
+
   //const [user, setUser] = useState(null);
   // const [usuario, setUsuario] = useState(null);
   //const [idToken, setIdToken] = useState(null);
@@ -66,7 +103,7 @@ function useProvideAuth() {
   const loginUsuario = async () => {
     return login()
       .then(token => {
-        setIdToken(token);
+        useIdToken.set(token);
         api.post(`/auth/google/login`, {},
           {
             headers: {
@@ -77,8 +114,8 @@ function useProvideAuth() {
             if (response.data.mensagem === "Usuário não cadastrado") {
               history.push('/Cadastro');
             } else {
-              setApiKey(response.data.api_key);
-              setUsuario(response.data.usuario);
+              useApiKey.set(response.data.api_key);
+              useUsuario.login(response.data.usuario);
               history.push('/Mapa')
             }
           })
@@ -92,7 +129,7 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
-        setUser(response.user)
+        useUser().login(response.user)
         return response.credential.idToken;
       });
   };
@@ -125,7 +162,7 @@ function useProvideAuth() {
         { ...formValues },
         {
           headers: {
-            'authorization': `Bearer ${idToken}`
+            'authorization': `Bearer ${useIdToken.idToken}`
           }
         })
       console.log(response);
@@ -153,9 +190,9 @@ function useProvideAuth() {
       .auth()
       .signOut()
       .then(() => {
-        setIdToken(null);
-        setApiKey(null);
-        setUsuario(null);
+        useIdToken.remove();
+        useApiKey.remove();
+        useUsuario.logoff();
         // setUser(false);
         // setUsuario(false);
       });
@@ -190,10 +227,10 @@ function useProvideAuth() {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        setUser(user);
+        useUser().login(user);
       } else {
-        setUser(false);
-        setUsuario(false);
+        useUser().logoff();
+        useUsuario.logoff();
       }
     });
 
@@ -203,10 +240,10 @@ function useProvideAuth() {
 
   // Return the user object and auth methods
   return {
-    user,
-    usuario,
-    idToken,
-    apiKey,
+    useUser,
+    useUsuario,
+    useIdToken,
+    useApiKey,
     login,
     loginUsuario,
     showWarning,
