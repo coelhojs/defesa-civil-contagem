@@ -43,6 +43,11 @@ export default function Chamados() {
             setChamados(response.data);
         };
         fetchData();
+
+        // Limpa a assinatura antes do componente deixar a tela
+        return () => {
+            setChamados(null);
+        }
     }, []);
 
     if (chamados) {

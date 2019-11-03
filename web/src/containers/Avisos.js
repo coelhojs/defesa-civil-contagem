@@ -33,6 +33,11 @@ export default function Avisos() {
             setAvisos(response.data);
         };
         fetchData();
+
+        // Limpa a assinatura antes do componente deixar a tela
+        return () => {
+            setAvisos(null);
+        }
     }, []);
 
     if (avisos && avisos.length > 0) {

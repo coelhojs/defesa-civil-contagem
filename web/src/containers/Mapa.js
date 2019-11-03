@@ -20,6 +20,11 @@ export default function Mapa() {
 
     useEffect(() => {
         fetchData();
+
+        // Limpa a assinatura antes do componente deixar a tela
+        return () => {
+            setMarkers(null);
+        }
     }, []);
 
     //const onLoad = useCallback(fetchData());
