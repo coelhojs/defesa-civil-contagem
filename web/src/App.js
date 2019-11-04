@@ -16,6 +16,7 @@ import PrivateRoute from './containers/PrivateRoute';
 import { ProvideAuth } from "./customHooks/useAuth";
 import fundo from "./img/background.png";
 import ProcessarAviso from './containers/ProcessarAviso';
+import DetalhesAviso from './containers/DetalhesAviso';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,6 +54,7 @@ function App() {
             <PrivateRoute exact path="/Chamados" component={Chamados} />
             <PrivateRoute exact path="/Dashboard" component={Dashboard} />
             <PrivateRoute exact path="/Mapa" component={Mapa} />
+            <PrivateRoute exact path="/DetalhesAviso/:id" component={DetalhesAviso} />
             <PrivateRoute exact path="/ProcessarAviso/:id" component={ProcessarAviso} />
             <Route path="*" component={NotFound} />
           </Switch>

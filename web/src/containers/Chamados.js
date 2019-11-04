@@ -1,16 +1,18 @@
+import { makeStyles } from '@material-ui/core/styles';
+import MaterialTable from 'material-table';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import MaterialTable from 'material-table'
 import { fetchAllChamados } from "../customHooks/useChamados";
+import Spinner from '../components/spinner';
 
 const useStyles = makeStyles({
     root: {
+        borderRadius: '0px',
+        height: '100%',
         width: '100%',
     },
     tableWrapper: {
-        maxHeight: 440,
+        // maxHeight: 440,
         overflow: 'auto',
     },
 });
@@ -18,8 +20,8 @@ const useStyles = makeStyles({
 export default function Chamados() {
     const [chamados, setChamados] = useState(null);
     const classes = useStyles();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -37,11 +39,12 @@ export default function Chamados() {
         { field: 'status', title: 'Status', minWidth: 100 },
     ];
 
+    const fetchData = async () => {
+        const response = await fetchAllChamados();
+        setChamados(response.data);
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetchAllChamados();
-            setChamados(response.data);
-        };
         fetchData();
 
         // Limpa a assinatura antes do componente deixar a tela
@@ -51,7 +54,6 @@ export default function Chamados() {
     }, []);
 
     if (chamados) {
-
         let rows = [];
         chamados.forEach((item) => {
             rows.push({
@@ -64,21 +66,21 @@ export default function Chamados() {
         })
 
         return (
-            <Paper className={classes.root}>
-                <MaterialTable
-                    columns={columns}
-                    data={rows}
-                    title="Lista de chamados"
-                    detailPanel={rowData => {
-                        return (
-                            <h4>Insira aqui os demais campos do chamado</h4>
-                        )
-                    }}
-                    onRowClick={(event, rowData, togglePanel) => togglePanel()}
-                />
-            </Paper>
+            <MaterialTable
+                className={classes.root}
+                columns={columns}
+                data={rows}
+                title="Lista de chamados"
+                detailPanel={rowData => {
+                    return (
+                        <h4>Insira aqui os demais campos do chamado</h4>
+                    )
+                }}
+                onRowClick={(event, rowData, togglePanel) => togglePanel()}
+            />
         )
     } else {
-        return "Não há chamados cadastrados"
+        return <Spinner />
+        //return "Não há chamados cadastrados"
     }
 }

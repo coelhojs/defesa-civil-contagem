@@ -1,27 +1,27 @@
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
+import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Typography from '@material-ui/core/Typography';
 import Send from '@material-ui/icons/Send';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { useForm } from "../customHooks/useForm";
 import { useHistory } from "react-router-dom";
-import { chamado } from '../models/chamado';
-import ListaImagem from "./listaImagem";
 import { createChamado } from "../customHooks/useChamados";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
+import { useForm } from "../customHooks/useForm";
+import { chamado } from '../models/chamado';
+import ListaImagem from "../components/listaImagem";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -59,7 +59,7 @@ export default function ChamadoForm(props) {
     const classes = useStyles();
     const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, chamado);
     const [aviso] = useState(props.aviso);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -74,8 +74,9 @@ export default function ChamadoForm(props) {
             lat: aviso.endereco.coordenadas.lat,
             lng: aviso.endereco.coordenadas.lng
         };
-        createChamado(values);
-        history.push('/Chamados');
+        createChamado(values).then(() => {
+            history.push('/Chamados');
+        });
     }
 
     return (
@@ -225,7 +226,7 @@ export default function ChamadoForm(props) {
                                 <TextareaAutosize rows={3}
                                     className={classes.textarea}
                                     onChange={handleChange}
-                                    value={values.descricao}
+                                    value={aviso.descricao}
                                     placeholder="Descrição"
                                 />
                                 <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
@@ -235,7 +236,7 @@ export default function ChamadoForm(props) {
                             <ListaImagem />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button variant="contained" color="secondary" className={classes.button}>Voltar
+                            <Button onClick={() => history.push('/Avisos')} variant="contained" color="secondary" className={classes.button}>Voltar
                         </Button>
                             <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.button}>
                                 Criar Chamado

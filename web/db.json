@@ -5,7 +5,23 @@
             "idSequencia": "0001/2019",
             "tipo": "Desabamento",
             "timestamp": 1571174541,
-            "descricao": "Modelo de Desabamento",
+            "descricao": "Desabamento de terra",
+            "status": "Pendente",
+            "endereco": {
+                "logradouro": "Rua Jacuí",
+                "numero": "17",
+                "bairro": "Santa Cruz",
+                "cidade": "",
+                "estado": "",
+                "cep": "",
+                "coordenadas": {
+                    "lat": "-19.8886",
+                    "lng": "-44.1134"
+                }
+            },
+            "imagens": [
+                "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
+            ],
             "usuario": {
                 "id": 1,
                 "tipo": "cidadao",
@@ -22,22 +38,7 @@
                     "cidade": "Belo Horizonte",
                     "cep": "00000-000"
                 }
-            },
-            "endereco": {
-                "logradouro": "Rua Jacuí",
-                "numero": "17",
-                "bairro": "Santa Cruz",
-                "cidade": "",
-                "estado": "",
-                "cep": "",
-                "coordenadas": {
-                    "lat": "-19.8886",
-                    "lng": "-44.1134"
-                }
-            },
-            "imagens": [
-                "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
-            ]
+            }
         },
         {
             "id": 2,
@@ -115,7 +116,167 @@
             ]
         }
     ],
-    "Chamados": [],
+    "Chamados": [
+        {
+            "informante": "Cristiano Coelho de Jesus Souza",
+            "tipo": "Desabamento",
+            "status": "",
+            "numeroDiscriminacao": "",
+            "numeroOficioEncaminhado": "",
+            "orgaoDestinoOficio": "",
+            "dataAviso": "15/10/2019 06:22",
+            "dataVistoria": "",
+            "equipeVistoria": "",
+            "dataMonitoramento": "",
+            "morador": "",
+            "pessoasEnvolvidas": "",
+            "vitimaParcial": "",
+            "vitimaFatal": "",
+            "interdicao": "",
+            "doacao": "",
+            "description": "",
+            "retornoVistoria": "",
+            "usuario": {
+                "nome": "",
+                "email": "ccoelho.me@gmail.com",
+                "cpf": "",
+                "telefone": "(31) 98587-7928",
+                "dataNasc": "",
+                "endereco": {
+                    "logradouro": "Rua Jacuí",
+                    "numero": "17",
+                    "bairro": "Santa Cruz",
+                    "cidade": "",
+                    "estado": "",
+                    "cep": "",
+                    "coordenadas": {
+                        "lat": "-19.8886",
+                        "lng": "-44.1134"
+                    }
+                }
+            },
+            "endereco": {
+                "logradouro": "Rua Jacuí",
+                "numero": "17",
+                "bairro": "Santa Cruz",
+                "cidade": "",
+                "estado": "",
+                "cep": "",
+                "coordenadas": {
+                    "lat": "-19.8886",
+                    "lng": "-44.1134"
+                }
+            },
+            "idSequencia": "0001/2019",
+            "id": 1
+        },
+        {
+            "informante": "Cristiano Coelho de Jesus Souza",
+            "tipo": "Erosão",
+            "status": "",
+            "numeroDiscriminacao": "",
+            "numeroOficioEncaminhado": "",
+            "orgaoDestinoOficio": "",
+            "dataAviso": "15/10/2019 06:22",
+            "dataVistoria": "",
+            "equipeVistoria": "",
+            "dataMonitoramento": "",
+            "morador": "",
+            "pessoasEnvolvidas": "",
+            "vitimaParcial": "",
+            "vitimaFatal": "",
+            "interdicao": "",
+            "doacao": "",
+            "description": "",
+            "retornoVistoria": "",
+            "usuario": {
+                "nome": "",
+                "email": "ccoelho.me@gmail.com",
+                "cpf": "",
+                "telefone": "(31) 98587-7928",
+                "dataNasc": "",
+                "endereco": {
+                    "logradouro": "Rua Amapá",
+                    "numero": "13",
+                    "bairro": "Independência",
+                    "cidade": "",
+                    "estado": "",
+                    "cep": "",
+                    "coordenadas": {
+                        "lat": "-19.9343",
+                        "lng": "-44.0851"
+                    }
+                }
+            },
+            "endereco": {
+                "logradouro": "Rua Amapá",
+                "numero": "13",
+                "bairro": "Independência",
+                "cidade": "",
+                "estado": "",
+                "cep": "",
+                "coordenadas": {
+                    "lat": "-19.9343",
+                    "lng": "-44.0851"
+                }
+            },
+            "idSequencia": "0002/2019",
+            "id": 2
+        },
+        {
+            "informante": "Cristiano Coelho de Jesus Souza",
+            "tipo": "Alagamento",
+            "status": "",
+            "numeroDiscriminacao": "",
+            "numeroOficioEncaminhado": "",
+            "orgaoDestinoOficio": "",
+            "dataAviso": "15/10/2019 06:22",
+            "dataVistoria": "",
+            "equipeVistoria": "",
+            "dataMonitoramento": "",
+            "morador": "",
+            "pessoasEnvolvidas": "",
+            "vitimaParcial": "",
+            "vitimaFatal": "",
+            "interdicao": "",
+            "doacao": "",
+            "description": "",
+            "retornoVistoria": "",
+            "usuario": {
+                "nome": "",
+                "email": "ccoelho.me@gmail.com",
+                "cpf": "",
+                "telefone": "(31) 98587-7928",
+                "dataNasc": "",
+                "endereco": {
+                    "logradouro": "Rua VP 2",
+                    "numero": "",
+                    "bairro": "Nova Contagem",
+                    "cidade": "",
+                    "estado": "",
+                    "cep": "",
+                    "coordenadas": {
+                        "lat": "-19.827",
+                        "lng": "-44.1582"
+                    }
+                }
+            },
+            "endereco": {
+                "logradouro": "Rua VP 2",
+                "numero": "",
+                "bairro": "Nova Contagem",
+                "cidade": "",
+                "estado": "",
+                "cep": "",
+                "coordenadas": {
+                    "lat": "-19.827",
+                    "lng": "-44.1582"
+                }
+            },
+            "idSequencia": "0003/2019",
+            "id": 3
+        }
+    ],
     "Usuarios": [
         {
             "id": 1,

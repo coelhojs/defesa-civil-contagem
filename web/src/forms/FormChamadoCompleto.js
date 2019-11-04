@@ -13,7 +13,7 @@ import Send from '@material-ui/icons/Send';
 import React, { useState } from 'react';
 import { useForm } from "../customHooks/useForm";
 import { chamado } from '../models/chamado';
-import ListaImagem from "./listaImagem";
+import ListaImagem from "../components/listaImagem";
 
 const useStyles = makeStyles(theme => ({
     root: {

@@ -1,9 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Spinner from '../components/spinner';
+import { fetchAviso } from '../customHooks/useAvisos';
 import ChamadoForm from '../forms/chamado';
-import { fetchAviso } from '../customHooks/useAvisos'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,7 +16,6 @@ export default function ProcessarAviso() {
     const [aviso, setAviso] = useState(null);
 
     let location = useLocation();
-    let pathname = location.pathname;
     let avisoId = location.pathname.split("/")
 
     useEffect(() => {
@@ -30,12 +29,6 @@ export default function ProcessarAviso() {
     if (aviso) {
         return <ChamadoForm aviso={aviso} />
     } else {
-        return (
-            <div className={classes.root} >
-                <Typography variant="h5" component="h3">
-                    Carregando aviso...
-                </Typography>
-            </div >
-        )
+        return <Spinner />
     }
 }

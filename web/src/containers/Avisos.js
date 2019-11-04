@@ -1,37 +1,57 @@
-//https://codeburst.io/how-to-fetch-data-from-an-api-with-react-hooks-9e7202b8afcd
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import { useHistory } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import MaterialTable from 'material-table';
+import moment from 'moment';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import Aviso from '../components/aviso';
+import Spinner from '../components/spinner';
 import { fetchAllAvisos } from '../customHooks/useAvisos';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
+        borderRadius: '0px',
+        height: '100%',
+        width: '100%',
     },
-    gridList: {
-        paddingTop: '2rem',
-        paddingBottom: '2rem'
-    }
-}));
+    tableWrapper: {
+        // maxHeight: 440,
+        overflow: 'auto',
+    },
+});
 
-export default function Avisos() {
+export default function Chamados() {
+    const [avisos, setAvisos] = useState(null);
     const classes = useStyles();
-    const [avisos, setAvisos] = useState([]);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    let history = useHistory();
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = event => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+    const columns = [
+        { field: 'idSequencia', title: 'ID', minWidth: 10 },
+        { field: 'tipo', title: 'Tipo', minWidth: 50 },
+        { field: 'data', title: 'Data', minWidth: 50 },
+        { field: 'bairro', title: 'Bairro', minWidth: 50 },
+        { field: 'status', title: 'Status', minWidth: 50 },
+        { field: 'acao', title: '', minWidth: 50 },
+    ];
+
+    const fetchData = async () => {
+        const response = await fetchAllAvisos();
+        setAvisos(response.data);
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetchAllAvisos();
-            setAvisos(response.data);
-        };
         fetchData();
 
         // Limpa a assinatura antes do componente deixar a tela
@@ -40,24 +60,48 @@ export default function Avisos() {
         }
     }, []);
 
-    if (avisos && avisos.length > 0) {
+    if (avisos) {
+        let rows = [];
+        avisos.forEach((item) => {
+            rows.push({
+                id: item.id,
+                idSequencia: item.idSequencia,
+                tipo: item.tipo,
+                data: moment.unix(item.timestamp).format("MM/DD/YYYY"),
+                bairro: item.endereco.bairro,
+                status: item.status,
+                acao: (item.status == "Pendente") ? (
+                    <Button variant="contained" color="primary" className={classes.button}
+                        onClick={() => {
+                            history.push(`/ProcessarAviso/${item.id}`)
+                        }}
+                    >Processar</Button>
+                ) : (
+                        <Button variant="contained" color="secondary" className={classes.button}
+                            onClick={() => {
+                                history.push(`/DetalhesAviso/${item.id}`)
+                            }}
+                        >Detalhes</Button>
+                    )
+            })
+        })
+
         return (
-            <GridList cellHeight={180} className={classes.gridList}>
-                <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                    <ListSubheader component="div">
-                        <Typography variant="h3" component="h2">
-                            Lista de avisos
-                        </Typography>
-                    </ListSubheader>
-                </GridListTile>
-                {avisos.map(avisos => (
-                    <Aviso key={avisos.id} avisos={avisos} />
-                ))}
-            </GridList>
+            <MaterialTable
+                className={classes.root}
+                columns={columns}
+                data={rows}
+                title="Lista de avisos"
+            // detailPanel={rowData => {
+            //     return (
+            //         <h4>Insira aqui os demais campos do chamado</h4>
+            //     )
+            // }}
+            // onRowClick={(event, rowData, togglePanel) => togglePanel()}
+            />
         )
     } else {
-        return (
-            <h1>Não há avisos cadastrados</h1>
-        )
+        return <Spinner />
+        //return "Não há chamados cadastrados"
     }
 }
