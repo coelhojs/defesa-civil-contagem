@@ -6,17 +6,17 @@ import { Route, Switch } from "react-router-dom";
 import AppDrawer from './components/drawer';
 import Header from './components/header';
 import Avisos from "./containers/Avisos";
-import Chamados from "./containers/Chamados";
 import CadastroRoute from "./containers/CadastroRoute";
+import Chamados from "./containers/Chamados";
 import Dashboard from './containers/Dashboard';
+import DetalhesAviso from './containers/DetalhesAviso';
 import Inicio from './containers/Inicio';
 import Mapa from "./containers/Mapa";
 import NotFound from "./containers/NotFound";
 import PrivateRoute from './containers/PrivateRoute';
+import ProcessarAviso from './containers/ProcessarAviso';
 import { ProvideAuth } from "./customHooks/useAuth";
 import fundo from "./img/background.png";
-import ProcessarAviso from './containers/ProcessarAviso';
-import DetalhesAviso from './containers/DetalhesAviso';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -77,6 +77,28 @@ export default function Chamados() {
                     )
                 }}
                 onRowClick={(event, rowData, togglePanel) => togglePanel()}
+                localization={{
+                    pagination: {
+                        labelDisplayedRows: '{from}-{to} de {count}',
+                        labelRowsSelect:'linhas',
+                        labelRowsPerPage: 'linhas por página'
+                    },
+                    
+                    toolbar: {
+                        nRowsSelected: '{0} linha(s) selecionadas',
+                        searchPlaceholder: 'Pesquisar',
+                        searchTooltip: 'Pesquisar'
+                    },
+                    header: {
+                        actions: 'Ações'
+                    },
+                    body: {
+                        emptyDataSourceMessage: 'Sem registros para exibir',
+                        filterRow: {
+                            filterTooltip: 'Filtro'
+                        }
+                    }
+                }}
             />
         )
     } else {

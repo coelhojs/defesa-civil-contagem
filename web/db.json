@@ -45,7 +45,8 @@
             "idSequencia": "0002/2019",
             "tipo": "Erosão",
             "timestamp": 1571174541,
-            "descricao": "Modelo de Desabamento",
+            "descricao": "Erosão",
+            "status": "Pendente",
             "usuario": {
                 "id": 1,
                 "tipo": "cidadao",
@@ -85,6 +86,7 @@
             "tipo": "Alagamento",
             "timestamp": 1571174541,
             "descricao": "Alagamento na Rua VP 2",
+            "status": "Pendente",
             "usuario": {
                 "id": 1,
                 "tipo": "cidadao",
@@ -116,167 +118,7 @@
             ]
         }
     ],
-    "Chamados": [
-        {
-            "informante": "Cristiano Coelho de Jesus Souza",
-            "tipo": "Desabamento",
-            "status": "",
-            "numeroDiscriminacao": "",
-            "numeroOficioEncaminhado": "",
-            "orgaoDestinoOficio": "",
-            "dataAviso": "15/10/2019 06:22",
-            "dataVistoria": "",
-            "equipeVistoria": "",
-            "dataMonitoramento": "",
-            "morador": "",
-            "pessoasEnvolvidas": "",
-            "vitimaParcial": "",
-            "vitimaFatal": "",
-            "interdicao": "",
-            "doacao": "",
-            "description": "",
-            "retornoVistoria": "",
-            "usuario": {
-                "nome": "",
-                "email": "ccoelho.me@gmail.com",
-                "cpf": "",
-                "telefone": "(31) 98587-7928",
-                "dataNasc": "",
-                "endereco": {
-                    "logradouro": "Rua Jacuí",
-                    "numero": "17",
-                    "bairro": "Santa Cruz",
-                    "cidade": "",
-                    "estado": "",
-                    "cep": "",
-                    "coordenadas": {
-                        "lat": "-19.8886",
-                        "lng": "-44.1134"
-                    }
-                }
-            },
-            "endereco": {
-                "logradouro": "Rua Jacuí",
-                "numero": "17",
-                "bairro": "Santa Cruz",
-                "cidade": "",
-                "estado": "",
-                "cep": "",
-                "coordenadas": {
-                    "lat": "-19.8886",
-                    "lng": "-44.1134"
-                }
-            },
-            "idSequencia": "0001/2019",
-            "id": 1
-        },
-        {
-            "informante": "Cristiano Coelho de Jesus Souza",
-            "tipo": "Erosão",
-            "status": "",
-            "numeroDiscriminacao": "",
-            "numeroOficioEncaminhado": "",
-            "orgaoDestinoOficio": "",
-            "dataAviso": "15/10/2019 06:22",
-            "dataVistoria": "",
-            "equipeVistoria": "",
-            "dataMonitoramento": "",
-            "morador": "",
-            "pessoasEnvolvidas": "",
-            "vitimaParcial": "",
-            "vitimaFatal": "",
-            "interdicao": "",
-            "doacao": "",
-            "description": "",
-            "retornoVistoria": "",
-            "usuario": {
-                "nome": "",
-                "email": "ccoelho.me@gmail.com",
-                "cpf": "",
-                "telefone": "(31) 98587-7928",
-                "dataNasc": "",
-                "endereco": {
-                    "logradouro": "Rua Amapá",
-                    "numero": "13",
-                    "bairro": "Independência",
-                    "cidade": "",
-                    "estado": "",
-                    "cep": "",
-                    "coordenadas": {
-                        "lat": "-19.9343",
-                        "lng": "-44.0851"
-                    }
-                }
-            },
-            "endereco": {
-                "logradouro": "Rua Amapá",
-                "numero": "13",
-                "bairro": "Independência",
-                "cidade": "",
-                "estado": "",
-                "cep": "",
-                "coordenadas": {
-                    "lat": "-19.9343",
-                    "lng": "-44.0851"
-                }
-            },
-            "idSequencia": "0002/2019",
-            "id": 2
-        },
-        {
-            "informante": "Cristiano Coelho de Jesus Souza",
-            "tipo": "Alagamento",
-            "status": "",
-            "numeroDiscriminacao": "",
-            "numeroOficioEncaminhado": "",
-            "orgaoDestinoOficio": "",
-            "dataAviso": "15/10/2019 06:22",
-            "dataVistoria": "",
-            "equipeVistoria": "",
-            "dataMonitoramento": "",
-            "morador": "",
-            "pessoasEnvolvidas": "",
-            "vitimaParcial": "",
-            "vitimaFatal": "",
-            "interdicao": "",
-            "doacao": "",
-            "description": "",
-            "retornoVistoria": "",
-            "usuario": {
-                "nome": "",
-                "email": "ccoelho.me@gmail.com",
-                "cpf": "",
-                "telefone": "(31) 98587-7928",
-                "dataNasc": "",
-                "endereco": {
-                    "logradouro": "Rua VP 2",
-                    "numero": "",
-                    "bairro": "Nova Contagem",
-                    "cidade": "",
-                    "estado": "",
-                    "cep": "",
-                    "coordenadas": {
-                        "lat": "-19.827",
-                        "lng": "-44.1582"
-                    }
-                }
-            },
-            "endereco": {
-                "logradouro": "Rua VP 2",
-                "numero": "",
-                "bairro": "Nova Contagem",
-                "cidade": "",
-                "estado": "",
-                "cep": "",
-                "coordenadas": {
-                    "lat": "-19.827",
-                    "lng": "-44.1582"
-                }
-            },
-            "idSequencia": "0003/2019",
-            "id": 3
-        }
-    ],
+    "Chamados": [],
     "Usuarios": [
         {
             "id": 1,
@@ -295,10 +137,5 @@
                 "cep": "00000-000"
             }
         }
-    ],
-    "auth": {
-        "google": {
-            "login": "11"
-        }
-    }
+    ]
 }

@@ -74,6 +74,7 @@ export default function ChamadoForm(props) {
             lat: aviso.endereco.coordenadas.lat,
             lng: aviso.endereco.coordenadas.lng
         };
+        values.status = "Pendente";
         createChamado(values).then(() => {
             history.push('/Chamados');
         });
