@@ -1,14 +1,31 @@
 export const aviso = {
     id: "",
-    idUsuario: "",
     timestamp: "",
     tipo: "",
+    descricao: "",
+    imagens: [""],
+    // ...endereco,
+    // ...usuario,
     logradouro: "",
     numero: "",
     bairro: "",
-    imagens: [
-        ""
-    ],
-    descricao: "",
-    cidadao: ""
+    cidade: "",
+    estado: "",
+    cep: "",
+    coordenadas: {
+        lat: "",
+        lng: ""
+    },
+    usuario_id: "",
+    usuario_nome: "",
+    usuario_email: "",
+    usuario_cpf: "",
+    usuario_telefone: "",
+    usuario_dataNasc: "",
+    usuario_logradouro: "",
+    usuario_numero: "",
+    usuario_bairro: "",
+    usuario_cidade: "",
+    usuario_estado: "",
+    usuario_cep: ""
 }

@@ -110,7 +110,7 @@ export default function DetalhesAviso() {
                             <Input
                                 readOnly
                                 id="Informant"
-                                value={aviso.usuario.nome}
+                                value={aviso.usuario_nome}
                             />
                         </FormControl>
                     </Grid>
@@ -132,7 +132,7 @@ export default function DetalhesAviso() {
                             <Input
                                 readOnly
                                 id="email"
-                                value={aviso.usuario.email}
+                                value={aviso.usuario_email}
                             />
                         </FormControl>
                     </Grid>
@@ -143,7 +143,7 @@ export default function DetalhesAviso() {
                             <Input
                                 readOnly
                                 id="telefone"
-                                value={aviso.usuario.telefone}
+                                value={aviso.usuario_telefone}
                             />
                         </FormControl>
                     </Grid>
@@ -153,7 +153,7 @@ export default function DetalhesAviso() {
                             <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
                             <Input
                                 id="logradouro"
-                                value={aviso.endereco.logradouro}
+                                value={aviso.logradouro}
                             />
                         </FormControl>
                     </Grid>
@@ -164,7 +164,7 @@ export default function DetalhesAviso() {
                             <Input
                                 id="numero"
                                 type="number"
-                                value={aviso.endereco.numero}
+                                value={aviso.numero}
                             />
                         </FormControl>
                     </Grid>
@@ -174,7 +174,7 @@ export default function DetalhesAviso() {
                             <Input
                                 readOnly
                                 id="complemento"
-                                value={aviso.endereco.complemento}
+                                value={aviso.complemento}
                             />
                         </FormControl>
                     </Grid>
@@ -183,7 +183,7 @@ export default function DetalhesAviso() {
                             <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
                             <Input
                                 id="bairro"
-                                value={aviso.endereco.bairro}
+                                value={aviso.bairro}
                             />
                         </FormControl>
                     </Grid>

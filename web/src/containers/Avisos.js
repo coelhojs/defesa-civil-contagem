@@ -46,12 +46,12 @@ export default function Chamados() {
         { field: 'acao', title: '', minWidth: 50 },
     ];
 
-    const fetchData = async () => {
-        const response = await fetchAllAvisos();
-        setAvisos(response.data);
-    };
 
     useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetchAllAvisos();
+            setAvisos(response.data);
+        };
         fetchData();
 
         // Limpa a assinatura antes do componente deixar a tela
@@ -68,7 +68,7 @@ export default function Chamados() {
                 idSequencia: item.idSequencia,
                 tipo: item.tipo,
                 data: moment.unix(item.timestamp).format("MM/DD/YYYY"),
-                bairro: item.endereco.bairro,
+                bairro: item.bairro,
                 status: item.status,
                 acao: (item.status == "Pendente") ? (
                     <Button variant="contained" color="primary" className={classes.button}

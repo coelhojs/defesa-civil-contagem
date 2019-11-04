@@ -1,141 +1,168 @@
 {
-    "Avisos": [
-        {
-            "id": 1,
-            "idSequencia": "0001/2019",
-            "tipo": "Desabamento",
-            "timestamp": 1571174541,
-            "descricao": "Desabamento de terra",
-            "status": "Pendente",
-            "endereco": {
-                "logradouro": "Rua Jacuí",
-                "numero": "17",
-                "bairro": "Santa Cruz",
-                "cidade": "",
-                "estado": "",
-                "cep": "",
-                "coordenadas": {
-                    "lat": "-19.8886",
-                    "lng": "-44.1134"
-                }
-            },
-            "imagens": [
-                "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
-            ],
-            "usuario": {
-                "id": 1,
-                "tipo": "cidadao",
-                "nome": "Cristiano Coelho de Jesus Souza",
-                "telefone": "(31) 98587-7928",
-                "cpf": "123.456.789-09",
-                "email": "ccoelho.me@gmail.com",
-                "dataNascimento": "15/03/1994",
-                "endereco": {
-                    "logradouro": "Cláudio Manoel",
-                    "numero": "1162",
-                    "complemento": "",
-                    "bairro": "Funcionários",
-                    "cidade": "Belo Horizonte",
-                    "cep": "00000-000"
-                }
-            }
-        },
-        {
-            "id": 2,
-            "idSequencia": "0002/2019",
-            "tipo": "Erosão",
-            "timestamp": 1571174541,
-            "descricao": "Erosão",
-            "status": "Pendente",
-            "usuario": {
-                "id": 1,
-                "tipo": "cidadao",
-                "nome": "Cristiano Coelho de Jesus Souza",
-                "telefone": "(31) 98587-7928",
-                "cpf": "123.456.789-09",
-                "email": "ccoelho.me@gmail.com",
-                "dataNascimento": "15/03/1994",
-                "endereco": {
-                    "logradouro": "Cláudio Manoel",
-                    "numero": "1162",
-                    "complemento": "",
-                    "bairro": "Funcionários",
-                    "cidade": "Belo Horizonte",
-                    "cep": "00000-000"
-                }
-            },
-            "endereco": {
-                "logradouro": "Rua Amapá",
-                "numero": "13",
-                "bairro": "Independência",
-                "cidade": "",
-                "estado": "",
-                "cep": "",
-                "coordenadas": {
-                    "lat": "-19.9343",
-                    "lng": "-44.0851"
-                }
-            },
-            "imagens": [
-                "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
-            ]
-        },
-        {
-            "id": 3,
-            "idSequencia": "0003/2019",
-            "tipo": "Alagamento",
-            "timestamp": 1571174541,
-            "descricao": "Alagamento na Rua VP 2",
-            "status": "Pendente",
-            "usuario": {
-                "id": 1,
-                "tipo": "cidadao",
-                "nome": "Cristiano Coelho de Jesus Souza",
-                "telefone": "(31) 98587-7928",
-                "cpf": "123.456.789-09",
-                "email": "ccoelho.me@gmail.com",
-                "dataNascimento": "15/03/1994",
-                "endereco": {
-                    "logradouro": "Cláudio Manoel",
-                    "numero": "1162",
-                    "complemento": "",
-                    "bairro": "Funcionários",
-                    "cidade": "Belo Horizonte",
-                    "cep": "00000-000"
-                }
-            },
-            "endereco": {
-                "logradouro": "Rua VP 2",
-                "numero": "",
-                "bairro": "Nova Contagem",
-                "coordenadas": {
-                    "lat": "-19.827",
-                    "lng": "-44.1582"
-                }
-            },
-            "imagens": [
-                "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
-            ]
-        }
-    ],
-    "Chamados": [],
-    "Usuarios": [
-        {
-            "id": 1,
-            "tipo": "cidadao",
-            "nome": "Cristiano Coelho de Jesus Souza",
-            "telefone": "(31) 98587-7928",
-            "cpf": "123.456.789-09",
-            "email": "ccoelho.me@gmail.com",
-            "dataNascimento": "15/03/1994",
-            "endereco": {
-                "logradouro": "Cláudio Manoel",
-                "numero": "1162",
-                "complemento": "",
-                "bairro": "Funcionários",
-                "cidade": "Belo Horizonte",
-                "cep": "00000-000"
-            }
-        }
-    ]
+  "Avisos": [
+    {
+      "id": 1,
+      "idSequencia": "0001/2019",
+      "tipo": "Desabamento",
+      "timestamp": 1571174541,
+      "descricao": "Desabamento de terra",
+      "status": "Processado",
+      "logradouro": "Rua Jacuí",
+      "numero": "17",
+      "bairro": "Santa Cruz",
+      "cidade": "",
+      "estado": "",
+      "cep": "",
+      "coordenadas": {
+        "lat": "-19.8886",
+        "lng": "-44.1134"
+      },
+      "imagens": [
+        "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
+      ],
+      "usuario_id": 1,
+      "usuario_tipo": "cidadao",
+      "usuario_nome": "Cristiano Coelho de Jesus Souza",
+      "usuario_telefone": "(31) 98587-7928",
+      "usuario_cpf": "123.456.789-09",
+      "usuario_email": "ccoelho.me@gmail.com",
+      "usuario_dataNascimento": "15/03/1994",
+      "usuario_logradouro": "Cláudio Manoel",
+      "usuario_numero": "1162",
+      "usuario_complemento": "",
+      "usuario_bairro": "Funcionários",
+      "usuario_cidade": "Belo Horizonte",
+      "usuario_cep": "00000-000"
+    },
+    {
+      "id": 2,
+      "idSequencia": "0002/2019",
+      "tipo": "Erosão",
+      "timestamp": 1571174541,
+      "descricao": "Erosão",
+      "status": "Pendente",
+      "usuario_id": 1,
+      "usuario_nome": "Cristiano Coelho de Jesus Souza",
+      "usuario_telefone": "(31) 98587-7928",
+      "usuario_cpf": "123.456.789-09",
+      "usuario_email": "ccoelho.me@gmail.com",
+      "usuario_dataNascimento": "15/03/1994",
+      "usuario_logradouro": "Cláudio Manoel",
+      "usuario_numero": "1162",
+      "usuario_complemento": "",
+      "usuario_bairro": "Funcionários",
+      "usuario_cidade": "Belo Horizonte",
+      "usuario_cep": "00000-000",
+      "logradouro": "Rua Amapá",
+      "numero": "13",
+      "bairro": "Independência",
+      "cidade": "",
+      "estado": "",
+      "cep": "",
+      "coordenadas": {
+        "lat": "-19.9343",
+        "lng": "-44.0851"
+      },
+      "imagens": [
+        "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
+      ]
+    },
+    {
+      "id": 3,
+      "idSequencia": "0003/2019",
+      "tipo": "Alagamento",
+      "timestamp": 1571174541,
+      "descricao": "Alagamento na Rua VP 2",
+      "status": "Pendente",
+      "usuario_id": 1,
+      "usuario_tipo": "cidadao",
+      "usuario_nome": "Cristiano Coelho de Jesus Souza",
+      "usuario_telefone": "(31) 98587-7928",
+      "usuario_cpf": "123.456.789-09",
+      "usuario_email": "ccoelho.me@gmail.com",
+      "usuario_dataNascimento": "15/03/1994",
+      "usuario_logradouro": "Cláudio Manoel",
+      "usuario_numero": "1162",
+      "usuario_complemento": "",
+      "usuario_bairro": "Funcionários",
+      "usuario_cidade": "Belo Horizonte",
+      "usuario_cep": "00000-000",
+      "logradouro": "Rua VP 2",
+      "numero": "",
+      "bairro": "Nova Contagem",
+      "coordenadas": {
+        "lat": "-19.827",
+        "lng": "-44.1582"
+      },
+      "imagens": [
+        "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
+      ]
+    }
+  ],
+  "Chamados": [
+    {
+      "idSequencia": "0001/2019",
+      "id": 1,
+      "tipo": "Desabamento",
+      "status": "Pendente",
+      "numeroDiscriminacao": "",
+      "numeroOficioEncaminhado": "",
+      "orgaoDestinoOficio": "",
+      "dataAviso": "",
+      "dataVistoria": "",
+      "equipeVistoria": "",
+      "dataMonitoramento": "",
+      "morador": "",
+      "pessoasEnvolvidas": "",
+      "vitimaParcial": "",
+      "vitimaFatal": "",
+      "interdicao": "",
+      "doacao": "",
+      "descricao": "Desabamento de terra",
+      "retornoVistoria": "",
+      "logradouro": "Rua Jacuí",
+      "numero": "17",
+      "bairro": "Santa Cruz",
+      "cidade": "",
+      "estado": "",
+      "cep": "",
+      "coordenadas": {
+        "lat": "-19.8886",
+        "lng": "-44.1134"
+      },
+      "usuario_id": 1,
+      "usuario_nome": "Cristiano Coelho de Jesus Souza",
+      "usuario_email": "ccoelho.me@gmail.com",
+      "usuario_cpf": "123.456.789-09",
+      "usuario_telefone": "(31) 98587-7928",
+      "usuario_logradouro": "Cláudio Manoel",
+      "usuario_numero": "1162",
+      "usuario_bairro": "Funcionários",
+      "usuario_cidade": "Belo Horizonte",
+      "usuario_cep": "00000-000",
+      "timestamp": 1571174541,
+      "imagens": [
+        "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg"
+      ]
+    }
+  ],
+  "Usuarios": [
+    {
+      "id": 1,
+      "tipo": "cidadao",
+      "nome": "Cristiano Coelho de Jesus Souza",
+      "telefone": "(31) 98587-7928",
+      "cpf": "123.456.789-09",
+      "email": "ccoelho.me@gmail.com",
+      "dataNascimento": "15/03/1994",
+      "endereco": {
+        "logradouro": "Cláudio Manoel",
+        "numero": "1162",
+        "complemento": "",
+        "bairro": "Funcionários",
+        "cidade": "Belo Horizonte",
+        "cep": "00000-000"
+      }
+    }
+  ]
 }

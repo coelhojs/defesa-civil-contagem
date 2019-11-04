@@ -60,7 +60,7 @@ export default function Chamados() {
                 id: item.id,
                 idSequencia: item.idSequencia,
                 tipo: item.tipo,
-                bairro: item.endereco.bairro,
+                bairro: item.bairro,
                 status: item.status
             })
         })

@@ -301,20 +301,20 @@ export default function ChamadoForm(props) {
                             />
                         </FormControl>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="description" shrink>Descrição</InputLabel>
+                            <InputLabel htmlFor="descricao" shrink>Descrição</InputLabel>
                             <TextareaAutosize
                                 className={classes.textarea}
-                                value={values.description}
+                                value={values.descricao}
                                 onChange={handleChange}
                                 rowsMax={4}
                                 aria-label="maximum height"
                                 inputprops={{
-                                    name: 'description',
-                                    id: 'description',
+                                    name: 'descricao',
+                                    id: 'descricao',
                                 }}
 
                             />
-                            <FormHelperText className={classes.erro}>{errors.description}</FormHelperText>
+                            <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="retornoVistoria" shrink>Retorno da Vistoria</InputLabel>

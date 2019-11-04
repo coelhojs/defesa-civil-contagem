@@ -6,8 +6,8 @@ export const createMarkers = (chamados) => {
             markersArray.push({
                 id: element.id,
                 tipo: element.tipo,
-                lat: parseFloat(element.endereco.coordenadas.lat),
-                lng: parseFloat(element.endereco.coordenadas.lng)
+                lat: parseFloat(element.coordenadas.lat),
+                lng: parseFloat(element.coordenadas.lng)
             })
         });
         return markersArray;

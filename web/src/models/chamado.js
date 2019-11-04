@@ -1,8 +1,9 @@
-const endereco = require('./endereco');
-const usuario = require('./usuario');
+// const endereco = require('./endereco');
+// const usuario = require('./usuario');
 
 export const chamado = {
-    informante: "",
+    idSequencia: "",
+    id: "",
     tipo: "",
     status: "",
     numeroDiscriminacao: "",
@@ -18,8 +19,30 @@ export const chamado = {
     vitimaFatal: "",
     interdicao: "",
     doacao: "",
-    description: "",
+    descricao: "",
     retornoVistoria: "",
-    ...usuario,
-    ...endereco
+    logradouro: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    cep: "",
+    coordenadas: {
+        lat: "",
+        lng: ""
+    },
+    usuario_id: "",
+    usuario_nome: "",
+    usuario_email: "",
+    usuario_cpf: "",
+    usuario_telefone: "",
+    usuario_dataNasc: "",
+    usuario_logradouro: "",
+    usuario_numero: "",
+    usuario_bairro: "",
+    usuario_cidade: "",
+    usuario_estado: "",
+    usuario_cep: ""
+    // ...endereco,
+    // ...usuario
 }

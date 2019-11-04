@@ -18,6 +18,7 @@ import Send from '@material-ui/icons/Send';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
+import { updateAviso } from '../customHooks/useAvisos';
 import { createChamado } from "../customHooks/useChamados";
 import { useForm } from "../customHooks/useForm";
 import { chamado } from '../models/chamado';
@@ -57,8 +58,39 @@ const useStyles = makeStyles(theme => ({
 export default function ChamadoForm(props) {
     let history = useHistory();
     const classes = useStyles();
-    const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, chamado);
     const [aviso] = useState(props.aviso);
+    const [tempValues, setTempValues] = useState({
+        ...chamado,
+        id: aviso.id,
+        timestamp: aviso.timestamp,
+        tipo: aviso.tipo,
+        descricao: aviso.descricao,
+        imagens: aviso.imagens,
+        logradouro: aviso.logradouro,
+        numero: aviso.numero,
+        bairro: aviso.bairro,
+        cidade: aviso.cidade,
+        estado: aviso.estado,
+        cep: aviso.cep,
+        coordenadas: {
+            lat: aviso.lat,
+            lng: aviso.lng
+        },
+        usuario_id: aviso.usuario_id,
+        usuario_nome: aviso.usuario_nome,
+        usuario_email: aviso.usuario_email,
+        usuario_cpf: aviso.usuario_cpf,
+        usuario_telefone: aviso.usuario_telefone,
+        usuario_dataNasc: aviso.usuario_dataNasc,
+        usuario_logradouro: aviso.usuario_logradouro,
+        usuario_numero: aviso.usuario_numero,
+        usuario_bairro: aviso.usuario_bairro,
+        usuario_cidade: aviso.usuario_cidade,
+        usuario_estado: aviso.usuario_estado,
+        usuario_cep: aviso.usuario_cep
+    })
+
+    const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, tempValues);
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -70,12 +102,16 @@ export default function ChamadoForm(props) {
     };
 
     function callbackSubmit() {
-        values.endereco.coordenadas = {
-            lat: aviso.endereco.coordenadas.lat,
-            lng: aviso.endereco.coordenadas.lng
-        };
         values.status = "Pendente";
+        values.timestamp = aviso.timestamp;
+        values.coordenadas = {
+            lat: aviso.coordenadas.lat,
+            lng: aviso.coordenadas.lng
+        };
+
         createChamado(values).then(() => {
+            aviso.status = "Processado";
+            updateAviso(aviso);
             history.push('/Chamados');
         });
     }
@@ -99,9 +135,8 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="tipo">Tipo</InputLabel>
                                 <Input
-                                    readOnly
-                                    id="tipo"
-                                    value={values.tipo = aviso.tipo}
+                                    name="tipo"
+                                    defaultValue={values.tipo}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -111,7 +146,7 @@ export default function ChamadoForm(props) {
                                 <InputLabel htmlFor="id">ID</InputLabel>
                                 <Input
                                     readOnly
-                                    id="id"
+                                    name="idSequencia"
                                     value={values.idSequencia = aviso.idSequencia}
                                     onChange={handleChange}
                                 />
@@ -121,11 +156,10 @@ export default function ChamadoForm(props) {
 
                         <Grid item xs={12} md={8} >
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="Informant">Informante</InputLabel>
+                                <InputLabel htmlFor="nome">Informante</InputLabel>
                                 <Input
-                                    readOnly
-                                    id="Informant"
-                                    value={values.informante = aviso.usuario.nome}
+                                    name="usuario_nome"
+                                    defaultValue={values.usuario_nome}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -133,11 +167,11 @@ export default function ChamadoForm(props) {
 
                         <Grid item xs={12} md={4} >
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="data">Data/Hora</InputLabel>
+                                <InputLabel htmlFor="timestamp">Data/Hora</InputLabel>
                                 <Input
                                     readOnly
-                                    id="data"
-                                    value={values.dataAviso = moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
+                                    name="timestamp"
+                                    value={moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -148,8 +182,8 @@ export default function ChamadoForm(props) {
                                 <InputLabel htmlFor="email">Email</InputLabel>
                                 <Input
                                     readOnly
-                                    id="email"
-                                    value={values.usuario.email = aviso.usuario.email}
+                                    name="usuario_email"
+                                    defaultValue={values.usuario_email}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -159,9 +193,8 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="telefone">Telefone</InputLabel>
                                 <Input
-                                    readOnly
-                                    id="telefone"
-                                    value={values.usuario.telefone = aviso.usuario.telefone}
+                                    name="usuario_telefone"
+                                    defaultValue={values.usuario_telefone}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -171,8 +204,8 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
                                 <Input
-                                    id="logradouro"
-                                    value={values.endereco.logradouro = aviso.endereco.logradouro}
+                                    name="endereco.logradouro"
+                                    defaultValue={values.logradouro}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -182,9 +215,9 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="numero" >Número</InputLabel>
                                 <Input
-                                    id="numero"
                                     type="number"
-                                    value={values.endereco.numero = aviso.endereco.numero}
+                                    name="endereco.numero"
+                                    defaultValue={values.numero}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -193,9 +226,8 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="complemento">Complemento</InputLabel>
                                 <Input
-                                    readOnly
-                                    id="complemento"
-                                    value={values.endereco.complemento = aviso.endereco.complemento}
+                                    name="endereco.complemento"
+                                    defaultValue={values.complemento}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -204,8 +236,8 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
                                 <Input
-                                    id="bairro"
-                                    value={values.endereco.bairro = aviso.endereco.bairro}
+                                    name="endereco.bairro"
+                                    defaultValue={values.bairro}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -215,8 +247,8 @@ export default function ChamadoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="regional">Regional</InputLabel>
                                 <Input
-                                    id="regional"
-                                    value={values.endereco.regional}
+                                    name="endereco.regional"
+                                    defaultValue={values.regional}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -224,11 +256,12 @@ export default function ChamadoForm(props) {
 
                         <Grid item xs={12} md={12}>
                             <FormControl fullWidth className={classes.formControl}>
-                                <TextareaAutosize rows={3}
+                                <TextareaAutosize rows={2}
                                     className={classes.textarea}
-                                    onChange={handleChange}
-                                    value={aviso.descricao}
+                                    name="descricao"
+                                    defaultValue={values.descricao}
                                     placeholder="Descrição"
+                                    onChange={handleChange}
                                 />
                                 <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
                             </FormControl>
@@ -273,6 +306,6 @@ export default function ChamadoForm(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </div >
     )
 }
