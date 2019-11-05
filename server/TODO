@@ -1,6 +1,13 @@
-1) Criar modelo para fotos
-2) Organizar rotas de fotos
-3) Edição de chamados
-4) Criar diretório "dev" com rotas para cada entidade
-5) Adicionar modulo jest
-6) Testar o file.mv com createParentPath
+Consumir apenas as áreas de risco do KML do MyMaps 
+
+A API deverá converter o KML para geojson e estilizar os elementos de acordo com o grau de risco
+
+A API deverá gerar um geojson estilizado com os dados dos chamados
+
+Para atualizar as áreas de risco o admin deverá baixar o KML do MyMaps
+
+A API deverá substituir o KML antigo pelo novo
+
+Para pegar o mapa: GET /admin/Mapa
+
+Para pegar o mapa: GET /app/Mapa

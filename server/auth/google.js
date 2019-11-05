@@ -1,6 +1,6 @@
 const { OAuth2Client } = require('google-auth-library');
-const { AppError } = require('../handlers/error');
-const Usuario = require('../modelos/usuario.modelo');
+const { AppError } = require('../models/error');
+const Usuario = require('../models/usuario');
 const auth = require('./authorization');
 const express = require('express');
 const axios = require('axios').default;
@@ -50,6 +50,8 @@ router.post('/login', async (req, res, next) => {
 			mensagem: 'Usuário não cadastrado',
 			mensagem_amigavel: 'Impossível fazer o login',
 		});
+		user.player_id = req.body.player_id;
+		user.save();
 		// Gera e retorna uma api_key com o id do usuário:
 		let api_key = auth.gerarApiKey(user.id);
 		res.status(200).json({ api_key: api_key, usuario: user });
@@ -81,6 +83,8 @@ router.post('/cadastro', async (req, res, next) => {
 		user = new Usuario(req.body);
 		// Salva o google_id no usuario:
 		user.google_id = sub;
+		// Salva o palyer_id do usuário:
+		user.player_id = req.body.player_id;
 		await user.save();
 		// Gera e retorna uma api_key com o id do usuário:
 		let api_key = auth.gerarApiKey(user.id);

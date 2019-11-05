@@ -1,0 +1,84 @@
+================================ PERMISSÕES ================================
+
+Usuário (App):
+    Pode fazer cadastro/login
+    Pode criar/ver/excluir avisos (excluir apenas na fase "pendente")
+    Pode criar/ver/excluir fotos (excluir apenas através da exclusão do aviso)
+    Pode ver noticias
+    Pode ver o mapa
+
+Admin (Web):
+    Pode fazer cadastro/login
+    Pode ver avisos
+    Pode criar/ver/editar/excluir ocorrências
+    Pode ver fotos
+    Pode ver noticias
+    Pode ver/atualizar o mapa
+
+
+================================ ROTAS ================================
+
+Públicas:
+    /noticias..........................Obtem as últimas notícias
+
+Aplicativo:
+    /app/auth/google/login.............Login pelo google
+    /app/auth/google/cadastro..........Cadastro pelo google
+    /app/avisos........................Criar/ver/excluir avisos do usuário
+    /app/fotos.........................Ver fotos do usuário
+    /app/usuario.......................Ver/Editar perfil do usuário
+    /app/mapa..........................Ver mapa
+
+Admin:
+    /admin/auth/google/login...........Login pelo google
+    /admin/auth/google/cadastro........Cadastro (monousuário) pelo google
+    /admin/usuarios....................Ver usuarios
+    /admin/avisos......................Ver avisos
+    /admin/ocorrencias.................Criar/ver/editar/excluir ocorrencias
+    /admin/mapa........................Ver/atualizar mapa
+
+
+================================ CONTROLLERS ================================
+
+NoticiaController:
+    get_noticias:......................Obtem as ultimas noticias
+
+MapaController:
+    set_mapa:..........................Cria o mapa geojson a partir de um arquivo kml
+    get_mapa:..........................Obtem o arquivo geojson do mapa (inteiro)
+
+AvisoController:
+    get_avisos_user:...................Obtem avisos do usuário atual (podendo filtrar pela URL)
+    add_aviso_user:....................Adiciona um aviso para o usuario atual
+    del_aviso_user:....................Deleta um aviso (especificado pelo id)
+    get_avisos:........................Obtem avisos de todos os usuários (podendo filtrar pela URL)
+
+UsuarioController:
+    add_usuario:.......................Cria um usuário
+    edit_usuario:......................Edita informações do usuário atual
+
+FotoController:
+    get_fotos_user:....................Obtem todas as fotos do usuário atual (podendo filtrar pela URL)
+    add_foto_user:.....................Adiciona uma foto a um aviso
+    get_fotos:.........................Obtem todas as fotos (podendo filtrar pela URL)
+
+OcorrenciaController [Admin]:
+    get_ocorrencias:...................Obtem todas as ocorrências (podendo filtrar pela URL)
+    add_ocorrencia:....................Cria uma ocorrência para um aviso
+    edit_ocorrencia:...................Edita as informações de uma ocorrência
+    delete_ocorrencia:.................Deleta uma ocorrência
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

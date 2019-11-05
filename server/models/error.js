@@ -16,7 +16,7 @@ class AppError extends Error {
 	}
 
 	toJSON() {
-		if (process.env.NODE_ENV.toLowerCase() == 'development')
+		if (process.env.NODE_ENV.toLowerCase() == 'dev')
 			return {
 				stack: this.stack,
 				mensagem: this.mensagem,
