@@ -1,7 +1,7 @@
 import { InfoWindow, Marker } from '@react-google-maps/api';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { fetchAllChamados } from '../customHooks/useChamados';
+import { fetchAllOcorrencias } from '../customHooks/useChamados';
 import { createMarkers } from '../customHooks/useMaps';
 
 export default function Markers(props) {
@@ -9,7 +9,7 @@ export default function Markers(props) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchAllChamados();
+            const response = await fetchAllOcorrencias();
             setMarkers(createMarkers(response.data));
         };
         fetchData();

@@ -3,7 +3,7 @@ import { GoogleMap, KmlLayer, Marker, useLoadScript } from '@react-google-maps/a
 import * as React from 'react';
 import { useCallback, useEffect, useState } from "react";
 import Spinner from '../components/spinner';
-import { fetchAllChamados } from '../customHooks/useChamados';
+import { fetchAllOcorrencias } from '../customHooks/useChamados';
 import { createMarkers } from '../customHooks/useMaps';
 
 export default function Mapa() {
@@ -14,7 +14,7 @@ export default function Mapa() {
     })
 
     const fetchData = async () => {
-        const response = await fetchAllChamados();
+        const response = await fetchAllOcorrencias();
         setMarkers(createMarkers(response.data));
     };
 
@@ -29,7 +29,7 @@ export default function Mapa() {
 
     //const onLoad = useCallback(fetchData());
     //     async function onLoad(mapInstance) {
-    //         const response = await fetchAllChamados();
+    //         const response = await fetchAllOcorrencias();
     //         setMarkers(createMarkers(response.data));
     // }
     // )

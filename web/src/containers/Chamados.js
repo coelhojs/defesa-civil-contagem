@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import * as React from 'react';
 import { useEffect, useState } from "react";
-import { fetchAllChamados } from "../customHooks/useChamados";
+import { fetchAllOcorrencias } from "../customHooks/useChamados";
 import Spinner from '../components/spinner';
 
 const useStyles = makeStyles({
@@ -40,7 +40,7 @@ export default function Chamados() {
     ];
 
     const fetchData = async () => {
-        const response = await fetchAllChamados();
+        const response = await fetchAllOcorrencias();
         setChamados(response.data);
     };
 

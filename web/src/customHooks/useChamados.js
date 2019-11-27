@@ -2,7 +2,8 @@ import { api } from "./api";
 
 export const createChamado = async (formValues) => {
     try {
-        const response = await api.post(`/Chamados`, { ...formValues });
+        const response = await api.post(`/Ocorrencias`, { ...formValues });
+        // const response = await api.post(`/admin/Ocorrencias`, { ...formValues });
         
         return response;
 
@@ -11,9 +12,9 @@ export const createChamado = async (formValues) => {
     }
 };
 
-export const fetchAllChamados = async (apiKey) => {
+export const fetchAllOcorrencias = async (apiKey) => {
     try {
-        const response = await api.get('/Chamados');
+        const response = await api.get('/Ocorrencias');
         return response;
 
     } catch (e) {

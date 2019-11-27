@@ -130,153 +130,150 @@ export default function ChamadoForm(props) {
                         alignItems="center"
                         spacing={2}
                     >
-                        <Grid item xs={12} md={3} ></Grid>
-                        <Grid item xs={12} md={3} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="tipo">Tipo</InputLabel>
-                                <Input
-                                    name="tipo"
-                                    defaultValue={values.tipo}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={2} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="id">ID</InputLabel>
-                                <Input
-                                    readOnly
-                                    name="idSequencia"
-                                    value={values.idSequencia = aviso.idSequencia}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={4} ></Grid>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="tipo">Tipo</InputLabel>
+                            <Input
+                                name="tipo"
+                                defaultValue={values.tipo}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={2} >
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="id">ID</InputLabel>
+                            <Input
+                                readOnly
+                                name="idSequencia"
+                                value={values.idSequencia = aviso.idSequencia}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4} ></Grid>
 
-                        <Grid item xs={12} md={8} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="nome">Informante</InputLabel>
-                                <Input
-                                    name="usuario_nome"
-                                    defaultValue={values.usuario_nome}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={8} >
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="nome">Informante</InputLabel>
+                            <Input
+                                name="usuario_nome"
+                                defaultValue={values.usuario_nome}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={4} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="timestamp">Data/Hora</InputLabel>
-                                <Input
-                                    readOnly
-                                    name="timestamp"
-                                    value={moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={4} >
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="timestamp">Data/Hora</InputLabel>
+                            <Input
+                                readOnly
+                                name="timestamp"
+                                value={moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={8} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="email">Email</InputLabel>
-                                <Input
-                                    readOnly
-                                    name="usuario_email"
-                                    defaultValue={values.usuario_email}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={8} >
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="email">Email</InputLabel>
+                            <Input
+                                readOnly
+                                name="usuario_email"
+                                defaultValue={values.usuario_email}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={4} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="telefone">Telefone</InputLabel>
-                                <Input
-                                    name="usuario_telefone"
-                                    defaultValue={values.usuario_telefone}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={4} >
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="telefone">Telefone</InputLabel>
+                            <Input
+                                name="usuario_telefone"
+                                defaultValue={values.usuario_telefone}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={6} >
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
-                                <Input
-                                    name="endereco.logradouro"
-                                    defaultValue={values.logradouro}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={6} >
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
+                            <Input
+                                name="endereco.logradouro"
+                                defaultValue={values.logradouro}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={2}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="numero" >Número</InputLabel>
-                                <Input
-                                    type="number"
-                                    name="endereco.numero"
-                                    defaultValue={values.numero}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="complemento">Complemento</InputLabel>
-                                <Input
-                                    name="endereco.complemento"
-                                    defaultValue={values.complemento}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
-                                <Input
-                                    name="endereco.bairro"
-                                    defaultValue={values.bairro}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={2}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="numero" >Número</InputLabel>
+                            <Input
+                                type="number"
+                                name="endereco.numero"
+                                defaultValue={values.numero}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="complemento">Complemento</InputLabel>
+                            <Input
+                                name="endereco.complemento"
+                                defaultValue={values.complemento}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
+                            <Input
+                                name="endereco.bairro"
+                                defaultValue={values.bairro}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={4}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="regional">Regional</InputLabel>
-                                <Input
-                                    name="endereco.regional"
-                                    defaultValue={values.regional}
-                                    onChange={handleChange}
-                                />
-                            </FormControl>
-                        </Grid>
+                    <Grid item xs={12} md={4}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <InputLabel htmlFor="regional">Regional</InputLabel>
+                            <Input
+                                name="endereco.regional"
+                                defaultValue={values.regional}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                    </Grid>
 
-                        <Grid item xs={12} md={12}>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <TextareaAutosize rows={2}
-                                    className={classes.textarea}
-                                    name="descricao"
-                                    defaultValue={values.descricao}
-                                    placeholder="Descrição"
-                                    onChange={handleChange}
-                                />
-                                <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <ListaImagem />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button onClick={() => history.push('/Avisos')} variant="contained" color="secondary" className={classes.button}>Voltar
+                    <Grid item xs={12} md={12}>
+                        <FormControl fullWidth className={classes.formControl}>
+                            <TextareaAutosize rows={2}
+                                className={classes.textarea}
+                                name="descricao"
+                                defaultValue={values.descricao}
+                                placeholder="Descrição"
+                                onChange={handleChange}
+                            />
+                            <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ListaImagem />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button onClick={() => history.push('/Avisos')} variant="contained" color="secondary" className={classes.button}>Voltar
                         </Button>
-                            <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.button}>
-                                Criar Chamado
+                        <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.button}>
+                            Criar Chamado
                         <Send className={classes.rightIcon} />
-                            </Button>
-                        </Grid>
+                        </Button>
                     </Grid>
                 </form>
             </Paper >
