@@ -8,6 +8,7 @@ class Usuario {
   String telefone;
   Endereco endereco;
   String tipo;
+  String player_id;
 
   Usuario() {
     nome = "Nome";
@@ -27,6 +28,7 @@ class Usuario {
         cpf = json['cpf'],
         endereco = Endereco.fromJson(json['endereco']),
         telefone = json['telefone'],
+        player_id = json['player_id'],
         tipo = json['tipo'];
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +38,7 @@ class Usuario {
         'cpf': cpf,
         'endereco': endereco.toJson(),
         'telefone': telefone,
+        'player_id': player_id,
         'tipo': tipo,
       };
 

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:defesa_civil/helpers/blochome.dart';
+import 'package:defesa_civil/screens/unregistered/registerpage/components/sucess.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttie/fluttie.dart';
@@ -20,6 +22,7 @@ import 'package:http/http.dart' as http;
 import 'package:pedantic/pedantic.dart';
 
 import '../../models/size_config.dart';
+import '../../testepage.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -27,27 +30,24 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with AutomaticKeepAliveClientMixin {
+class _LoginPageState extends State<LoginPage> {
 
-  @override
-  bool get wantKeepAlive => true;
 
   Usuario novoUsuario;
+  var bloc = BlocHome();
+  String player_id;
 
+  @override
+  initState() {
+    super.initState();
+    bloc.initOneSignal();
+    bloc.getPlayerId().then((result)=> player_id= result);
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        label: Text("Pagina Testes"),
-        onPressed: (){
-          Navigator.push(
-            context,
-            CupertinoPageRoute(fullscreenDialog: true,builder: (context) => SignupPage()),
-          );
-        },
-      ),
+
       body: Stack(
         children: <Widget>[
           Image(
@@ -104,8 +104,9 @@ class _LoginPageState extends State<LoginPage>
                         signInWithGoogle().then((result) async {
                           var url = '$REQ/auth/google/login';
                           var response = await http.post(url,
-                              headers: {"authorization": "Bearer $token"});
+                              headers: {"authorization": "Bearer $token"},body: {"player_id": player_id});
                           var responseDecoded = json.decode(response.body);
+                          print(responseDecoded);
                           if (response.statusCode == 200) {
                             novoUsuario =
                                 Usuario.fromJson(responseDecoded['usuario']);
@@ -119,7 +120,7 @@ class _LoginPageState extends State<LoginPage>
                             unawaited(Navigator.of(context).pushAndRemoveUntil(
                                 CupertinoPageRoute(
                                     builder: (context) => RegisterPage(
-                                        name, email, image, token)),
+                                        name, email, image, token, player_id)),
                                 (Route<dynamic> route) => false));
                           }
                         }).catchError((erro) {
@@ -161,6 +162,13 @@ class SignupPageState extends State<SignupPage> {
   initState() {
     super.initState();
     prepareAnimation();
+    animationCtrl.start();
+    Timer(Duration(seconds: 3), () {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(fullscreenDialog: true,builder: (context) => LoginPage()),
+      );
+    });
   }
 
   @override
@@ -196,23 +204,6 @@ class SignupPageState extends State<SignupPage> {
             width: 300,
             child: FluttieAnimation(animationCtrl),
           ),
-          FlatButton(
-            onPressed: (){
-              setState(() {
-
-              });
-            animationCtrl.start();
-              Timer(Duration(seconds: 3), () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(fullscreenDialog: true,builder: (context) => LoginPage()),
-                );
-              });
-
-            },
-            child: Text("Teste"),
-          )
-
         ],
       ),
     );

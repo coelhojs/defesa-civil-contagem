@@ -5,6 +5,8 @@ import 'package:fluttie/fluttie.dart';
 Widget dialog(String titulo, String descricao,
     {IconData icone, Color cor, bool carregando = false}) {
   return AlertDialog(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15))),
     title: Text(titulo),
     content: Row(
       children: <Widget>[

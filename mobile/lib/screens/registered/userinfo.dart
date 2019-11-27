@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:defesa_civil/helpers/blochome.dart';
+import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/models/size_config.dart';
 import 'package:defesa_civil/models/usuario.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
@@ -21,14 +24,17 @@ class _UserInfoState extends State<UserInfo>
   @override
   bool get wantKeepAlive => true;
 
+
   Usuario usuario = Usuario();
   Future imagem;
   String api_key;
+  var bloc = BlocHome();
 
   SharedPreferences userData;
 
   @override
   void initState() {
+    bloc.initOneSignal();
     getCredentials();
   }
 
@@ -181,6 +187,16 @@ class _UserInfoState extends State<UserInfo>
               .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
           print(position.toString());
           print(api_key);
+          Dio dio = Dio();
+          var bloc = BlocHome();
+          print(await bloc.getPlayerId());
+
+          dio.get("$REQ/app/account", options: Options(headers: {"Authorization": "Bearer $api_key"})).then((result){
+
+            print(result.data);
+          }).catchError((e){
+            print(e.response.data);
+          });
         },
         icon: Icon(Feather.getIconData("edit")),
         label: Text(

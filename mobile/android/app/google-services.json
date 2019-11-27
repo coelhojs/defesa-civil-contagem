@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:627032586427:android:099bbb9683632e8592919e",
+        "mobilesdk_app_id": "1:627032586427:android:da42f223ff0fcd1c92919e",
         "android_client_info": {
           "package_name": "br.gov.mg.contagem.defesa_civil"
         }
       },
       "oauth_client": [
         {
-          "client_id": "627032586427-jpu3qm4jqp7302umkvsq1r63ro7aonfb.apps.googleusercontent.com",
+          "client_id": "627032586427-9gdjbja5ldhklhfe63t4ku3r9evk0btc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.gov.mg.contagem.defesa_civil",
-            "certificate_hash": "b46a61d59c4e8f44978c60703be92cdb169149fe"
+            "certificate_hash": "20f8a1994d2eaa222d1fd934a4af461200ee3875"
           }
         },
         {

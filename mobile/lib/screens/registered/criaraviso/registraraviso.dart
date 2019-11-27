@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/models/size_config.dart';
+import 'package:defesa_civil/screens/registered/criaraviso/services/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,59 +55,6 @@ class _RegistroAvisoState extends State<RegistroAviso> {
     super.initState();
   }
 
-  Future uploadAviso(List<File> imageFile) async {
-    position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-    var response;
-    var url = '$REQ/acesso/avisos';
-    Dio dio = new Dio();
-    response = await dio
-        .post(url,
-            data: jsonEncode({
-              "tipo": "$_incidenteAtual",
-              "descricao": "${descController.text}",
-              "coordenadas": {
-                "latitude": position.latitude,
-                "longitude": position.longitude
-              },
-              "local":
-                  "${endController.text}, ${numController.text} - ${bairroController.text}"
-            }),
-            options: Options(headers: {"authorization": "Bearer $api_key"}))
-        .then((sucess) async {
-      print(sucess.data);
-      await uploadFoto(imageFile, sucess.data['id']);
-      return sucess.data;
-    }).catchError((e) {
-      print(e.response.data);
-      return e.response.data;
-    });
-
-    //await uploadFoto(imageFile, responseAvisoDecoded['id']);
-    //print(responseAvisoDecoded);
-  }
-
-  Future uploadFoto(List<File> imageFile, String id) async {
-    Dio dio = new Dio();
-
-    for (int i = 0; i < 3; i++) {
-      if (imageFile[i] != null) {
-        FormData formData = new FormData.fromMap(
-            {"foto": await MultipartFile.fromFile(imageFile[i].path)});
-        await dio
-            .post("$REQ/acesso/avisos/$id/fotos",
-                data: formData,
-                options: Options(headers: {"authorization": "Bearer $api_key"}))
-            .then((sucesso) {
-          print(sucesso);
-        }).catchError((error) {
-          print(error.response.data);
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -134,7 +82,8 @@ class _RegistroAvisoState extends State<RegistroAviso> {
                 context: context,
                 builder: (BuildContext context) {
                   return FutureBuilder(
-                    future: uploadAviso(_image),
+                    future: uploadAviso(imageFile: _image, incidente: _incidenteAtual, descricao: descController.text,
+                        endereco: endController.text, numero: numController.text, bairro: bairroController.text),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState != ConnectionState.done)
                         return AlertDialog(

@@ -1,3 +1,4 @@
+import 'package:defesa_civil/helpers/blochome.dart';
 import 'package:defesa_civil/screens/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
@@ -5,17 +6,29 @@ import 'package:flutter_icons/feather.dart';
 import 'loginpage.dart';
 
 class Home extends StatefulWidget {
+  Home(this.index);
+  int index;
   @override
-  _HomeState createState() => _HomeState();
+  _HomeState createState() => _HomeState(index);
 }
 
 class _HomeState extends State<Home> {
+  _HomeState(this._selectedIndex);
+  int _selectedIndex;
+  var bloc = BlocHome();
+
   final List<Widget> pages = [
     MapPage(),
     LoginPage()
   ];
   final pageController = PageController();
-  int _selectedIndex = 0;
+
+
+  @override
+  void initState() {
+    super.initState();
+    bloc.initOneSignal();
+  }
 
   Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
     onTap: (int index) => pageController.jumpToPage(index),

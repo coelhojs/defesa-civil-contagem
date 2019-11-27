@@ -6,6 +6,8 @@ Widget sucessFail(bool sucess, String detalhes, BuildContext context, FluttieAni
 
   return sucess
       ? AlertDialog(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15))),
     title: Text("Sucesso"),
     content: Row(
       children: <Widget>[
@@ -31,6 +33,8 @@ Widget sucessFail(bool sucess, String detalhes, BuildContext context, FluttieAni
     ],
   )
       : AlertDialog(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15))),
     title: Text("Erro"),
     content: Row(
       children: <Widget>[
@@ -42,7 +46,9 @@ Widget sucessFail(bool sucess, String detalhes, BuildContext context, FluttieAni
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
         ),
-        Text(detalhes)
+        Flexible(
+          child: Text(detalhes),
+        )
       ],
     ),
     actions: <Widget>[

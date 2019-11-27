@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/models/size_config.dart';
-import 'package:defesa_civil/screens/registered/registraraviso.dart';
+import 'package:defesa_civil/screens/registered/detalhesaviso/detalhesaviso.dart';
+import 'package:defesa_civil/screens/registered/criaraviso/registraraviso.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,7 +32,7 @@ class _RelatarIncidenteState extends State<RelatarIncidente>
 
   Future<List> _getAvisos() async {
     http.Response response;
-    response = await http.get("$REQ/acesso/avisos",
+      response = await http.get("$REQ/app/avisos",
         headers: {"authorization": "Bearer $api_key"});
     print(response.body);
 
@@ -105,7 +106,7 @@ class _RelatarIncidenteState extends State<RelatarIncidente>
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        print("teste");
+                        Navigator.push(context,CupertinoPageRoute(builder: (context) => DetalhesAviso(snapshot.data[index]['id'])));
                       },
                       child: Card(
                         shape: RoundedRectangleBorder(

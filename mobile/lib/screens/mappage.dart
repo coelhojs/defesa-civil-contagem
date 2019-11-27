@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:geojson/geojson.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:geopoint/geopoint.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location_permissions/location_permissions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapPage extends StatefulWidget {
 
@@ -14,10 +17,7 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage>
-    with AutomaticKeepAliveClientMixin{
-
-  @override
-  bool get wantKeepAlive => true;
+    {
 
   MapType _defaultMapType = MapType.normal;
   GoogleMapController mapController;
@@ -43,26 +43,24 @@ class MapPageState extends State<MapPage>
   void initState() {
     super.initState();
     processData();
+    LocationPermissions().requestPermissions().then((result){
+      print(result);
+    });
+    LocationPermissions().checkPermissionStatus().then((result){
+      setState(() {
+
+      });
+      print(result.toString());
+      print("AAAAAAAAAAAAAAAAAAAAAAAAAAaa");
+    });
   }
-
-  List<LatLng> _points = <LatLng>[
-    new LatLng(-47.900390625, -9.622414142924805),
-    new LatLng(-50.71289062499999, -17.056784609942543),
-    new LatLng(-47.28515625, -18.396230138028812),
-    new LatLng(-47.900390625, -9.622414142924805),
-  ];
-
-  List<LatLng> _points2 = <LatLng>[
-    new LatLng(-19.918623, -50.082073),
-    new LatLng(-22.918623, -60.082073),
-    new LatLng(-25.918623, -40.082073),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: <Widget>[
         GoogleMap(
+
           tiltGesturesEnabled: false,
           mapType: _defaultMapType,
           myLocationEnabled: true,
@@ -73,40 +71,14 @@ class MapPageState extends State<MapPage>
         )
       ]),
       floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Colors.black54,
-          label: Text('Trocar mapa!'),
-          icon: Icon(Icons.map),
+          backgroundColor: Color(0xFF74D0EB),
+          label: Text('Abrir Waze'),
+          icon: Tab(icon: Image.asset('assets/images/waze.png', height: 30),),
           onPressed: () async {
             //_changeMapType();
-
-            i++;
-            final color =
-                Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-                    .withOpacity(0.3);
-            Polygon poly = Polygon(
-              consumeTapEvents: true,
-              onTap: () {
-                print("OI");
-              },
-              polygonId: PolygonId(
-                  "${(math.Random().nextDouble() * 0xFFFFFF).toInt() << 0}"),
-              fillColor: color,
-              points: _points,
-            );
-            Polygon poly2 = Polygon(
-              consumeTapEvents: true,
-              onTap: () {
-                print(i.toString());
-              },
-              polygonId: PolygonId(
-                  "${(math.Random().nextDouble() * 0xFFFFFF).toInt() << 0}"),
-              fillColor: color,
-              points: _points2,
-            );
-            setState(() => polygons.add(poly));
-            setState(() => polygons.add(poly2));
-            i++;
-            print(i);
+            if (await canLaunch('https://waze.com/ul')) {
+              await launch('https://waze.com/ul');
+            }
           }),
     );
   }
@@ -129,13 +101,36 @@ class MapPageState extends State<MapPage>
             geoPoints: <GeoPoint>[]);
 
         geoSerie.geoPoints.addAll(polygon.geoPoints);
-        final color =
-            Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-                .withOpacity(0.3);
+
+        Color color;
+        if(polygon.name == 'Alto') {
+           color =
+          Color(0x40FD2A2A);
+        }
+        else if(polygon.name == 'Inexistente ou Baixo'){
+          color =
+              Color(0x40FAFF44);
+        }
+        else if(polygon.name == 'Médio'){
+          color =
+              Color(0x70F7FF00);
+        }
+        else if(polygon.name == 'Muito Alto'){
+          color =
+              Color(0x70CD0000);
+        }
+        else{
+          color =
+              Color((math.Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+                  .withOpacity(0.0);
+        }
+
         Polygon poly = Polygon(
           consumeTapEvents: true,
           onTap: () {
           },
+
+          strokeColor: color,
           polygonId: PolygonId(
               "${(math.Random().nextDouble() * 0xFFFFFF).toInt() << 0}"),
           fillColor: color,
@@ -160,7 +155,7 @@ class MapPageState extends State<MapPage>
     });
     geojson.endSignal.listen((bool _) => geojson.dispose());
     // The data is from https://datahub.io/core/geo-countries
-    final nameProperty = "Name";
+    final nameProperty = "Grau_de_Ri";
     await geojson.parse(data, nameProperty: nameProperty, verbose: true);
     return true;
   }
