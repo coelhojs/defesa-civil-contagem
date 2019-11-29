@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from "../customHooks/useAuth";
-import SignOutBtn from './signOutBtn';
+import Notifications from './notifications';
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -35,7 +35,7 @@ export default function Header(props) {
                             Defesa Civil de Contagem
                     </Link>
                     </Typography>
-                    <SignOutBtn />
+                    <Notifications />
                 </Toolbar>
             </AppBar>
         );
