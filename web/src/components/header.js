@@ -12,10 +12,11 @@ const useStyles = makeStyles(theme => ({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
         backgroundColor: "#f46524",
+        height: '10%'
     },
     toolBar: {
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     link: {
         color: 'white',
@@ -35,7 +36,6 @@ export default function Header(props) {
                             Defesa Civil de Contagem
                     </Link>
                     </Typography>
-                    <Notifications />
                 </Toolbar>
             </AppBar>
         );

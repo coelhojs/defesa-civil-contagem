@@ -98,7 +98,6 @@ export default function Chamados() {
                         labelRowsSelect: 'linhas',
                         labelRowsPerPage: 'linhas por página'
                     },
-
                     toolbar: {
                         nRowsSelected: '{0} linha(s) selecionadas',
                         searchPlaceholder: 'Pesquisar',

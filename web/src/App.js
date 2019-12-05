@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     overflowY: 'auto',
+    height: '100%'
   },
   toolbar: theme.mixins.toolbar
 }));
