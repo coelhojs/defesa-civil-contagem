@@ -1,11 +1,8 @@
 //https://github.com/fullstackreact/google-maps-react
 import { GoogleMap, InfoWindow, KmlLayer, Marker, useLoadScript } from '@react-google-maps/api';
 import * as React from 'react';
-import { useEffect, useState } from "react";
-//import Markers from '../components/markers';
+import { useState } from "react";
 import Spinner from '../components/spinner';
-import { fetchAllOcorrencias } from '../customHooks/useChamados';
-import { createMarkers } from '../customHooks/useMaps';
 
 export default function Mapa() {
     const [markers, setMarkers] = useState([]);
@@ -17,14 +14,6 @@ export default function Mapa() {
         googleMapsApiKey: "AIzaSyAFCWhrDp1Unfxx5TKCqlkEYx2xB5Tj-HU" // ,
         // ...otherOptions
     })
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetchAllOcorrencias();
-            setMarkers(createMarkers(response.data));
-        };
-        fetchData();
-    }, []);
 
     const onMarkerClick = (props, marker, e) => {
         setPosition(props.latLng);

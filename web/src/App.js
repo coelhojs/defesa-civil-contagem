@@ -7,7 +7,6 @@ import AppDrawer from './components/drawer';
 import Header from './components/header';
 import Avisos from "./containers/Avisos";
 import CadastroRoute from "./containers/CadastroRoute";
-import Chamados from "./containers/Chamados";
 import Dashboard from './containers/Dashboard';
 import DetalhesAviso from './containers/DetalhesAviso';
 import Inicio from './containers/Inicio';
@@ -52,7 +51,6 @@ function App() {
             <Route path="/Cadastro" component={CadastroRoute} />
             {/* <PrivateRoute path="/Cadastro" component={Cadastro} /> */}
             <PrivateRoute exact path="/Avisos" component={Avisos} />
-            <PrivateRoute exact path="/Chamados" component={Chamados} />
             <PrivateRoute exact path="/Dashboard" component={Dashboard} />
             <PrivateRoute exact path="/Mapa" component={Mapa} />
             <PrivateRoute exact path="/DetalhesAviso/:id" component={DetalhesAviso} />

@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from "../customHooks/useAuth";
-import Notifications from './notifications';
 
 const useStyles = makeStyles(theme => ({
     appBar: {

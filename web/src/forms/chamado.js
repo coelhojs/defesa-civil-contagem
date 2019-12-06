@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function ChamadoForm(props) {
+export default function AvisoForm(props) {
     let history = useHistory();
     const classes = useStyles();
     const [aviso] = useState(props.aviso);
@@ -112,7 +112,7 @@ export default function ChamadoForm(props) {
         createChamado(values).then(() => {
             aviso.status = "Processado";
             updateAviso(aviso);
-            history.push('/Chamados');
+            history.push('/Avisos');
         });
     }
 

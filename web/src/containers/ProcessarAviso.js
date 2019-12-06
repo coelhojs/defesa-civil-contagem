@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Spinner from '../components/spinner';
 import { fetchAviso } from '../customHooks/useAvisos';
-import ChamadoForm from '../forms/chamado';
+import AvisoForm from '../forms/chamado';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,7 +27,7 @@ export default function ProcessarAviso() {
     }, []);
 
     if (aviso) {
-        return <ChamadoForm aviso={aviso} />
+        return <AvisoForm aviso={aviso} />
     } else {
         return <Spinner />
     }
