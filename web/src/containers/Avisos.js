@@ -1,10 +1,10 @@
-import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import MaterialTable from 'material-table';
 import moment from 'moment';
 import * as React from 'react';
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Spinner from '../components/spinner';
 import { fetchAllAvisos } from '../customHooks/useAvisos';
 
@@ -27,15 +27,6 @@ export default function Chamados() {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     let history = useHistory();
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = event => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
 
     const columns = [
         { field: 'idSequencia', title: 'ID', minWidth: 10 },
@@ -87,33 +78,26 @@ export default function Chamados() {
         })
 
         return (
-            <MaterialTable
-                className={classes.root}
-                columns={columns}
-                data={rows}
-                title="Lista de avisos"
-                localization={{
-                    pagination: {
-                        labelDisplayedRows: '{from}-{to} de {count}',
-                        labelRowsSelect: 'linhas',
-                        labelRowsPerPage: 'linhas por página'
-                    },
-                    toolbar: {
-                        nRowsSelected: '{0} linha(s) selecionadas',
-                        searchPlaceholder: 'Pesquisar',
-                        searchTooltip: 'Pesquisar'
-                    },
-                    header: {
-                        actions: 'Ações'
-                    },
-                    body: {
-                        emptyDataSourceMessage: 'Sem registros para exibir',
-                        filterRow: {
-                            filterTooltip: 'Filtro'
-                        }
-                    }
-                }}
-            />
+            <Grid container spacing={3}>
+                <Grid item md={1}>
+                    <div className={classes.paper}>ID</div>
+                </Grid>
+                <Grid item md={2}>
+                    <div className={classes.paper}>Tipo</div>
+                </Grid>
+                <Grid item md={2}>
+                    <div className={classes.paper}>Data</div>
+                </Grid>
+                <Grid item md={3}>
+                    <div className={classes.paper}>Bairro</div>
+                </Grid>
+                <Grid item md={2}>
+                    <div className={classes.paper}>Status</div>
+                </Grid>
+                <Grid item md={2}>
+                    <div className={classes.paper}></div>
+                </Grid>
+            </Grid>
         )
     } else {
         return <Spinner />
