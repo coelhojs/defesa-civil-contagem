@@ -56,26 +56,31 @@ function useProvideAuth() {
   const [showWarning, setShowWarning] = useState(false);
 
   const loginUsuario = async () => {
-    return login()
-      .then(token => {
-        setIdToken(token);
-        api.post(`/auth/google/login2`, {},
-          {
-            headers: {
-              'authorization': `Bearer ${token}`
-            }
-          })
-          .then(function (response) {
-            if (response.data && response.data.mensagem === "Usuário não cadastrado") {
-              history.push('/');
-              signout();
-            } else if (response.data && response.data.api_key) {
-              setApiKey(response.data.api_key);
-              setUsuario(response.data.usuario);
-              history.push('/Mapa')
-            }
-          })
-      })
+    try {
+      return login()
+        .then(token => {
+          setIdToken(token);
+          api.post(`/auth/google/login2`, {},
+            {
+              headers: {
+                'authorization': `Bearer ${token}`
+              }
+            })
+            .then(function (response) {
+              if (response.data && response.data.mensagem === "Usuário não cadastrado" || response.status != 200) {
+                history.push('/');
+                signout();
+                toggleShowWarning();
+              } else if (response.data && response.data.api_key) {
+                setApiKey(response.data.api_key);
+                setUsuario(response.data.usuario);
+                history.push('/Mapa')
+              }
+            })
+        })
+    } catch (err) {
+      console.error(`Houve um problema na autenticação: ${err}`)
+    }
   }
 
   const login = async () => {

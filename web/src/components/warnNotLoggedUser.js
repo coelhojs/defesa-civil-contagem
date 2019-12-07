@@ -28,17 +28,17 @@ export default function WarnNotLoggedUser() {
             };
         }
         warnUser();
-    });
+    }, [auth.showWarning]);
 
     if (auth.showWarning) {
-    return (
-        <Chip className={classes.root} 
-        color="secondary" 
-        deleteIcon={<DoneIcon />} 
-        label="Para utilizar o sistema, faça o login."
-        // onDelete={auth.toggleShowWarning()} 
-        />
-    )
+        return (
+            <Chip className={classes.root}
+                color="secondary"
+                deleteIcon={<DoneIcon />}
+                label="Para utilizar o sistema, faça o login."
+            // onDelete={auth.toggleShowWarning()} 
+            />
+        )
     } else {
         return null;
     }

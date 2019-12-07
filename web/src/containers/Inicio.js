@@ -41,6 +41,7 @@ export default function Inicio() {
             if (makeRequest) {
                 await auth.loginUsuario();
                 history.replace(from);
+                setMakeRequest(false);
             };
         }
         login();
