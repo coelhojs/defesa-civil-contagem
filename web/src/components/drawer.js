@@ -4,9 +4,9 @@ import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import FeedbackIcon from '@material-ui/icons/Feedback';
+import GroupIcon from '@material-ui/icons/Group';
 import MapIcon from '@material-ui/icons/Map';
 import React from 'react';
-import { useHistory } from "react-router-dom";
 import { useAuth } from "../customHooks/useAuth";
 import ListItemLink from "./listItemLink";
 
@@ -26,10 +26,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function AppDrawer() {
     const classes = useStyles();
-    let history = useHistory();
     const auth = useAuth();
 
-    if (auth.user) {
+    if (auth.usuario && auth.apiKey) {
         return (
             <Drawer
                 className={classes.drawer}
@@ -42,14 +41,14 @@ export default function AppDrawer() {
                 <List>
                     <ListItemLink to="/Mapa" primary="Mapa" icon={<MapIcon />} />
                     <ListItemLink to="/Avisos" primary="Avisos" icon={<FeedbackIcon />} />
+                    <ListItemLink to="/NupDeC" primary="NupDeC" icon={<GroupIcon />} />
                 </List>
                 <Divider />
                 <List>
-                    <ListItemLink primary="Sair"
+                    <ListItemLink to="/" primary="Sair"
                         icon={<ExitToAppIcon />}
                         onClick={() => {
                             auth.signout()
-                            history.push('/')
                         }} />
                 </List>
             </Drawer>

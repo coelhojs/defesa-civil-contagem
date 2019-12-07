@@ -1,27 +1,21 @@
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Spinner from '../components/spinner';
+import { useAuth } from "../customHooks/useAuth";
 import { fetchAviso } from '../customHooks/useAvisos';
-import AvisoForm from '../forms/chamado';
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        padding: theme.spacing(3, 2),
-    },
-}));
+import AvisoForm from '../forms/aviso';
 
 export default function ProcessarAviso() {
-    const classes = useStyles();
     const [aviso, setAviso] = useState(null);
+    const auth = useAuth();
 
     let location = useLocation();
     let avisoId = location.pathname.split("/")
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchAviso(avisoId[2])
-            setAviso(response.data);
+            const response = await fetchAviso(avisoId[2], auth.apiKey)
+            setAviso(response);
         };
         fetchData();
     }, []);

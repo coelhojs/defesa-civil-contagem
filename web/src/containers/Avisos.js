@@ -1,11 +1,12 @@
-import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import moment from 'moment';
 import * as React from 'react';
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Spinner from '../components/spinner';
+import { useAuth } from "../customHooks/useAuth";
 import { fetchAllAvisos } from '../customHooks/useAvisos';
 
 const useStyles = makeStyles({
@@ -26,6 +27,7 @@ export default function Chamados() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    const auth = useAuth();
     let history = useHistory();
 
     const handleChangePage = (event, newPage) => {
@@ -49,8 +51,8 @@ export default function Chamados() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetchAllAvisos();
-            setAvisos(response.data);
+            const response = await fetchAllAvisos(auth.apiKey);
+            setAvisos(response);
         };
         fetchData();
 
@@ -60,7 +62,7 @@ export default function Chamados() {
         }
     }, []);
 
-    if (avisos) {
+    if (avisos && avisos.length > 0) {
         let rows = [];
         avisos.forEach((item) => {
             rows.push({
@@ -116,7 +118,7 @@ export default function Chamados() {
             />
         )
     } else {
-        return <Spinner />
-        //return "Não há chamados cadastrados"
+        // return <Spinner />
+        return "Não há avisos cadastrados"
     }
 }

@@ -1,19 +1,18 @@
 import "firebase/auth";
 import React from 'react';
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useAuth } from "../customHooks/useAuth";
 
 export default function PrivateRoute({ children, ...rest }) {
     const auth = useAuth();
-    const history = useHistory();
 
-    if (auth.user) {
+    if (auth.usuario && auth.apiKey) {
         return (
             <Route {...rest} render={() => children} />
         )
     } else {
+        auth.signout();
         auth.toggleShowWarning();
-        history.push('/');
         return null
     };
 }

@@ -59,16 +59,17 @@ function useProvideAuth() {
     return login()
       .then(token => {
         setIdToken(token);
-        api.post(`/auth/google/login`, {},
+        api.post(`/auth/google/login2`, {},
           {
             headers: {
               'authorization': `Bearer ${token}`
             }
           })
           .then(function (response) {
-            if (response.data.mensagem === "Usuário não cadastrado") {
-              history.push('/Cadastro');
-            } else {
+            if (response.data && response.data.mensagem === "Usuário não cadastrado") {
+              history.push('/');
+              signout();
+            } else if (response.data && response.data.api_key) {
               setApiKey(response.data.api_key);
               setUsuario(response.data.usuario);
               history.push('/Mapa')
@@ -84,6 +85,7 @@ function useProvideAuth() {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then(response => {
+        console.log(response);
         setUser(response.user)
         return response.credential.idToken;
       });
@@ -130,16 +132,6 @@ function useProvideAuth() {
     }
   }
 
-  // const signup = (email, password) => {
-  //   return firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(response => {
-  //       setUser(response.user);
-  //       return response.user;
-  //     });
-  // };
-
   const signout = () => {
     return firebase
       .auth()
@@ -148,8 +140,7 @@ function useProvideAuth() {
         setIdToken(null);
         setApiKey(null);
         setUsuario(null);
-        // setUser(false);
-        // setUsuario(false);
+        setUser(null);
       });
   };
 

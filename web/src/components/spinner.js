@@ -1,6 +1,6 @@
-import React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import GridLoader from "react-spinners/GridLoader";
-import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     margin: {

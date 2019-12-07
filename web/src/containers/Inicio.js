@@ -46,39 +46,39 @@ export default function Inicio() {
         login();
     }, [makeRequest]);
 
-    //TODO: Verificar se esse método é suficiente
-    if (auth && auth.user) {
+    if (auth.usuario && auth.apiKey) {
         history.push('/Mapa')
-    }
-
-    return (
-        <div className={classes.content}>
-            <Card className={classes.card}>
-                <CardContent>
-                    <CardMedia
-                        component="img"
-                        alt="Defesa Civil de Contagem - MG"
-                        image={logo}
-                        title="Defesa Civil de Contagem - MG"
-                    />
-                    <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                        spacing={2}
-                    >
-                        <Grid item>
-                            <Button variant="contained"
-                                type="submit" className={classes.button}
-                                onClick={() => setMakeRequest(true)}>
-                                Acessar
+        return null;
+    } else {
+        return (
+            <div className={classes.content}>
+                <Card className={classes.card}>
+                    <CardContent>
+                        <CardMedia
+                            component="img"
+                            alt="Defesa Civil de Contagem - MG"
+                            image={logo}
+                            title="Defesa Civil de Contagem - MG"
+                        />
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                            spacing={2}
+                        >
+                            <Grid item>
+                                <Button variant="contained"
+                                    type="submit" className={classes.button}
+                                    onClick={() => setMakeRequest(true)}>
+                                    Acessar
                             </Button>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </CardContent>
-            </Card>
-            <WarnNotLoggedUser />
-        </div>
-    );
+                    </CardContent>
+                </Card>
+                <WarnNotLoggedUser />
+            </div>
+        );
+    }
 }

@@ -1,10 +1,22 @@
 import { api } from "./api";
 
-export const fetchAviso = async (id) => {
+export const fetchAviso = async (id, apiKey) => {
     try {
-        const response = await api.get(`/Avisos/${id}`);
-        // const response = await api.get(`/admin/Avisos/${id}`);
-        return response;
+        const result = await api.get(`/admin/avisos/${id}`, {},
+            {
+                headers: {
+                    'authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(function (response) {
+                if (response.status == 200 && response.data) {
+                    return response.data;
+                }
+                else {
+                    return null;
+                }
+            });
+        return result;
 
     } catch (e) {
         console.error(e)
@@ -13,10 +25,21 @@ export const fetchAviso = async (id) => {
 
 export const fetchAllAvisos = async (apiKey) => {
     try {
-        const response = await api.get('/Avisos');
-        // const response = await api.get('/admin/Avisos');
-        return response;
-
+        const result = await api.get('/admin/avisos', {},
+            {
+                headers: {
+                    'authorization': `Bearer ${apiKey}`
+                }
+            })
+            .then(function (response) {
+                if (response.status == 200 && response.data) {
+                    return response.data;
+                }
+                else {
+                    return null;
+                }
+            });
+        return result;
     } catch (e) {
         console.error(e)
     }
@@ -24,7 +47,7 @@ export const fetchAllAvisos = async (apiKey) => {
 
 export const updateAviso = async (aviso) => {
     try {
-        const response = await api.put(`/Avisos/${aviso.id}`, { ...aviso });
+        const response = await api.put(`/admin/avisos/${aviso.id}`, { ...aviso });
         // const response = await api.put(`/admin/Avisos/${aviso.id}`, { ...aviso });
         return response;
 

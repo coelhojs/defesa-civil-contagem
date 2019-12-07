@@ -26,7 +26,7 @@ export default function Header(props) {
     const classes = useStyles();
     const auth = useAuth();
 
-    if (auth.user) {
+    if (auth.usuario && auth.apiKey) {
         return (
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar className={classes.toolBar}>
@@ -38,8 +38,7 @@ export default function Header(props) {
                 </Toolbar>
             </AppBar>
         );
-    }
-    else {
+    } else {
         return null;
     }
 }

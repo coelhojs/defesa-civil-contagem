@@ -18,11 +18,9 @@ import Send from '@material-ui/icons/Send';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { updateAviso } from '../customHooks/useAvisos';
-import { createChamado } from "../customHooks/useChamados";
-import { useForm } from "../customHooks/useForm";
-import { chamado } from '../models/chamado';
 import ListaImagem from "../components/listaImagem";
+import { updateAviso } from '../customHooks/useAvisos';
+import { useForm } from "../customHooks/useForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -59,40 +57,8 @@ export default function AvisoForm(props) {
     let history = useHistory();
     const classes = useStyles();
     const [aviso] = useState(props.aviso);
-    const [tempValues, setTempValues] = useState({
-        ...chamado,
-        id: aviso.id,
-        timestamp: aviso.timestamp,
-        tipo: aviso.tipo,
-        descricao: aviso.descricao,
-        imagens: aviso.imagens,
-        logradouro: aviso.logradouro,
-        numero: aviso.numero,
-        bairro: aviso.bairro,
-        cidade: aviso.cidade,
-        estado: aviso.estado,
-        cep: aviso.cep,
-        coordenadas: {
-            lat: aviso.lat,
-            lng: aviso.lng
-        },
-        usuario_id: aviso.usuario_id,
-        usuario_nome: aviso.usuario_nome,
-        usuario_email: aviso.usuario_email,
-        usuario_cpf: aviso.usuario_cpf,
-        usuario_telefone: aviso.usuario_telefone,
-        usuario_dataNasc: aviso.usuario_dataNasc,
-        usuario_logradouro: aviso.usuario_logradouro,
-        usuario_numero: aviso.usuario_numero,
-        usuario_bairro: aviso.usuario_bairro,
-        usuario_cidade: aviso.usuario_cidade,
-        usuario_estado: aviso.usuario_estado,
-        usuario_cep: aviso.usuario_cep
-    })
-
-    const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, tempValues);
     const [open, setOpen] = useState(false);
-
+    const { errors, values, handleChange, handleSubmit } = useForm(callbackSubmit, aviso);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -102,26 +68,23 @@ export default function AvisoForm(props) {
     };
 
     function callbackSubmit() {
-        values.status = "Pendente";
-        values.timestamp = aviso.timestamp;
-        values.coordenadas = {
+        aviso.status = "Pendente";
+        aviso.timestamp = aviso.timestamp;
+        aviso.coordenadas = {
             lat: aviso.coordenadas.lat,
             lng: aviso.coordenadas.lng
         };
 
-        createChamado(values).then(() => {
-            aviso.status = "Processado";
-            updateAviso(aviso);
-            history.push('/Avisos');
-        });
+        aviso.status = "Processado";
+        updateAviso(aviso);
+        history.push('/Avisos');
     }
 
     return (
         <div>
             <Paper className={classes.root}>
                 <Typography variant="h3" gutterBottom className={classes.title}>
-                    Novo Chamado
-      </Typography>
+                    Detalhes do aviso</Typography>
                 <form onSubmit={handleSubmit}>
                     <Grid
                         container
@@ -129,14 +92,13 @@ export default function AvisoForm(props) {
                         justify="space-between"
                         alignItems="center"
                         spacing={2}
-
                     >
                         <Grid item xs={12} md={2} >
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="tipo">Tipo</InputLabel>
                                 <Input
                                     name="tipo"
-                                    defaultValue={values.tipo}
+                                    defaultValue={aviso.tipo}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -147,7 +109,7 @@ export default function AvisoForm(props) {
                                 <Input
                                     readOnly
                                     name="idSequencia"
-                                    value={values.idSequencia = aviso.idSequencia}
+                                    value={aviso.idSequencia}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -159,7 +121,7 @@ export default function AvisoForm(props) {
                                 <InputLabel htmlFor="nome">Informante</InputLabel>
                                 <Input
                                     name="usuario_nome"
-                                    defaultValue={values.usuario_nome}
+                                    defaultValue={aviso.user_id.nome}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -171,7 +133,7 @@ export default function AvisoForm(props) {
                                 <Input
                                     readOnly
                                     name="timestamp"
-                                    value={moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
+                                    value={moment.unix(aviso.dataHora).format("DD/MM/YYYY hh:mm")}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -183,7 +145,7 @@ export default function AvisoForm(props) {
                                 <Input
                                     readOnly
                                     name="usuario_email"
-                                    defaultValue={values.usuario_email}
+                                    defaultValue={aviso.user_id.email}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -194,7 +156,7 @@ export default function AvisoForm(props) {
                                 <InputLabel htmlFor="telefone">Telefone</InputLabel>
                                 <Input
                                     name="usuario_telefone"
-                                    defaultValue={values.usuario_telefone}
+                                    defaultValue={aviso.user_id.telefone}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -204,8 +166,8 @@ export default function AvisoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
                                 <Input
-                                    name="endereco.logradouro"
-                                    defaultValue={values.logradouro}
+                                    name="aviso.endereco.rua"
+                                    defaultValue={aviso.endereco.rua}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -216,8 +178,8 @@ export default function AvisoForm(props) {
                                 <InputLabel htmlFor="numero" >Número</InputLabel>
                                 <Input
                                     type="number"
-                                    name="endereco.numero"
-                                    defaultValue={values.numero}
+                                    name="aviso.endereco.numero"
+                                    defaultValue={aviso.endereco.numero}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -226,8 +188,8 @@ export default function AvisoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="complemento">Complemento</InputLabel>
                                 <Input
-                                    name="endereco.complemento"
-                                    defaultValue={values.complemento}
+                                    name="aviso.endereco.complemento"
+                                    defaultValue={aviso.endereco.complemento}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -236,8 +198,8 @@ export default function AvisoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="bairro" shrink>Bairro</InputLabel>
                                 <Input
-                                    name="endereco.bairro"
-                                    defaultValue={values.bairro}
+                                    name="aviso.endereco.bairro"
+                                    defaultValue={aviso.endereco.bairro}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -247,25 +209,25 @@ export default function AvisoForm(props) {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="regional">Regional</InputLabel>
                                 <Input
-                                    name="endereco.regional"
-                                    defaultValue={values.regional}
+                                    name="aviso.endereco.regional"
+                                    defaultValue={aviso.endereco.regional}
                                     onChange={handleChange}
                                 />
                             </FormControl>
                         </Grid>
 
-                        {/* <Grid item xs={12} md={12}>
+                        <Grid item xs={12} md={12}>
                             <FormControl fullWidth className={classes.formControl}>
                                 <TextareaAutosize rows={2}
                                     className={classes.textarea}
-                                    name="descricao"
-                                    defaultValue={values.descricao}
+                                    name="aviso.descricao"
+                                    defaultValue={aviso.descricao}
                                     placeholder="Descrição"
                                     onChange={handleChange}
                                 />
                                 <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
                             </FormControl>
-                        </Grid> */}
+                        </Grid>
                         <Grid item xs={12}>
                             <ListaImagem />
                         </Grid>
