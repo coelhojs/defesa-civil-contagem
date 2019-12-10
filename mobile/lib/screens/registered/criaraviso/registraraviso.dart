@@ -167,7 +167,7 @@ class _RegistroAvisoState extends State<RegistroAviso> {
         child: Icon(Feather.getIconData("send")),
       ),
       appBar: AppBar(
-        title: Text("Titulo"),
+        title: Text("Novo aviso"),
         backgroundColor: Color.fromRGBO(246, 129, 33, 1),
       ),
       body: Padding(
