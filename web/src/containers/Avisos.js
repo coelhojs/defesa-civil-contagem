@@ -40,7 +40,7 @@ export default function Chamados() {
     };
 
     const columns = [
-        { field: 'idSequencia', title: 'ID', minWidth: 10 },
+        { field: 'id', title: 'ID', minWidth: 10 },
         { field: 'tipo', title: 'Tipo', minWidth: 50 },
         { field: 'data', title: 'Data', minWidth: 50 },
         { field: 'bairro', title: 'Bairro', minWidth: 50 },
@@ -64,13 +64,18 @@ export default function Chamados() {
 
     if (avisos && avisos.length > 0) {
         let rows = [];
+        avisos.sort((a, b) => {
+            if (a.status > b.status) {
+                return 1;
+            }
+        })
         avisos.forEach((item) => {
             rows.push({
                 id: item.id,
-                idSequencia: item.idSequencia,
+                // idSequencia: item.idSequencia,
                 tipo: item.tipo,
-                data: moment.unix(item.timestamp).format("MM/DD/YYYY"),
-                bairro: item.bairro,
+                data: moment(item.dataHora).format("MM/DD/YYYY"),
+                bairro: item.endereco.bairro,
                 status: item.status,
                 acao: (item.status == "Pendente") ? (
                     <Button variant="contained" color="primary" className={classes.button}
@@ -118,7 +123,6 @@ export default function Chamados() {
             />
         )
     } else {
-        // return <Spinner />
-        return "Não há avisos cadastrados"
+        return <Spinner />
     }
 }

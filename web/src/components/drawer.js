@@ -44,7 +44,7 @@ export default function AppDrawer() {
                 </List>
                 <Divider />
                 <List style={{ 'marginTop': 'auto' }}>
-                    <ListItem onClick={() => {
+                    <ListItem style={{'cursor':'pointer'}} onClick={() => {
                         auth.signout()
                     }}>
                         <ListItemIcon button>

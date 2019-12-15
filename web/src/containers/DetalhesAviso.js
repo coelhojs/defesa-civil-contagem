@@ -73,7 +73,7 @@ export default function DetalhesAviso() {
         return (
             <Paper className={classes.root}>
                 <Typography variant="h5" className={classes.title}>
-                    Detalhes do aviso {aviso.idSequencia}
+                    Detalhes do aviso {aviso.id}
                 </Typography>
                 <Grid
                     container
@@ -98,7 +98,7 @@ export default function DetalhesAviso() {
                             <Input
                                 readOnly
                                 id="id"
-                                value={aviso.idSequencia}
+                                value={aviso.id}
                             />
                         </FormControl>
                     </Grid>
@@ -121,7 +121,7 @@ export default function DetalhesAviso() {
                             <Input
                                 readOnly
                                 id="data"
-                                value={moment.unix(aviso.timestamp).format("DD/MM/YYYY hh:mm")}
+                                value={moment(aviso.dataHora).format("DD/MM/YYYY hh:mm")}
                             />
                         </FormControl>
                     </Grid>
@@ -150,7 +150,7 @@ export default function DetalhesAviso() {
 
                     <Grid item xs={12} md={6} >
                         <FormControl fullWidth className={classes.formControl}>
-                            <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
+                            <InputLabel htmlFor="logradouro" >Endereço da ocorrência</InputLabel>
                             <Input
                                 id="logradouro"
                                 value={aviso.logradouro}
@@ -188,14 +188,14 @@ export default function DetalhesAviso() {
                         </FormControl>
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
+                    {/* <Grid item xs={12} md={4}>
                         <FormControl fullWidth className={classes.formControl}>
                             <InputLabel htmlFor="regional">Regional</InputLabel>
                             <Input
                                 id="regional"
                             />
                         </FormControl>
-                    </Grid>
+                    </Grid> */}
 
                     <Grid item xs={12} md={12}>
                         <FormControl fullWidth className={classes.formControl}>

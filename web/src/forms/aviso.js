@@ -108,8 +108,8 @@ export default function AvisoForm(props) {
                                 <InputLabel htmlFor="id">ID</InputLabel>
                                 <Input
                                     readOnly
-                                    name="idSequencia"
-                                    value={aviso.idSequencia}
+                                    name="id"
+                                    value={aviso.id}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -129,11 +129,11 @@ export default function AvisoForm(props) {
 
                         <Grid item xs={12} md={4} >
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="timestamp">Data/Hora</InputLabel>
+                                <InputLabel htmlFor="dataHora">Data/Hora</InputLabel>
                                 <Input
                                     readOnly
-                                    name="timestamp"
-                                    value={moment.unix(aviso.dataHora).format("DD/MM/YYYY hh:mm")}
+                                    name="dataHora"
+                                    value={moment(aviso.dataHora).format("DD/MM/YYYY hh:mm")}
                                     onChange={handleChange}
                                 />
                             </FormControl>
@@ -164,7 +164,7 @@ export default function AvisoForm(props) {
 
                         <Grid item xs={12} md={6} >
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="logradouro" >Logradouro</InputLabel>
+                                <InputLabel htmlFor="logradouro" >Endereço da ocorrência</InputLabel>
                                 <Input
                                     name="aviso.endereco.rua"
                                     defaultValue={aviso.endereco.rua}
@@ -205,7 +205,7 @@ export default function AvisoForm(props) {
                             </FormControl>
                         </Grid>
 
-                        <Grid item xs={12} md={4}>
+                        {/* <Grid item xs={12} md={4}>
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel htmlFor="regional">Regional</InputLabel>
                                 <Input
@@ -214,7 +214,7 @@ export default function AvisoForm(props) {
                                     onChange={handleChange}
                                 />
                             </FormControl>
-                        </Grid>
+                        </Grid> */}
 
                         <Grid item xs={12} md={12}>
                             <FormControl fullWidth className={classes.formControl}>
@@ -225,7 +225,6 @@ export default function AvisoForm(props) {
                                     placeholder="Descrição"
                                     onChange={handleChange}
                                 />
-                                <FormHelperText className={classes.erro}>{errors.descricao}</FormHelperText>
                             </FormControl>
                         </Grid>
                         <Grid item xs={12}>
@@ -247,8 +246,6 @@ export default function AvisoForm(props) {
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle id="alert-dialog-slide-title">
                     Confirmar criação de chamado</DialogTitle>
