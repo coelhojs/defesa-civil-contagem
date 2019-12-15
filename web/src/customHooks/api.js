@@ -5,7 +5,7 @@ export const api = create({
     // baseURL: "http://localhost:3004"
 
     //Back-end aplicação:
-    baseURL: "http://167.172.117.77"
+    baseURL: "http://167.172.117.77:3001"
     // baseURL: "http://localhost:3001"
 
     //baseURL: "http://192.168.43.196:3001"

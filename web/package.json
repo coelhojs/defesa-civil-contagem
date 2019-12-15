@@ -30,9 +30,7 @@
         "use-persisted-state": "^0.3.0"
     },
     "scripts": {
-        "start-jsondb": "json-server --watch db.json --port 3004",
-        "start-app": "react-scripts start",
-        "start": "npm-run-all -p start-app",
+        "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"

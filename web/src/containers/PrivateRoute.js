@@ -2,9 +2,11 @@ import "firebase/auth";
 import React from 'react';
 import { Route } from "react-router-dom";
 import { useAuth } from "../customHooks/useAuth";
+import { useHistory } from "react-router-dom";
 
 export default function PrivateRoute({ children, ...rest }) {
     const auth = useAuth();
+    let history = useHistory();
 
     if (auth.usuario && auth.apiKey) {
         return (
@@ -12,7 +14,8 @@ export default function PrivateRoute({ children, ...rest }) {
         )
     } else {
         auth.signout();
-        auth.toggleShowWarning();
+        history.push('/')
+        // auth.toggleShowWarning();
         return null
     };
 }
