@@ -154,17 +154,21 @@ class _RelatarIncidenteState extends State<RelatarIncidente>
                               Padding(
                                 padding: EdgeInsets.only(left: 20),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "${snapshot.data[index]['tipo']}",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text("${snapshot.data[index]['descricao']}"),
-                                ],
-                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "${snapshot.data[index]['tipo']}",
+                                      style:
+                                      TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Text("${snapshot.data[index]['descricao']}", overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      softWrap: false,),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),

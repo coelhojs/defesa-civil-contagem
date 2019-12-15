@@ -8,7 +8,9 @@ Widget carregando(BuildContext context, bool tipo){
           children: <Widget>[
             Positioned.fill(
               child: Align(
-                  alignment: Alignment.center, child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color.fromRGBO(246, 129, 33, 1)))),
+                  alignment: Alignment.center, child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      Color.fromRGBO(246, 129, 33, 1)))),
             )
           ],
         )) :

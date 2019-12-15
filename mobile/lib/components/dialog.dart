@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttie/fluttie.dart';
 
 Widget dialog(String titulo, String descricao,
-    {IconData icone, Color cor, bool carregando = false}) {
+    {IconData icone, Color cor, bool carregando = false, bool botao = false, BuildContext context}) {
   return AlertDialog(
+    actions: <Widget>[
+      botao ? FlatButton(
+        child: Text("Fechar"),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ) : Container(),
+    ],
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15))),
     title: Text(titulo),

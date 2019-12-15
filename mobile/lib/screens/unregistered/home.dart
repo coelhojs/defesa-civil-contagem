@@ -1,4 +1,6 @@
+import 'package:defesa_civil/components/drawer.dart';
 import 'package:defesa_civil/helpers/blochome.dart';
+import 'package:defesa_civil/screens/mapa.dart';
 import 'package:defesa_civil/screens/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
@@ -18,7 +20,6 @@ class _HomeState extends State<Home> {
   var bloc = BlocHome();
 
   final List<Widget> pages = [
-    MapPage(),
     LoginPage()
   ];
   final pageController = PageController();
@@ -66,13 +67,7 @@ class _HomeState extends State<Home> {
         backgroundColor: Color.fromRGBO(246, 129, 33, 1),
         title: Text('Defesa Civil de Contagem'),
       ),
-      body: PageView(
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: pages,
-        physics: NeverScrollableScrollPhysics(), // No sliding
-      ),
-      bottomNavigationBar: _bottomNavigationBar(_selectedIndex)
+      body: LoginPage()
     );
   }
 }

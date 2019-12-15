@@ -1,6 +1,7 @@
+import 'package:defesa_civil/components/drawer.dart';
+import 'package:defesa_civil/screens/mapa.dart';
 import 'package:defesa_civil/screens/registered/relatarincidente.dart';
 import 'package:defesa_civil/screens/registered/userinfo.dart';
-import 'package:defesa_civil/screens/mappage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/feather.dart';
 
@@ -10,7 +11,7 @@ class HomeLogged extends StatefulWidget {
 }
 
 class _HomeLoggedState extends State<HomeLogged> {
-  final List<Widget> pages = [MapPage(), RelatarIncidente(), UserInfo()];
+  final List<Widget> pages = [Mapa(), RelatarIncidente(), UserInfo()];
   final pageController = PageController();
   int _selectedIndex = 0;
 
@@ -61,10 +62,10 @@ class _HomeLoggedState extends State<HomeLogged> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: DrawerNav(context),
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(246, 129, 33, 1),
           title: Text('Defesa Civil de Contagem'),

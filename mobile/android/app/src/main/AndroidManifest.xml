@@ -13,8 +13,8 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Civil Defense"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Defesa Civil Contagem"
+        android:icon="@drawable/icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCi_I99n6iAV4IjyS_0MPkcBqleMorBh9k"/>
         <activity

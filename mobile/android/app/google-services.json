@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "627032586427-9gdjbja5ldhklhfe63t4ku3r9evk0btc.apps.googleusercontent.com",
+          "client_id": "627032586427-bf01jf7lr5fpgv1e6pbq9fcv6cf9kd36.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.gov.mg.contagem.defesa_civil",
-            "certificate_hash": "20f8a1994d2eaa222d1fd934a4af461200ee3875"
+            "certificate_hash": "57f560c7104b965b3a0c5dea1d0d334e3e13436b"
           }
         },
         {

@@ -43,6 +43,8 @@ dependencies:
   photo_view: ^0.7.0
   url_launcher: ^5.2.5
   location_permissions: ^2.0.3
+  webview_flutter: ^0.3.17
+  snaplist: ^0.1.8
 
 
 dev_dependencies:
@@ -69,11 +71,13 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/images/
+    - assets/images/vistoriadores/
     - assets/coordinates/
     - assets/animation/
     - assets/done.json
     - assets/teste.json
     - assets/erro.json
+    - assets/orangecheck.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

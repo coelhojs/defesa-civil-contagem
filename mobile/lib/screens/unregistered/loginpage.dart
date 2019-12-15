@@ -25,14 +25,11 @@ import '../../models/size_config.dart';
 import '../../testepage.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-
   Usuario novoUsuario;
   var bloc = BlocHome();
   String player_id;
@@ -41,13 +38,13 @@ class _LoginPageState extends State<LoginPage> {
   initState() {
     super.initState();
     bloc.initOneSignal();
-    bloc.getPlayerId().then((result)=> player_id= result);
+    bloc.getPlayerId().then((result) => player_id = result);
   }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-
       body: Stack(
         children: <Widget>[
           Image(
@@ -104,7 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                         signInWithGoogle().then((result) async {
                           var url = '$REQ/auth/google/login';
                           var response = await http.post(url,
-                              headers: {"authorization": "Bearer $token"},body: {"player_id": player_id});
+                              headers: {"authorization": "Bearer $token"},
+                              body: {"player_id": player_id});
                           var responseDecoded = json.decode(response.body);
                           print(responseDecoded);
                           if (response.statusCode == 200) {
@@ -124,6 +122,14 @@ class _LoginPageState extends State<LoginPage> {
                                 (Route<dynamic> route) => false));
                           }
                         }).catchError((erro) {
+                          Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return dialog(
+                                    "Erro", "Houve um erro ao carregar",
+                                icone: Icons.error_outline, cor: Colors.red, botao: true, context: context);
+                              });
                           print("ERRO: $erro");
                         });
                       },
@@ -147,7 +153,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-
 class SignupPage extends StatefulWidget {
   @override
   SignupPageState createState() => SignupPageState();
@@ -166,7 +171,8 @@ class SignupPageState extends State<SignupPage> {
     Timer(Duration(seconds: 3), () {
       Navigator.push(
         context,
-        CupertinoPageRoute(fullscreenDialog: true,builder: (context) => LoginPage()),
+        CupertinoPageRoute(
+            fullscreenDialog: true, builder: (context) => LoginPage()),
       );
     });
   }
@@ -181,7 +187,7 @@ class SignupPageState extends State<SignupPage> {
     var instance = Fluttie();
 
     var checkAnimation =
-    await instance.loadAnimationFromAsset("assets/teste.json");
+        await instance.loadAnimationFromAsset("assets/teste.json");
 
     animationCtrl = await instance.prepareAnimation(
       checkAnimation,
@@ -198,7 +204,9 @@ class SignupPageState extends State<SignupPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Container(width: double.infinity,),
+          Container(
+            width: double.infinity,
+          ),
           Container(
             height: 300,
             width: 300,

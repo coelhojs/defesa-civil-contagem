@@ -4,6 +4,7 @@ import 'package:defesa_civil/helpers/blochome.dart';
 import 'package:defesa_civil/helpers/constants.dart';
 import 'package:defesa_civil/models/size_config.dart';
 import 'package:defesa_civil/models/usuario.dart';
+import 'package:defesa_civil/screens/unregistered/home.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -166,44 +167,25 @@ class _UserInfoState extends State<UserInfo>
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Center(
-                  child: RaisedButton(
-                    onPressed: () {},
-                    child: Container(
-                      child: Text("Sair"),
-                    ),
-                  ),
-                ),
-              )
+
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          Position position = await Geolocator()
-              .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-          print(position.toString());
-          print(api_key);
-          Dio dio = Dio();
-          var bloc = BlocHome();
-          print(await bloc.getPlayerId());
+        onPressed: () {
+          Navigator.pushAndRemoveUntil(
+            context,
+            CupertinoPageRoute(builder: (context) => Home(0)),
+                  (Route<dynamic> route) => false);
 
-          dio.get("$REQ/app/account", options: Options(headers: {"Authorization": "Bearer $api_key"})).then((result){
-
-            print(result.data);
-          }).catchError((e){
-            print(e.response.data);
-          });
         },
-        icon: Icon(Feather.getIconData("edit")),
+        icon: Icon(Icons.directions_walk),
         label: Text(
-          "Editar",
+          "Sair",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.black54,
+        backgroundColor: Color.fromRGBO(50, 69, 157, 1),
       ),
     );
   }
