@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => ({
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
     },
-    imagem:{
-        maxHeight:"200px",
+    imagem: {
+        maxHeight: "200px",
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -31,39 +31,28 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const tileData = [
-    {
-        id: '329',
-        img: "https://s2.glbimg.com/ruC1KAoB1uN6AxezO2x5yMAwGeU=/0x0:5184x3456/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2019/C/B/axBnMXRlexSBGlAtaKwg/oft20190217011.jpg",
-    },
-    {
-        id: '342',
-        img: "http://agencia.fapesp.br/agencia-novo/imagens/noticia/27406.jpg",
-    },
-    {
-        id: '241',
-        img: "https://www.dw.com/image/46244256_303.jpg",
-    },
-];
-
-export default function ListaImagem() {
+export default function ListaImagem(props) {
     const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <GridList className={classes.gridList} cols={2.5}>
-                {tileData.map(tile => (
-                    <GridListTile key={tile.img}>
-                        <img src={tile.img} alt={tile.id} className={classes.imagem} />
-                        <GridListTileBar
-                            classes={{
-                                root: classes.titleBar,
-                                title: classes.title,
-                            }}
-                        />
-                    </GridListTile>
-                ))}
-            </GridList>
-        </div>
-    );
+    if (props.imagens.length > 0) {
+        return (
+            <div className={classes.root}>
+                <GridList className={classes.gridList} cols={2.5}>
+                    {props.imagens.map(tile => (
+                        <GridListTile key={tile}>
+                            <img key={tile} src={tile} className={classes.imagem} />
+                            <GridListTileBar
+                                classes={{
+                                    root: classes.titleBar,
+                                    title: classes.title,
+                                }}
+                            />
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+        );
+    } else {
+        return null;
+    }
 }

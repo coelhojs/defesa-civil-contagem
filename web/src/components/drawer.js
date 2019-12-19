@@ -47,7 +47,7 @@ export default function AppDrawer() {
                     <ListItem style={{'cursor':'pointer'}} onClick={() => {
                         auth.signout()
                     }}>
-                        <ListItemIcon button>
+                        <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>
                         <ListItemText primary="Sair" />

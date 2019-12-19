@@ -228,7 +228,7 @@ export default function AvisoForm(props) {
                             </FormControl>
                         </Grid>
                         <Grid item xs={12}>
-                            <ListaImagem />
+                            <ListaImagem imagens={aviso.fotos} />
                         </Grid>
                         <Grid item xs={12}>
                             <Button onClick={() => history.push('/Avisos')} variant="contained" color="secondary" className={classes.button}>Voltar
