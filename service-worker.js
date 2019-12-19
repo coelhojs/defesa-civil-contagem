@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/defesa-civil-contagem/precache-manifest.a910ed9d12c08a1e7e153d65b7066438.js"
+  "/defesa-civil-contagem/precache-manifest.ed2263b1d7890e9d592d9200c368fb2a.js"
 );
 
 self.addEventListener('message', (event) => {

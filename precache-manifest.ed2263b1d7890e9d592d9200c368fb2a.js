@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e636a756d7c03f7596cbae2f5ddfb902",
+    "revision": "3da1fa8dff505eba6d208b8943295b30",
     "url": "/defesa-civil-contagem/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/defesa-civil-contagem/static/js/2.157b18bd.chunk.js"
   },
   {
-    "revision": "017b99723876250df126",
-    "url": "/defesa-civil-contagem/static/js/main.b0772056.chunk.js"
+    "revision": "50da6e4d0fd91329e78c",
+    "url": "/defesa-civil-contagem/static/js/main.92efd75d.chunk.js"
   },
   {
     "revision": "1ca457ca77259bf1b35c",
