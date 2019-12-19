@@ -210,7 +210,7 @@ export default function DetalhesAviso() {
                         <ListaImagem />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button onClick={() => history.push('/Avisos')} variant="contained" color="primary" className={classes.button}>
+                        <Button onClick={() => history.push('/defesa-civil-contagem/Avisos')} variant="contained" color="primary" className={classes.button}>
                             Voltar para a lista
                         </Button>
                     </Grid>

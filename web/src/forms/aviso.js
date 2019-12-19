@@ -77,7 +77,7 @@ export default function AvisoForm(props) {
 
         aviso.status = "Processado";
         updateAviso(aviso);
-        history.push('/Avisos');
+        history.push('/defesa-civil-contagem/Avisos');
     }
 
     return (
@@ -231,7 +231,7 @@ export default function AvisoForm(props) {
                             <ListaImagem imagens={aviso.fotos} />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button onClick={() => history.push('/Avisos')} variant="contained" color="secondary" className={classes.button}>Voltar
+                            <Button onClick={() => history.push('/defesa-civil-contagem/Avisos')} variant="contained" color="secondary" className={classes.button}>Voltar
                         </Button>
                             <Button onClick={handleClickOpen} variant="contained" color="primary" className={classes.button}>
                                 Criar Chamado

@@ -46,10 +46,10 @@ function App() {
           <div className={classes.toolbar} />
           <Switch>
             <Route exact path="/defesa-civil-contagem" component={Inicio} />
-            <PrivateRoute exact path="/defesa-civil-contagemAvisos" component={Avisos} />
-            <PrivateRoute exact path="/defesa-civil-contagemMapa" component={Mapa} />
-            <PrivateRoute exact path="/defesa-civil-contagemDetalhesAviso/:id" component={DetalhesAviso} />
-            <PrivateRoute exact path="/defesa-civil-contagemProcessarAviso/:id" component={ProcessarAviso} />
+            <PrivateRoute exact path="/defesa-civil-contagem/Avisos" component={Avisos} />
+            <PrivateRoute exact path="/defesa-civil-contagem/Mapa" component={Mapa} />
+            <PrivateRoute exact path="/defesa-civil-contagem/DetalhesAviso/:id" component={DetalhesAviso} />
+            <PrivateRoute exact path="/defesa-civil-contagem/ProcessarAviso/:id" component={ProcessarAviso} />
             <Route path="*" component={NotFound} />
           </Switch>
         </main>

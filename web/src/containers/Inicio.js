@@ -48,7 +48,7 @@ export default function Inicio() {
     }, [makeRequest]);
 
     if (auth.usuario && auth.apiKey) {
-        history.push('/Mapa')
+        history.push('/defesa-civil-contagem/Mapa')
         return null;
     } else {
         return (

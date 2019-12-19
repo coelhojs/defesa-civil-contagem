@@ -14,7 +14,7 @@ export default function PrivateRoute({ children, ...rest }) {
         )
     } else {
         auth.signout();
-        history.push('/')
+        history.push('/defesa-civil-contagem/')
         // auth.toggleShowWarning();
         return null
     };

@@ -80,13 +80,13 @@ export default function Chamados() {
                 acao: (item.status == "Pendente") ? (
                     <Button variant="contained" color="primary" className={classes.button}
                         onClick={() => {
-                            history.push(`/ProcessarAviso/${item.id}`)
+                            history.push(`/defesa-civil-contagem/ProcessarAviso/${item.id}`)
                         }}
                     >Processar</Button>
                 ) : (
                         <Button variant="contained" color="secondary" className={classes.button}
                             onClick={() => {
-                                history.push(`/DetalhesAviso/${item.id}`)
+                                history.push(`/defesa-civil-contagem/DetalhesAviso/${item.id}`)
                             }}
                         >Detalhes</Button>
                     )

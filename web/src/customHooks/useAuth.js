@@ -68,13 +68,13 @@ function useProvideAuth() {
             })
             .then(function (response) {
               if (response.data && response.data.mensagem === "Usuário não cadastrado" || response.status != 200) {
-                history.push('/');
+                history.push('/defesa-civil-contagem/');
                 signout();
                 toggleShowWarning();
               } else if (response.data && response.data.api_key) {
                 setApiKey(response.data.api_key);
                 setUsuario(response.data.usuario);
-                history.push('/Mapa')
+                history.push('/defesa-civil-contagem/Mapa')
               }
             })
         })
